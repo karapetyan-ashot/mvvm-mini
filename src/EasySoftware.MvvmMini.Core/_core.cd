@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Interface Name="EasySoftware.MvvmMini.Core.IViewModel">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAABAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>IViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="EasySoftware.MvvmMini.Core.IView">
+    <Position X="5.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="EasySoftware.MvvmMini.Core.IWindowView">
+    <Position X="5.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAEAAAAAAAAAACAAAA=</HashCode>
+      <FileName>IWindowView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="EasySoftware.MvvmMini.Core.IClosableViewModel">
+    <Position X="2.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAEgAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>IClosableViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="EasySoftware.MvvmMini.Core.IWindowViewModel">
+    <Position X="2.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IWindowViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="EasySoftware.MvvmMini.Core.IDialogWindowViewModel">
+    <Position X="2.25" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IDialogWindowViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
