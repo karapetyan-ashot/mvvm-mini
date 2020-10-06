@@ -1,13 +1,14 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Input;
 
 namespace EasySoftware.MvvmMini.Core
 {
 	public interface IClosableViewModel : IViewModel
 	{
-		string Title { get; set; }
-		ICommand CloseCommand { get; }
 		event EventHandler Closed;
-		void OnClosed();
+		ICommand CloseCommand { get; }
+		ViewModelState State { get; }
+		void OnClosing(CancelEventArgs e);
 	}
 }

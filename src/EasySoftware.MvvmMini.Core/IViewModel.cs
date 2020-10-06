@@ -1,11 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace EasySoftware.MvvmMini.Core
 {
-	public interface IViewModel
+	public interface IViewModel : INotifyPropertyChanged
 	{
-		string UniqueId { get; }
-		IView View { get; }
-		Task Loaded();
+		string Title { get; set; }
+		bool IsBusy { get; }
 	}
 }
