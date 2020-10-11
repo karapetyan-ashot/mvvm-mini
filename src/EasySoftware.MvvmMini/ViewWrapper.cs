@@ -10,15 +10,16 @@ namespace EasySoftware.MvvmMini
 	{
 		public event EventHandler Loaded;
 
-		private T _view;
+		public T View { get; }
+
 		public ViewWrapper(T view)
 		{
-			this._view = view ?? throw new ArgumentNullException(nameof(view));
+			this.View = view ?? throw new ArgumentNullException(nameof(view));
 
-			this._view.Loaded += (s, e) =>
+			this.View.Loaded += (s, e) =>
 				this.Loaded?.Invoke(this, EventArgs.Empty);
 
-			if (this._view is Window window)
+			if (this.View is Window window)
 			{
 				window.Closing += (s, e) =>
 				{
@@ -45,31 +46,29 @@ namespace EasySoftware.MvvmMini
 
 		public object DataContext
 		{
-			get => this._view.DataContext;
-			set => this._view.DataContext = value;
+			get => this.View.DataContext;
+			set => this.View.DataContext = value;
 		}
 
 		public void Show()
 		{
-			if (this._view is Window window)
+			if (this.View is Window window)
 			{
 				window.Show();
 			}
 		}
 
-		public bool? ShowDialog()
+		public void ShowDialog()
 		{
-			if (this._view is Window window)
+			if (this.View is Window window)
 			{
-				return window.ShowDialog();
+				window.ShowDialog();
 			}
-
-			return null;
 		}
 
 		public void Close()
 		{
-			if (this._view is Window window)
+			if (this.View is Window window)
 			{
 				window.Close();
 			}

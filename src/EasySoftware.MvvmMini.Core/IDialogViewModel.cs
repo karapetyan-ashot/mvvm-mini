@@ -2,6 +2,6 @@
 {
 	public interface IDialogViewModel : IWindowViewModel
 	{
-		bool ShowDialog();
+		void ShowDialog();
 	}
 }

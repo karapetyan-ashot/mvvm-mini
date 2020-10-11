@@ -6,4 +6,13 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Unity" Version="5.11.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EasySoftware.MvvmMini.Core\EasySoftware.MvvmMini.Core.csproj" />
+    <ProjectReference Include="..\EasySoftware.MvvmMini\EasySoftware.MvvmMini.csproj" />
+  </ItemGroup>
+
 </Project>

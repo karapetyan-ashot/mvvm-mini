@@ -8,10 +8,9 @@ namespace EasySoftware.MvvmMini
 		{
 		}
 
-		public bool ShowDialog()
+		public void ShowDialog()
 		{
-			var result = this._view.ShowDialog();
-			return result ?? false;
+			this._view.ShowDialog();
 		}
 	}
 }

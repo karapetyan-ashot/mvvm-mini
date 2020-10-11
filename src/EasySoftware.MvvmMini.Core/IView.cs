@@ -9,7 +9,7 @@ namespace EasySoftware.MvvmMini.Core
 		object DataContext { get; set; }
 
 		void Show();
-		bool? ShowDialog();
+		void ShowDialog();
 		void Close();
 	}
 }
