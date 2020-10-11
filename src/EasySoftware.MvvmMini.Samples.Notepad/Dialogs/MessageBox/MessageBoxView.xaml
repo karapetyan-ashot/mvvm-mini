@@ -10,7 +10,8 @@
 	Title="{Binding Title}"
 	Width="500"
 	Height="200"
-	d:DataContext="{d:DesignInstance Type=local:MessageBoxViewModel}" WindowStartupLocation="CenterOwner"
+	d:DataContext="{d:DesignInstance Type=local:MessageBoxViewModel}"
+	WindowStartupLocation="CenterOwner"
 	mc:Ignorable="d">
 	<Window.Resources>
 		<conv:MessageBoxButtonToVisibilityConverter x:Key="MessageBoxButtonToVisibilityConverter" />
@@ -25,7 +26,7 @@
 			<RowDefinition />
 			<RowDefinition Height="50" />
 		</Grid.RowDefinitions>
-		<TextBlock Text="{Binding Message}" Margin="30" />
+		<TextBlock Margin="30" Text="{Binding Message}" />
 		<StackPanel
 			Grid.Row="1"
 			HorizontalAlignment="Right"

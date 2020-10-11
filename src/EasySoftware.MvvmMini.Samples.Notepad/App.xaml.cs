@@ -8,6 +8,7 @@ using System.Windows;
 using EasySoftware.MvvmMini.Core;
 using EasySoftware.MvvmMini.Samples.Notepad.Dialogs.MessageBox;
 using EasySoftware.MvvmMini.Samples.Notepad.Factories;
+using EasySoftware.MvvmMini.Samples.Notepad.Workplaces.Document;
 
 using Unity;
 using Unity.Injection;
@@ -49,14 +50,21 @@ namespace EasySoftware.MvvmMini.Samples.Notepad
 			this._container.RegisterInstance<IUnityContainer>(this._container);
 
 			this._container.RegisterSingleton<IDialogFactory, DialogFactory>();
+			this._container.RegisterSingleton<IViewModelFactory, ViewModelFactory>();
 
 			this._container.RegisterType<IView, ViewWrapper<MainView>>(ViewModels.MainWindow);
 			this._container.RegisterType<IWindowViewModel, MainViewModel>(ViewModels.MainWindow,
 				new InjectionConstructor(
 					new ResolvedParameter<IView>(ViewModels.MainWindow),
+					new ResolvedParameter<IViewModelFactory>()));
+
+			this._container.RegisterType<IView, ViewWrapper<DocumentView>>(ViewModels.Document);
+			this._container.RegisterType<IClosableViewModel, DocumentViewModel>(ViewModels.Document,
+				new InjectionConstructor(
+					new ResolvedParameter<IView>(ViewModels.Document),
 					new ResolvedParameter<IDialogFactory>()));
 
-			this._container.RegisterType<IView, ViewWrapper<MessageBoxView>>(ViewModels.MessageBoxViewModel);
+				this._container.RegisterType<IView, ViewWrapper<MessageBoxView>>(ViewModels.MessageBoxViewModel);
 			this._container.RegisterType<IMessageBoxDialog, MessageBoxViewModel>(ViewModels.MessageBoxViewModel,
 				new InjectionConstructor(
 					new ResolvedParameter<IView>(ViewModels.MessageBoxViewModel),

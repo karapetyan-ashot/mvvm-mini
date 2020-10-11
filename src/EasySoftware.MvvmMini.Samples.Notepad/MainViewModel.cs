@@ -1,91 +1,84 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 using EasySoftware.MvvmMini.Core;
-using EasySoftware.MvvmMini.Samples.Notepad.Dialogs.MessageBox;
 using EasySoftware.MvvmMini.Samples.Notepad.Factories;
-
-using Unity;
-using Unity.Resolution;
 
 namespace EasySoftware.MvvmMini.Samples.Notepad
 {
 	public class MainViewModel : WindowViewModelBase
 	{
-		private bool _saved = true;
-		private IDialogFactory _dialogFactory;
+		private int docNum = 0;
+		private IViewModelFactory _viewModelFactory;
 
-		public MainViewModel(IView view, IDialogFactory dialogFactory) : base(view)
+		public MainViewModel(IView view, IViewModelFactory viewModelFactory) : base(view)
 		{
-			this._dialogFactory = dialogFactory ?? throw new ArgumentNullException(nameof(dialogFactory));
-			this.SaveCommand = new RelayCommand(this.Save, this.CanSave);
+			this._viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
+			
+			this.Documents = new ObservableCollection<IClosableViewModel>();
+
+			this.NewDocumentCommand = new RelayCommand(this.CreateNewDocument);
 		}
 
-		public ICommand SaveCommand { get; }
+		public ICommand NewDocumentCommand { get; }
 
-		protected override void Loaded()
+		private ObservableCollection<IClosableViewModel> _documents;
+		public ObservableCollection<IClosableViewModel> Documents
 		{
-			this.Title += " loaded";
+			get => this._documents;
+			set => SetProperty(ref this._documents, value);
 		}
 
-		private string _text;
-		public string Text
+		private IClosableViewModel _currentDocument;
+		public IClosableViewModel CurrentDocument
 		{
-			get { return _text; }
-			set
+			get => this._currentDocument;
+			set => SetProperty(ref this._currentDocument, value);
+		}
+
+		protected override Task Loaded()
+		{
+			return CreateNewDocument();			
+		}
+
+		private Task CreateNewDocument()
+		{
+			IClosableViewModel doc = this._viewModelFactory.CreateDocumentViewModel();
+			doc.Title = $"New doc {++docNum}";
+			doc.Closed += (o, e) =>
 			{
-				if (_text != value)
+				if(o is IClosableViewModel viewModel)
 				{
-					_text = value;
-					RaisePropertyChanged();
-					this._saved = false;
+					if (this.Documents.Contains(viewModel))
+						this.Documents.Remove(viewModel);
 				}
-			}
+			};
+			this.Documents.Add(doc);
+			this.CurrentDocument = doc;
+			return Task.CompletedTask;
 		}
 
 		public override void OnClosing(CancelEventArgs e)
 		{
-			if (!this._saved)
+			var currDoc = this.CurrentDocument;
+			foreach (var document in this.Documents.ToList())
 			{
-				IMessageBoxDialog messageBox = this._dialogFactory.CreateMessageBoxDialog("do you want to save", "confirm please", MessageBoxButton.YesNoCancel);
-				messageBox.ShowDialog();
-
-				switch (messageBox.DialogResult)
-				{
-					case MessageBoxResult.Yes:
-						this._saved = true;
-						break;
-					case MessageBoxResult.No:
-						break;
-					case MessageBoxResult.Cancel:
-						e.Cancel = true;
-						break;
-				}
+				this.CurrentDocument = document;
+				document.CloseCommand.Execute(null);
 			}
+			
+			if(this.Documents.Any())
+			{
+				e.Cancel = true;
+				if (this.Documents.Contains(currDoc))
+					this.CurrentDocument = currDoc;
+			}			
+			base.OnClosing(e);
 		}
 
-		protected override bool CanClose()
-		{
-			return true;
-		}
-
-		private Task Save()
-		{
-
-			ObservableCollection<IViewModel> c = new ObservableCollection<IViewModel>();
-			ReadOnlyObservableCollection<IViewModel> roc = new ReadOnlyObservableCollection<IViewModel>(c);
-
-			this._saved = true;
-			return Task.CompletedTask;
-		}
-
-		private bool CanSave()
-		{
-			return !this._saved;
-		}
 	}
 }

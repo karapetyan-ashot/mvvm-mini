@@ -4,5 +4,10 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:local="clr-namespace:EasySoftware.MvvmMini.Samples.Notepad"
 	ShutdownMode="OnExplicitShutdown">
-	<Application.Resources />
+	<Application.Resources>
+		<Style x:Key="menuButton" TargetType="Button">
+			<Setter Property="Margin" Value="3" />
+			<Setter Property="Width" Value="60" />
+		</Style>
+	</Application.Resources>
 </Application>

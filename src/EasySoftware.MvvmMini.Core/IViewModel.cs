@@ -6,5 +6,6 @@ namespace EasySoftware.MvvmMini.Core
 	{
 		string Title { get; set; }
 		bool IsBusy { get; }
+		object View { get; }
 	}
 }

@@ -1,4 +1,7 @@
 ﻿
+using System.Threading.Tasks;
+using System.Windows;
+
 using EasySoftware.MvvmMini.Core;
 
 namespace EasySoftware.MvvmMini
@@ -11,7 +14,7 @@ namespace EasySoftware.MvvmMini
 		{
 			this._view = view;
 			this._view.DataContext = this;
-			this._view.Loaded += (s, e) => this.Loaded();
+			this._view.Loaded += async (s, e) => await this.Loaded();
 		}
 
 		private string _title;
@@ -42,6 +45,8 @@ namespace EasySoftware.MvvmMini
 			}
 		}
 
-		protected virtual void Loaded() { }
+		public object View => this._view.View;
+
+		protected virtual Task Loaded() { return Task.CompletedTask; }
 	}
 }

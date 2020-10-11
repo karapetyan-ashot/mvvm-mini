@@ -19,14 +19,12 @@ namespace EasySoftware.MvvmMini.Samples.Notepad.Factories
 
 		public IMessageBoxDialog CreateMessageBoxDialog(string message, string title, MessageBoxButton buttons)
 		{
-			IMessageBoxDialog messageBoxDialog = this._container.Resolve<IMessageBoxDialog>(ViewModels.MessageBoxViewModel, new ResolverOverride[]
+			return this._container.Resolve<IMessageBoxDialog>(ViewModels.MessageBoxViewModel, new ResolverOverride[]
 				{
 					new ParameterOverride( "message", message ),
 					new ParameterOverride( "title", title),
 					new ParameterOverride( "buttons", buttons)
 				});
-
-			return messageBoxDialog;
 		}
 
 	}

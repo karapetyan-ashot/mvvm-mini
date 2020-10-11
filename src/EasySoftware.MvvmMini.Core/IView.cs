@@ -7,9 +7,10 @@ namespace EasySoftware.MvvmMini.Core
 		event EventHandler Loaded;
 
 		object DataContext { get; set; }
-
+		object View { get; }
 		void Show();
 		void ShowDialog();
 		void Close();
+
 	}
 }
