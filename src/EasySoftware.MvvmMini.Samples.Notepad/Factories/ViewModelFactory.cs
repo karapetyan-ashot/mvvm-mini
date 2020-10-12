@@ -19,5 +19,10 @@ namespace EasySoftware.MvvmMini.Samples.Notepad.Factories
 		{
 			return this._container.Resolve<IClosableViewModel>(ViewModels.Document);
 		}
-	}
+
+      public IWindowViewModel CreateMainViewModel()
+      {
+			return this._container.Resolve<IWindowViewModel>(ViewModels.MainWindow);
+      }
+   }
 }

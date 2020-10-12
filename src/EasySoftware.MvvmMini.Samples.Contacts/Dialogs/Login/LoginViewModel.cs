@@ -1,18 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using EasySoftware.MvvmMini.Core;
+using EasySoftware.MvvmMini.Samples.Contacts.Services;
 
 namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.Login
 {
-	public class LoginViewModel : DialogViewModelBase, IDialogViewModel
+	public class LoginViewModel : DialogViewModelBase, ILoginViewModel
 	{
-		public LoginViewModel(IView view) : base(view)
+		private IContactsService _contactsService;
+
+		public LoginViewModel(IView view, IContactsService contactsService) : base(view)
 		{
+			this._contactsService = contactsService ?? throw new ArgumentNullException(nameof(contactsService));
 			this.LoginCommand = new RelayCommand(this.Login, this.CanLogin);
+			this.Title = "Login to Contacts app";
 		}
+
+		public User User { get; private set; }
 
 		public ICommand LoginCommand { get; }
 
@@ -30,9 +38,30 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.Login
 			set => SetProperty(ref this._password, value);
 		}
 
-		private Task Login()
+		private string _errorMessage;
+		public string ErrorMessage
 		{
+			get => this._errorMessage;
+			set => SetProperty(ref this._errorMessage, value);
+		}
+
+
+
+
+		private async Task Login()
+		{
+			this.IsBusy = true;
 			
+			this.ErrorMessage = null;
+
+			this.User = await this._contactsService.Login(this.UserName, this.Password);
+			
+			if (this.User != null)
+				this._view.Close();
+			else
+				this.ErrorMessage = "Wrong user/pass";
+
+			this.IsBusy = false;
 		}
 
 		private bool CanLogin()

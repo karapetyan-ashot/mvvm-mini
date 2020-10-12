@@ -15,64 +15,62 @@ using Unity.Injection;
 
 namespace EasySoftware.MvvmMini.Samples.Notepad
 {
-	/// <summary>
-	/// Interaction logic for App.xaml
-	/// </summary>
-	public partial class App : Application
-	{
-		IUnityContainer _container;
-		public App()
-		{
-			this.ShutdownMode = ShutdownMode.OnExplicitShutdown;
-		}
+   public partial class App : Application
+   {
+      IUnityContainer _container;
+      public App()
+      {
+         this.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+      }
 
-		protected override void OnStartup(StartupEventArgs e)
-		{
-			base.OnStartup(e);
+      protected override void OnStartup(StartupEventArgs e)
+      {
+         base.OnStartup(e);
 
-			ConfigureContainer();
-			
-			IWindowViewModel mainViewModel = this._container.Resolve<IWindowViewModel>(ViewModels.MainWindow);
-			
-			mainViewModel.Closed += MainViewModel_Closed;			
-			mainViewModel.Show();
-		}
+         ConfigureContainer();
 
-		private void MainViewModel_Closed(object sender, EventArgs e)
-		{
-			this.Shutdown();
-		}
+         IViewModelFactory viewModelFactory = this._container.Resolve<IViewModelFactory>();
+         IWindowViewModel mainViewModel = viewModelFactory.CreateMainViewModel();
 
-		private void ConfigureContainer()
-		{
-			this._container = new UnityContainer().AddExtension(new Diagnostic());
+         mainViewModel.Closed += MainViewModel_Closed;
+         mainViewModel.Show();
+      }
 
-			this._container.RegisterInstance<IUnityContainer>(this._container);
+      private void MainViewModel_Closed(object sender, EventArgs e)
+      {
+         this.Shutdown();
+      }
 
-			this._container.RegisterSingleton<IDialogFactory, DialogFactory>();
-			this._container.RegisterSingleton<IViewModelFactory, ViewModelFactory>();
+      private void ConfigureContainer()
+      {
+         this._container = new UnityContainer().AddExtension(new Diagnostic());
 
-			this._container.RegisterType<IView, ViewWrapper<MainView>>(ViewModels.MainWindow);
-			this._container.RegisterType<IWindowViewModel, MainViewModel>(ViewModels.MainWindow,
-				new InjectionConstructor(
-					new ResolvedParameter<IView>(ViewModels.MainWindow),
-					new ResolvedParameter<IViewModelFactory>()));
+         this._container.RegisterInstance<IUnityContainer>(this._container);
 
-			this._container.RegisterType<IView, ViewWrapper<DocumentView>>(ViewModels.Document);
-			this._container.RegisterType<IClosableViewModel, DocumentViewModel>(ViewModels.Document,
-				new InjectionConstructor(
-					new ResolvedParameter<IView>(ViewModels.Document),
-					new ResolvedParameter<IDialogFactory>()));
+         this._container.RegisterSingleton<IDialogFactory, DialogFactory>();
+         this._container.RegisterSingleton<IViewModelFactory, ViewModelFactory>();
 
-				this._container.RegisterType<IView, ViewWrapper<MessageBoxView>>(ViewModels.MessageBoxViewModel);
-			this._container.RegisterType<IMessageBoxDialog, MessageBoxViewModel>(ViewModels.MessageBoxViewModel,
-				new InjectionConstructor(
-					new ResolvedParameter<IView>(ViewModels.MessageBoxViewModel),
-					new OptionalParameter<string>(),
-					new OptionalParameter<string>(),
-					new OptionalParameter<MessageBoxButton>()));
+         this._container.RegisterType<IView, ViewWrapper<MainView>>(ViewModels.Main);
+         this._container.RegisterType<IWindowViewModel, MainViewModel>(ViewModels.Main,
+            new InjectionConstructor(
+               new ResolvedParameter<IView>(ViewModels.Main),
+               new ResolvedParameter<IViewModelFactory>()));
 
-		}
+         this._container.RegisterType<IView, ViewWrapper<DocumentView>>(ViewModels.Document);
+         this._container.RegisterType<IClosableViewModel, DocumentViewModel>(ViewModels.Document,
+            new InjectionConstructor(
+               new ResolvedParameter<IView>(ViewModels.Document),
+               new ResolvedParameter<IDialogFactory>()));
 
-	}
+         this._container.RegisterType<IView, ViewWrapper<MessageBoxView>>(ViewModels.MessageBox);
+         this._container.RegisterType<IMessageBoxDialog, MessageBoxViewModel>(ViewModels.MessageBox,
+            new InjectionConstructor(
+               new ResolvedParameter<IView>(ViewModels.MessageBox),
+               new OptionalParameter<string>(),
+               new OptionalParameter<string>(),
+               new OptionalParameter<MessageBoxButton>()));
+
+      }
+
+   }
 }

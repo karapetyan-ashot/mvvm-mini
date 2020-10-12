@@ -2,8 +2,8 @@
 {
 	public static class ViewModels
 	{
-		public const string MainWindow = "mainWindow";
+		public const string Main= "main";
 		public const string Document = "document";
-		public const string MessageBoxViewModel = "messageBoxViewModel";
+		public const string MessageBox = "messageBox";
 	}
 }
