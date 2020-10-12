@@ -17,7 +17,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Factories
 
       public ILoginViewModel CreateLoginDialog()
       {
-         return this._unityContainer.Resolve<ILoginViewModel>();
+         return this._unityContainer.Resolve<ILoginViewModel>(ViewModels.Login);
       }
    }
 }

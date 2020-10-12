@@ -22,7 +22,7 @@ namespace EasySoftware.MvvmMini.Samples.Notepad.Factories
 
       public IWindowViewModel CreateMainViewModel()
       {
-			return this._container.Resolve<IWindowViewModel>(ViewModels.MainWindow);
+			return this._container.Resolve<IWindowViewModel>(ViewModels.Main);
       }
    }
 }
