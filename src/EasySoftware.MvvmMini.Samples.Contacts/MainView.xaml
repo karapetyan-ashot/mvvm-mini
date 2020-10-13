@@ -6,10 +6,21 @@
         xmlns:local="clr-namespace:EasySoftware.MvvmMini.Samples.Contacts"
 		xmlns:ctrl="clr-namespace:EasySoftware.MvvmMini.Samples.Contacts.Controls"
         mc:Ignorable="d"
+		d:DataContext="{d:DesignInstance local:MainViewModel}"
         Title="MainView" Height="450" Width="800">
 	<ctrl:BusyIndicator IsBusy="{Binding IsBusy}">
 		<Grid>
-			<ListBox ItemsSource="{Binding Contacts}" />
+			<Grid.RowDefinitions>
+				<RowDefinition Height="30" />
+				<RowDefinition />
+			</Grid.RowDefinitions>
+			<StackPanel Orientation="Horizontal">
+				<Button Content="Add" Command="{Binding CreateContactCommand}"    Style="{StaticResource menuButton}" />
+				<Button Content="Edit" Command="{Binding EditContactCommand}"     Style="{StaticResource menuButton}" />
+				<Button Content="Delete" Command="{Binding DeleteContactCommand}" Style="{StaticResource menuButton}" />
+				
+			</StackPanel>
+			<DataGrid Grid.Row="1" ItemsSource="{Binding Contacts}" SelectedItem="{Binding CurrentContact, Mode=TwoWay}" AutoGenerateColumns="True" IsReadOnly="True" />
 		</Grid>
 	</ctrl:BusyIndicator>
 </Window>

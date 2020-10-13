@@ -22,7 +22,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Services
 
 			for (int i = 1; i < 10; i++)
 			{
-				_contacts.Add(new Contact { Id = NextId, Name = $"Contact {i}", Email = "email_{i}@gmail.com", Sex = i % 3 == 0 });
+				_contacts.Add(new Contact { Id = NextId, Name = $"Contact {i}", Email = $"email_{i}@gmail.com", Sex = i % 3 == 0 });
 			}
 		}
 

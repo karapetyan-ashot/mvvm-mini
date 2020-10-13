@@ -2,7 +2,9 @@
 using System.Windows;
 
 using EasySoftware.MvvmMini.Core;
+using EasySoftware.MvvmMini.Samples.Contacts.Dialogs.ContactEditor;
 using EasySoftware.MvvmMini.Samples.Contacts.Dialogs.Login;
+using EasySoftware.MvvmMini.Samples.Contacts.Dialogs.MessageBox;
 using EasySoftware.MvvmMini.Samples.Contacts.Factories;
 using EasySoftware.MvvmMini.Samples.Contacts.Services;
 
@@ -59,7 +61,23 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 			this._unityContainer.RegisterType<IWindowViewModel, MainViewModel>(ViewModels.Main,
 				new InjectionConstructor(
 					new ResolvedParameter<IView>(ViewModels.Main), 
-					new ResolvedParameter<IContactsService>()));
+					new ResolvedParameter<IContactsService>(),
+					new ResolvedParameter<IDialogFactory>()));
+
+			this._unityContainer.RegisterType<IView, ViewWrapper<MessageBoxView>>(ViewModels.MessageBox);
+			this._unityContainer.RegisterType<IMessageBoxDialog, MessageBoxViewModel>(ViewModels.MessageBox,
+			   new InjectionConstructor(
+				  new ResolvedParameter<IView>(ViewModels.MessageBox),
+				  new OptionalParameter<string>(),
+				  new OptionalParameter<string>(),
+				  new OptionalParameter<MessageBoxButton>()));
+
+			this._unityContainer.RegisterType<IView, ViewWrapper<ContactEditorView>>(ViewModels.Contact);
+			this._unityContainer.RegisterType<IContactEditor, ContactEditorViewModel>(ViewModels.Contact,
+			   new InjectionConstructor(
+				  new ResolvedParameter<IView>(ViewModels.Contact),
+				  new OptionalParameter<Contact>()));
+
 		}
 	}
 }
