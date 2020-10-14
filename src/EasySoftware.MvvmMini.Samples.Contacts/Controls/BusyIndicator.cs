@@ -139,7 +139,6 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Controls
 
       #endregion
 
-
       #region CancelCommand
       public ICommand CancelCommand
       {
@@ -154,9 +153,6 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Controls
           new UIPropertyMetadata(null));
 
       #endregion
-
-
-
 
    }
 }

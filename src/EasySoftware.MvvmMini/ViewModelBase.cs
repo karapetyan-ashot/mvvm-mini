@@ -153,14 +153,33 @@ namespace EasySoftware.MvvmMini
 
 		public void RemoveError(string propName, string errorMessage)
 		{
-			if(this._errors != null && this._errors.ContainsKey(propName))
+			if (this._errors != null && this._errors.ContainsKey(propName))
 			{
-				if(this._errors[propName].Contains(errorMessage))
+				if (this._errors[propName].Contains(errorMessage))
 				{
 					this._errors[propName].Remove(errorMessage);
 					this.RaiseErrorsChanged(propName);
 				}
 			}
+		}
+
+		public Dictionary<string, string> GetErrors()
+		{
+			Dictionary<string, string> result = new Dictionary<string, string>();
+			if (this._errors != null)
+			{
+				string err;
+				foreach (KeyValuePair<string, List<string>> item in this._errors)
+				{
+					err = string.Empty;
+					foreach (string errMsg in item.Value)
+					{
+						err += string.Format("{0}{1}", errMsg, System.Environment.NewLine);
+					}
+					result.Add(item.Key, err);
+				}
+			}
+			return result;
 		}
 	}
 }

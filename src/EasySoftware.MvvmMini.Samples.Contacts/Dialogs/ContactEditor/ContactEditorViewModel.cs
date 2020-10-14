@@ -18,7 +18,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.ContactEditor
 			this._contact = contact ?? throw new ArgumentNullException(nameof(contact));
 
 			this.Name = this._contact.Name;
-			this.Sex = this._contact.Sex;
+			this.Phone = this._contact.Phone;
 			this.Email = this._contact.Email;
 
 			this.Title = contact.Id <= 0 ? "Create contact" : "Edit contact";
@@ -39,11 +39,11 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.ContactEditor
 			set => SetProperty(ref this._name, value);
 		}
 
-		private bool _sex;
-		public bool Sex
+		private string _phone;
+		public string Phone
 		{
-			get => this._sex;
-			set => SetProperty(ref this._sex, value);
+			get => this._phone;
+			set => SetProperty(ref this._phone, value);
 		}
 
 		private string _email;
@@ -59,7 +59,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.ContactEditor
 			if(!this.HasErrors)
 			{
 				this._contact.Name = this.Name;
-				this._contact.Sex = this.Sex;
+				this._contact.Phone = this.Phone;
 				this._contact.Email = this.Email;
 				this.ModifiedContact = this._contact;
 				this._view.Close();

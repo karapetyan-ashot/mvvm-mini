@@ -38,30 +38,24 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.Login
 			set => SetProperty(ref this._password, value);
 		}
 
-		private string _errorMessage;
-		public string ErrorMessage
-		{
-			get => this._errorMessage;
-			set => SetProperty(ref this._errorMessage, value);
-		}
-
-
-
-
 		private async Task Login()
 		{
-			this.IsBusy = true;
-			
-			this.ErrorMessage = null;
+			this.Validate();
 
-			this.User = await this._contactsService.Login(this.UserName, this.Password);
-			
-			if (this.User != null)
-				this._view.Close();
-			else
-				this.ErrorMessage = "Wrong user/pass";
+			if (!this.HasErrors)
+			{
+				this.IsBusy = true;
+								
+				this.User = await this._contactsService.Login(this.UserName, this.Password);
 
-			this.IsBusy = false;
+				if (this.User != null)
+					this._view.Close();
+				else
+					this.AddError("Wrong user/pass");
+
+				this.IsBusy = false;
+			}
+			
 		}
 
 		private bool CanLogin()
@@ -71,6 +65,20 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.Login
 			return true;
 		}
 
+
+		private void Validate()
+		{
+			this.ClearErrors();
+			
+			if (string.IsNullOrEmpty(this.UserName))
+				this.AddError(nameof(UserName), "username is required");
+			if(this.UserName != null && this.UserName.Length < 2)
+				this.AddError(nameof(UserName), "username lenght must be >= 2");
+			if (string.IsNullOrEmpty(this.Password))
+				this.AddError(nameof(Password), "password is required");
+
+			this.RaiseErrorsChanged(string.Empty);
+		}
 
 	}
 }

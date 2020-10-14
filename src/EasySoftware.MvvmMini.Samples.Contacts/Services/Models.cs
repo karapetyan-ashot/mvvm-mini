@@ -14,7 +14,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Services
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
-		public bool Sex { get; set; }
+		public string Phone { get; set; }
 		public string Email { get; set; }
 		public DateTime Modified { get; set; }
 
@@ -24,7 +24,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Services
 			{
 				Id = this.Id,
 				Name = this.Name,
-				Sex = this.Sex,
+				Phone = this.Phone,
 				Email = this.Email,
 				Modified = this.Modified,
 			};

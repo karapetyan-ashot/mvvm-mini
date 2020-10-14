@@ -3,14 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:ctrl="clr-namespace:EasySoftware.MvvmMini.Samples.Contacts.Controls"
         xmlns:local="clr-namespace:EasySoftware.MvvmMini.Samples.Contacts.Dialogs.ContactEditor"
 		xmlns:conv="clr-namespace:EasySoftware.MvvmMini.Samples.Contacts.Converters"
         mc:Ignorable="d"
-        Title="{Binding Title}" Height="200" Width="400">
-	<Window.Resources>
-		<conv:SexToColorConverter x:Key="SexToColorConverter" />
-	</Window.Resources>
-    <Grid Margin="20" Background="{Binding Sex, Converter={StaticResource SexToColorConverter}}">
+        Title="{Binding Title}" Height="300" Width="400">
+	
+    <Grid Margin="20" >
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
@@ -24,10 +23,11 @@
 		</Grid.ColumnDefinitions>
 		<Label Grid.Row="0" Grid.Column="0" Content="Name" />
 		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name, Mode=TwoWay}" />
-		<Label Grid.Row="1" Grid.Column="0" Content="Sex" />
-		<CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding Sex}" />
+		<Label Grid.Row="1" Grid.Column="0" Content="Phone" />
+		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Phone, Mode=TwoWay}" />
 		<Label Grid.Row="2" Grid.Column="0" Content="Email" />
 		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Email, Mode=TwoWay}" />
+		<ctrl:ValidationSummary Grid.Row="3" Grid.ColumnSpan="2" />
 		<StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
 			<Button Content="Save" Command="{Binding SaveCommand}" Style="{StaticResource dialogButton}" />
 			<Button Content="Cancel" Command="{Binding CancelCommand}" Style="{StaticResource dialogButton}"/>

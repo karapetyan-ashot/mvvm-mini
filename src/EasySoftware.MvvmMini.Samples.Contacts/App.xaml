@@ -1,23 +1,71 @@
 ﻿<Application
-   x:Class="EasySoftware.MvvmMini.Samples.Contacts.App"
-   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-   xmlns:local="clr-namespace:EasySoftware.MvvmMini.Samples.Contacts"
-   ShutdownMode="OnExplicitShutdown">
-   <Application.Resources>
-      <Style x:Key="dialogButton" TargetType="Button">
-         <Setter Property="Width" Value="60" />
-         <Setter Property="Height" Value="30" />
-         <Setter Property="Margin" Value="6" />
-      </Style>
-      <Style TargetType="TextBox">
-         <Setter Property="Margin" Value="3" />
-      </Style>
+	x:Class="EasySoftware.MvvmMini.Samples.Contacts.App"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:ctrl="clr-namespace:EasySoftware.MvvmMini.Samples.Contacts.Controls"
+	xmlns:local="clr-namespace:EasySoftware.MvvmMini.Samples.Contacts"
+	ShutdownMode="OnExplicitShutdown">
+	<Application.Resources>
+		<Style x:Key="dialogButton" TargetType="Button">
+			<Setter Property="Width" Value="60" />
+			<Setter Property="Height" Value="30" />
+			<Setter Property="Margin" Value="6" />
+		</Style>
+		<Style TargetType="TextBox">
+			<Setter Property="Margin" Value="3" />
+			<Style.Triggers>
+				<Trigger Property="Validation.HasError" Value="true">
+					<Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+				</Trigger>
+			</Style.Triggers>
+		</Style>
 
 		<Style x:Key="menuButton" TargetType="Button">
 			<Setter Property="Margin" Value="3" />
 			<Setter Property="Width" Value="60" />
 		</Style>
-	   
+		<ControlTemplate x:Key="ErrorTemplate">
+			<DockPanel LastChildFill="True">
+				<Border BorderBrush="Red" BorderThickness="2">
+					<AdornedElementPlaceholder />
+				</Border>
+			</DockPanel>
+		</ControlTemplate>
+
+		<Style TargetType="{x:Type ctrl:ValidationSummary}">
+			<Setter Property="BorderBrush" Value="Red" />
+			<Setter Property="BorderThickness" Value="1" />
+			<Setter Property="Focusable" Value="False" />
+		</Style>
+
+		<Style x:Key="{x:Type ToolTip}" TargetType="ToolTip">
+			<Setter Property="OverridesDefaultStyle" Value="true" />
+			<Setter Property="HasDropShadow" Value="True" />
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="ToolTip">
+						<Border
+							Name="Border"
+							Width="{TemplateBinding Width}"
+							Height="{TemplateBinding Height}"
+							Background="White"
+							BorderBrush="Red"
+							BorderThickness="1">
+							<ContentPresenter 
+								Margin="4"
+								HorizontalAlignment="Left"
+								VerticalAlignment="Top" />
+						</Border>
+						<ControlTemplate.Triggers>
+							<Trigger Property="HasDropShadow" Value="true">
+								<Setter TargetName="Border" Property="CornerRadius" Value="4" />
+								<Setter TargetName="Border" Property="SnapsToDevicePixels" Value="true" />
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
 	</Application.Resources>
 </Application>
