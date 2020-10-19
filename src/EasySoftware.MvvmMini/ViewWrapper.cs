@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows;
 
 using EasySoftware.MvvmMini.Core;
@@ -64,6 +66,9 @@ namespace EasySoftware.MvvmMini
 		{
 			if (this._view is Window window)
 			{
+				window.Owner = Application.Current?.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+				window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
 				window.ShowDialog();
 			}
 		}
