@@ -36,6 +36,7 @@
 				Command="{Binding SetResultCommand}"
 				CommandParameter="{x:Static wnd:MessageBoxResult.Yes}"
 				Content="Yes"
+            IsDefault="True"
 				Visibility="{Binding Buttons, Converter={StaticResource MessageBoxButtonToVisibilityConverter}, ConverterParameter={x:Static wnd:MessageBoxResult.Yes}}" />
 
 			<Button
@@ -48,12 +49,14 @@
 				Command="{Binding SetResultCommand}"
 				CommandParameter="{x:Static wnd:MessageBoxResult.OK}"
 				Content="Ok"
+            IsDefault="True"
 				Visibility="{Binding Buttons, Converter={StaticResource MessageBoxButtonToVisibilityConverter}, ConverterParameter={x:Static wnd:MessageBoxResult.OK}}" />
 
 			<Button
 				Command="{Binding SetResultCommand}"
 				CommandParameter="{x:Static wnd:MessageBoxResult.Cancel}"
 				Content="Cancel"
+            IsCancel="True"
 				Visibility="{Binding Buttons, Converter={StaticResource MessageBoxButtonToVisibilityConverter}, ConverterParameter={x:Static wnd:MessageBoxResult.Cancel}}" />
 		</StackPanel>
 	</Grid>

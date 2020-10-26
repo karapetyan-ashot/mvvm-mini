@@ -20,6 +20,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.Login
 		public LoginView()
 		{
 			InitializeComponent();
-		}
+         this._loginTextBox.Focus();
+      }
 	}
 }
