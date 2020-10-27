@@ -1,20 +1,19 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Windows;
 
 using EasySoftware.MvvmMini.Core;
 
 namespace EasySoftware.MvvmMini
 {
-	public class ViewWrapper<T> : IView where T : FrameworkElement
+	public class ViewWrapper : IView  
 	{
 		public event EventHandler Loaded;
 
-		private T _view { get; }
+		private FrameworkElement _view { get; }
 
-		public ViewWrapper(T view)
+		public ViewWrapper(FrameworkElement view)
 		{
 			this._view = view ?? throw new ArgumentNullException(nameof(view));
 

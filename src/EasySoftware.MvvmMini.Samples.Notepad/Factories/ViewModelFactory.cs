@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Windows;
 
 using EasySoftware.MvvmMini.Core;
+using EasySoftware.MvvmMini.Samples.Notepad.Dialogs.MessageBox;
+using EasySoftware.MvvmMini.Samples.Notepad.Workplaces.Document;
 
 using Unity;
 
@@ -15,14 +18,26 @@ namespace EasySoftware.MvvmMini.Samples.Notepad.Factories
 			this._container = container ?? throw new ArgumentNullException(nameof(container));
 		}
 
-		public IClosableViewModel CreateDocumentViewModel()
+		public IMessageBoxDialog CreateMessageBoxDialog(string message, string title, MessageBoxButton buttons)
 		{
-			return this._container.Resolve<IClosableViewModel>(ViewModels.Document);
+			IView view = new ViewWrapper(new MessageBoxView());
+			return new MessageBoxViewModel(view, message, title, buttons);
 		}
 
-      public IWindowViewModel CreateMainViewModel()
-      {
-			return this._container.Resolve<IWindowViewModel>(ViewModels.Main);
-      }
-   }
+		public IClosableViewModel CreateDocumentViewModel()
+		{
+			IViewModelFactory viewModelFactory = this._container.Resolve<IViewModelFactory>();
+
+			IView view = new ViewWrapper(new DocumentView());
+			return new DocumentViewModel(view, viewModelFactory);
+		}
+
+		public IWindowViewModel CreateMainViewModel()
+		{
+			IViewModelFactory viewModelFactory = this._container.Resolve<IViewModelFactory>();
+
+			IView view = new ViewWrapper(new MainView());
+			return new MainViewModel(view, viewModelFactory);
+		}
+	}
 }

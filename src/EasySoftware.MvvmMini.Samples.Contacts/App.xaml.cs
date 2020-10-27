@@ -2,14 +2,11 @@
 using System.Windows;
 
 using EasySoftware.MvvmMini.Core;
-using EasySoftware.MvvmMini.Samples.Contacts.Dialogs.ContactEditor;
 using EasySoftware.MvvmMini.Samples.Contacts.Dialogs.Login;
-using EasySoftware.MvvmMini.Samples.Contacts.Dialogs.MessageBox;
 using EasySoftware.MvvmMini.Samples.Contacts.Factories;
 using EasySoftware.MvvmMini.Samples.Contacts.Services;
 
 using Unity;
-using Unity.Injection;
 
 namespace EasySoftware.MvvmMini.Samples.Contacts
 {
@@ -21,13 +18,13 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 		{
 			this.ConfigureContainer();
 
-			IDialogFactory dialogFactory = this._unityContainer.Resolve<IDialogFactory>();
-			ILoginViewModel loginViewModel = dialogFactory.CreateLoginDialog();
+			IViewModelFactory viewModelFactory = this._unityContainer.Resolve<IViewModelFactory>();
+			ILoginViewModel loginViewModel = viewModelFactory.CreateLoginDialog();
 			loginViewModel.ShowDialog();
 			if (loginViewModel.User != null)
 			{
-				IViewModelFactory factory = this._unityContainer.Resolve<IViewModelFactory>();
-				IWindowViewModel mainViewModel = factory.CreateMainViewModel();
+				
+				IWindowViewModel mainViewModel = viewModelFactory.CreateMainViewModel();
 
 				mainViewModel.Closed += MainViewModel_Closed;
 				mainViewModel.Show();
@@ -47,37 +44,8 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 
 			this._unityContainer.RegisterInstance(this._unityContainer);
 
-			this._unityContainer.RegisterSingleton<IContactsService, ContactsMockService>();
-			this._unityContainer.RegisterSingleton<IDialogFactory, DialogFactory>();
+			this._unityContainer.RegisterSingleton<IContactsService, ContactsMockService>();			
 			this._unityContainer.RegisterSingleton<IViewModelFactory, ViewModelFactory>();
-
-			this._unityContainer.RegisterType<IView, ViewWrapper<LoginView>>(ViewModels.Login);
-			this._unityContainer.RegisterType<ILoginViewModel, LoginViewModel>(ViewModels.Login,
-			   new InjectionConstructor(
-				  new ResolvedParameter<IView>(ViewModels.Login),
-				  new ResolvedParameter<IContactsService>()));
-
-			this._unityContainer.RegisterType<IView, ViewWrapper<MainView>>(ViewModels.Main);
-			this._unityContainer.RegisterType<IWindowViewModel, MainViewModel>(ViewModels.Main,
-				new InjectionConstructor(
-					new ResolvedParameter<IView>(ViewModels.Main), 
-					new ResolvedParameter<IContactsService>(),
-					new ResolvedParameter<IDialogFactory>()));
-
-			this._unityContainer.RegisterType<IView, ViewWrapper<MessageBoxView>>(ViewModels.MessageBox);
-			this._unityContainer.RegisterType<IMessageBoxDialog, MessageBoxViewModel>(ViewModels.MessageBox,
-			   new InjectionConstructor(
-				  new ResolvedParameter<IView>(ViewModels.MessageBox),
-				  new OptionalParameter<string>(),
-				  new OptionalParameter<string>(),
-				  new OptionalParameter<MessageBoxButton>()));
-
-			this._unityContainer.RegisterType<IView, ViewWrapper<ContactEditorView>>(ViewModels.Contact);
-			this._unityContainer.RegisterType<IContactEditor, ContactEditorViewModel>(ViewModels.Contact,
-			   new InjectionConstructor(
-				  new ResolvedParameter<IView>(ViewModels.Contact),
-				  new OptionalParameter<Contact>()));
-
 		}
 	}
 }

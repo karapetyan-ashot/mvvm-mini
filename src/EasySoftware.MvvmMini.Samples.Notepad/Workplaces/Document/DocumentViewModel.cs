@@ -13,17 +13,16 @@ namespace EasySoftware.MvvmMini.Samples.Notepad.Workplaces.Document
 	public class DocumentViewModel : ClosableViewModelBase
 	{
 		private bool _saved = true;
-		private IDialogFactory _dialogFactory;
+		private IViewModelFactory _viewModelFactory;
 
-		public DocumentViewModel(IView view, IDialogFactory dialogFactory) : base(view)
+		public DocumentViewModel(IView view, IViewModelFactory viewModelFactory) : base(view)
 		{
-			this._dialogFactory = dialogFactory ?? throw new ArgumentNullException(nameof(dialogFactory));
+			this._viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
 			this.SaveCommand = new RelayCommand(this.Save, this.CanSave);
 			this.Title = "New1";
 		}
 
 		public ICommand SaveCommand { get; }
-
 
 		private string _text;
 		public string Text
@@ -44,7 +43,7 @@ namespace EasySoftware.MvvmMini.Samples.Notepad.Workplaces.Document
 		{
 			if (!this._saved)
 			{
-				IMessageBoxDialog messageBox = this._dialogFactory.CreateMessageBoxDialog("do you want to save", "confirm please", MessageBoxButton.YesNoCancel);
+				IMessageBoxDialog messageBox = this._viewModelFactory.CreateMessageBoxDialog("do you want to save", "confirm please", MessageBoxButton.YesNoCancel);
 				messageBox.ShowDialog();
 
 				switch (messageBox.DialogResult)

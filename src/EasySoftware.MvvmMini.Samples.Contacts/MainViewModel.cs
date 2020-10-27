@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -17,12 +16,12 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 	public class MainViewModel : WindowViewModelBase
 	{
 		private IContactsService _contactsService;
-		private IDialogFactory _dialogFactory;
+		private IViewModelFactory _viewModelFactory;
 
-		public MainViewModel(IView view, IContactsService contactsService, IDialogFactory dialogFactory) : base(view)
+		public MainViewModel(IView view, IContactsService contactsService, IViewModelFactory viewModelFactory) : base(view)
 		{
 			this._contactsService = contactsService ?? throw new ArgumentNullException(nameof(contactsService));
-			this._dialogFactory = dialogFactory ?? throw new ArgumentNullException(nameof(dialogFactory));
+			this._viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
 
 			this.CreateContactCommand = new RelayCommand(this.CreateContact);
 			this.EditContactCommand = new RelayCommand(this.EditContact, this.CanEditContact);
@@ -59,7 +58,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 
 		private async Task CreateContact()
 		{
-			IContactEditor contactEditor = this._dialogFactory.CreateContactEditorDialog(new Contact());
+			IContactEditor contactEditor = this._viewModelFactory.CreateContactEditorDialog(new Contact());
 			contactEditor.ShowDialog();
 			if (contactEditor.ModifiedContact != null)
 			{
@@ -73,7 +72,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 
 		private async Task EditContact()
 		{
-			IContactEditor contactEditor = this._dialogFactory.CreateContactEditorDialog(this.CurrentContact);
+			IContactEditor contactEditor = this._viewModelFactory.CreateContactEditorDialog(this.CurrentContact);
 			contactEditor.ShowDialog();
 			if (contactEditor.ModifiedContact != null)
 			{
@@ -93,7 +92,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 
 		private async Task DeleteContact()
 		{
-			IMessageBoxDialog messageBoxDialog = this._dialogFactory.CreateMessageBoxDialog("Are you sure?", "Confirm deletion", System.Windows.MessageBoxButton.YesNo);
+			IMessageBoxDialog messageBoxDialog = this._viewModelFactory.CreateMessageBoxDialog("Are you sure?", "Confirm deletion", System.Windows.MessageBoxButton.YesNo);
 			messageBoxDialog.ShowDialog();
 			if (messageBoxDialog.DialogResult == MessageBoxResult.Yes)
 			{
