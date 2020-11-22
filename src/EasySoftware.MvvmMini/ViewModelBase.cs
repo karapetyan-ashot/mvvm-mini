@@ -8,6 +8,7 @@ using EasySoftware.MvvmMini.Core;
 
 namespace EasySoftware.MvvmMini
 {
+	// IViewModel
 	public partial class ViewModelBase : BindableBase, IViewModel
 	{
 		protected IView _view;
@@ -52,6 +53,7 @@ namespace EasySoftware.MvvmMini
 		protected virtual Task Loaded() { return Task.CompletedTask; }
 	}
 
+	// IDataErrorInfo
 	public partial class ViewModelBase : IDataErrorInfo
 	{
 		private Dictionary<string, List<string>> _errors;
@@ -92,6 +94,7 @@ namespace EasySoftware.MvvmMini
 		}
 	}
 
+	// INotifyDataErrorInfo
 	public partial class ViewModelBase : INotifyDataErrorInfo
 	{
 		public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
@@ -114,6 +117,7 @@ namespace EasySoftware.MvvmMini
 		}
 	}
 
+	// IErrorContainer
 	public partial class ViewModelBase : IErrorContainer
 	{
 		public void ClearErrors()

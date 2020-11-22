@@ -9,17 +9,19 @@ using EasySoftware.MvvmMini.Samples.Contacts.Services;
 
 namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.ContactEditor
 {
-	public class ContactEditorViewModel : DialogViewModelBase, IContactEditor
+	public class ContactEditorViewModel : DialogViewModelBase, IContactEditorViewModel
 	{
-		private Contact _contact;
+		private Contact _contactToEdit;
 
 		public ContactEditorViewModel(IView view, Contact contact) : base(view)
 		{
-			this._contact = contact ?? throw new ArgumentNullException(nameof(contact));
+			if (contact == null)
+				throw new ArgumentNullException(nameof(contact));
+			this._contactToEdit = new Contact { Id = contact.Id, Modified = contact.Modified };
 
-			this.Name = this._contact.Name;
-			this.Phone = this._contact.Phone;
-			this.Email = this._contact.Email;
+			this.Name = contact.Name;
+			this.Phone = contact.Phone;
+			this.Email = contact.Email;
 
 			this.Title = contact.Id <= 0 ? "Create contact" : "Edit contact";
 
@@ -56,14 +58,13 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.ContactEditor
 		private Task Save()
 		{
 			this.Validate();
-			if(!this.HasErrors)
+			if (!this.HasErrors)
 			{
-				this._contact.Name = this.Name;
-				this._contact.Phone = this.Phone;
-				this._contact.Email = this.Email;
-				this.ModifiedContact = this._contact;
+				this._contactToEdit.Name = this.Name;
+				this._contactToEdit.Phone = this.Phone;
+				this._contactToEdit.Email = this.Email;
+				this.ModifiedContact = this._contactToEdit;
 				this._view.Close();
-
 			}
 			return Task.CompletedTask;
 		}
@@ -80,7 +81,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.ContactEditor
 			this.ClearErrors();
 			if (string.IsNullOrEmpty(this.Name))
 				this.AddError(nameof(Name), "name is required");
-			if(string.IsNullOrEmpty(this.Email))
+			if (string.IsNullOrEmpty(this.Email))
 				this.AddError(nameof(Email), "Email is required");
 			else
 			{
@@ -88,8 +89,5 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.ContactEditor
 					this.AddError(nameof(Email), "Not valid email");
 			}
 		}
-
-
-
 	}
 }

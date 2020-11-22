@@ -31,18 +31,18 @@
 				Grid.Column="0"
 				Content="Username" />
 			<TextBox
+				x:Name="_loginTextBox"
 				Grid.Row="0"
 				Grid.Column="1"
-				x:Name="_loginTextBox"
-            Text="{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+				Text="{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 			<Label
 				Grid.Row="1"
 				Grid.Column="0"
 				Content="Password" />
 			<TextBox
+				x:Name="_passwordTextBox"
 				Grid.Row="1"
 				Grid.Column="1"
-            x:Name="_passwordTextBox"
 				Text="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
 			<ctrl:ValidationSummary Grid.Row="2" Grid.ColumnSpan="2" />
@@ -54,11 +54,11 @@
 				<Button
 					Command="{Binding LoginCommand}"
 					Content="Login"
-               IsDefault="True"
+					IsDefault="True"
 					Style="{StaticResource dialogButton}" />
 				<Button
 					Content="Cancel"
-					IsCancel="True"               
+					IsCancel="True"
 					Style="{StaticResource dialogButton}" />
 			</StackPanel>
 		</Grid>

@@ -23,7 +23,6 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 			loginViewModel.ShowDialog();
 			if (loginViewModel.User != null)
 			{
-				
 				IWindowViewModel mainViewModel = viewModelFactory.CreateMainViewModel();
 
 				mainViewModel.Closed += MainViewModel_Closed;

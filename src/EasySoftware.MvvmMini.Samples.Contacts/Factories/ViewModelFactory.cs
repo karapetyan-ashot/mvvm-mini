@@ -23,12 +23,11 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Factories
 		public IWindowViewModel CreateMainViewModel()
 		{
 			IContactsService contactsService = this._unityContainer.Resolve<IContactsService>();
-			IViewModelFactory viewModelFactory = this._unityContainer.Resolve<IViewModelFactory>();
 			
 			IView view = new ViewWrapper(new MainView());
-			return new MainViewModel(view, contactsService, viewModelFactory);
+			return new MainViewModel(view, contactsService, this);
 		}
-		public IContactEditor CreateContactEditorDialog(Contact contact)
+		public IContactEditorViewModel CreateContactEditorDialog(Contact contact)
 		{
 			IView view = new ViewWrapper(new ContactEditorView());
 			return new ContactEditorViewModel(view, contact);
@@ -42,7 +41,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Factories
 			return new LoginViewModel(view, contactsService);
 		}
 
-		public IMessageBoxDialog CreateMessageBoxDialog(string message, string title, MessageBoxButton buttons)
+		public IMessageBoxViewModel CreateMessageBoxDialog(string message, string title, MessageBoxButton buttons)
 		{
 			IView view = new ViewWrapper(new MessageBoxView());
 			return new MessageBoxViewModel(view, message, title, buttons);

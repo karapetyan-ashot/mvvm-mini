@@ -12,7 +12,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Factories
 	{
 		IWindowViewModel CreateMainViewModel();
 		ILoginViewModel CreateLoginDialog();
-		IMessageBoxDialog CreateMessageBoxDialog(string message, string title, MessageBoxButton buttons);
-		IContactEditor CreateContactEditorDialog(Contact contact);
+		IMessageBoxViewModel CreateMessageBoxDialog(string message, string title, MessageBoxButton buttons);
+		IContactEditorViewModel CreateContactEditorDialog(Contact contact);
 	}
 }

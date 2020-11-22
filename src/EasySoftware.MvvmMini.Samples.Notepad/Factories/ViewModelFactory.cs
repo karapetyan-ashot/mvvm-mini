@@ -26,18 +26,14 @@ namespace EasySoftware.MvvmMini.Samples.Notepad.Factories
 
 		public IClosableViewModel CreateDocumentViewModel()
 		{
-			IViewModelFactory viewModelFactory = this._container.Resolve<IViewModelFactory>();
-
 			IView view = new ViewWrapper(new DocumentView());
-			return new DocumentViewModel(view, viewModelFactory);
+			return new DocumentViewModel(view, this);
 		}
 
 		public IWindowViewModel CreateMainViewModel()
 		{
-			IViewModelFactory viewModelFactory = this._container.Resolve<IViewModelFactory>();
-
 			IView view = new ViewWrapper(new MainView());
-			return new MainViewModel(view, viewModelFactory);
+			return new MainViewModel(view, this);
 		}
 	}
 }
