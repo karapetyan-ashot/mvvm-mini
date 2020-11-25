@@ -13,7 +13,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.ContactEditor
 	{
 		private Contact _contactToEdit;
 
-		public ContactEditorViewModel(IView view, Contact contact) : base(view)
+		public ContactEditorViewModel(IViewAdapter viewAdapter, Contact contact) : base(viewAdapter)
 		{
 			if (contact == null)
 				throw new ArgumentNullException(nameof(contact));
@@ -64,7 +64,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.ContactEditor
 				this._contactToEdit.Phone = this.Phone;
 				this._contactToEdit.Email = this.Email;
 				this.ModifiedContact = this._contactToEdit;
-				this._view.Close();
+				this._viewAdapter.Close();
 			}
 			return Task.CompletedTask;
 		}
@@ -72,7 +72,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.ContactEditor
 		private Task Cancel()
 		{
 			this.ModifiedContact = null;
-			this._view.Close();
+			this._viewAdapter.Close();
 			return Task.CompletedTask;
 		}
 

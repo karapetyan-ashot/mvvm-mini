@@ -7,13 +7,13 @@ using EasySoftware.MvvmMini.Core;
 
 namespace EasySoftware.MvvmMini
 {
-	public class ViewWrapper : IView  
+	public class ViewAdapter : IViewAdapter
 	{
 		public event EventHandler Loaded;
 
-		private FrameworkElement _view { get; }
+		private FrameworkElement _view;
 
-		public ViewWrapper(FrameworkElement view)
+		public ViewAdapter(FrameworkElement view)
 		{
 			this._view = view ?? throw new ArgumentNullException(nameof(view));
 
@@ -59,6 +59,10 @@ namespace EasySoftware.MvvmMini
 			{
 				window.Show();
 			}
+			else
+			{
+				throw new NotSupportedException();
+			}
 		}
 
 		public void ShowDialog()
@@ -66,9 +70,13 @@ namespace EasySoftware.MvvmMini
 			if (this._view is Window window)
 			{
 				window.Owner = Application.Current?.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-				window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+				window.WindowStartupLocation = window.Owner == null ? WindowStartupLocation.CenterScreen : WindowStartupLocation.CenterOwner;				
 
 				window.ShowDialog();
+			}
+			else
+			{
+				throw new NotSupportedException();
 			}
 		}
 

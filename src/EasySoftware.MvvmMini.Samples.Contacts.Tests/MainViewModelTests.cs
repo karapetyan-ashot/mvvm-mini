@@ -23,14 +23,14 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Tests
 		public void LoadContacts_ContactsLoaded()
 		{
 			// arrange
-			var view = new Mock<IView>();
+			var viewAdapter = new Mock<IViewAdapter>();
 			var contactsService = new Mock<IContactsService>();
 			contactsService.Setup(x => x.GetContacts()).Returns(Task.FromResult<List<Contact>>(this.GenerateContacts()));
 			var vmFactory = new Mock<IViewModelFactory>();
-			var mainViewModel = new MainViewModel(view.Object, contactsService.Object, vmFactory.Object);
+			var mainViewModel = new MainViewModel(viewAdapter.Object, contactsService.Object, vmFactory.Object);
 
 			// act
-			view.Raise(x => x.Loaded += null, new EventArgs());
+			viewAdapter.Raise(x => x.Loaded += null, new EventArgs());
 
 			// assert
 			Assert.AreEqual(9, mainViewModel.Contacts.Count);
@@ -40,7 +40,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Tests
 		public void CreateContact_ContactCreated()
 		{
 			// arrange
-			var view = new Mock<IView>();
+			var viewAdapter = new Mock<IViewAdapter>();
 			var newContact = new Contact();
 			var editedByDialogContact = new Contact { Email = "aa@bb.com", Name = "name", Phone = "123" };
 			var updatedBuServidceContact = new Contact { Id = 10, Email = "aa@bb.com", Name = "name", Phone = "123", Modified = DateTime.Now };
@@ -55,8 +55,8 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Tests
 			var vmFactory = new Mock<IViewModelFactory>();
 			vmFactory.Setup(x => x.CreateContactEditorDialog(It.IsAny<Contact>())).Returns(contactEditor.Object);
 
-			var mainViewModel = new MainViewModel(view.Object, contactsService.Object, vmFactory.Object);
-			view.Raise(x => x.Loaded += null, new EventArgs());
+			var mainViewModel = new MainViewModel(viewAdapter.Object, contactsService.Object, vmFactory.Object);
+			viewAdapter.Raise(x => x.Loaded += null, new EventArgs());
 
 			// act
 			mainViewModel.CreateContactCommand.Execute(null);
@@ -74,7 +74,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Tests
 		public void CreateContactCanceled_ContactIsNotCreated()
 		{
 			// arrange
-			var view = new Mock<IView>();
+			var viewAdapter = new Mock<IViewAdapter>();
 			var newContact = new Contact();
 
 			var contactEditor = new Mock<IContactEditorViewModel>();
@@ -86,8 +86,8 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Tests
 			var vmFactory = new Mock<IViewModelFactory>();
 			vmFactory.Setup(x => x.CreateContactEditorDialog(It.IsAny<Contact>())).Returns(contactEditor.Object);
 
-			var mainViewModel = new MainViewModel(view.Object, contactsService.Object, vmFactory.Object);
-			view.Raise(x => x.Loaded += null, new EventArgs());
+			var mainViewModel = new MainViewModel(viewAdapter.Object, contactsService.Object, vmFactory.Object);
+			viewAdapter.Raise(x => x.Loaded += null, new EventArgs());
 
 			// act
 			mainViewModel.CreateContactCommand.Execute(null);
@@ -109,7 +109,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Tests
 			var editedByDialogContact = new Contact { Id = contactToEdit.Id, Email = "aa@bb.com", Name = "name", Phone = "123", Modified = new DateTime(2020, 01, 15) };
 			var updatedBuServidceContact = new Contact { Id = contactToEdit.Id, Email = "aa@bb.com", Name = "name", Phone = "123", Modified = DateTime.Now };
 
-			var view = new Mock<IView>();
+			var viewAdapter = new Mock<IViewAdapter>();
 			var contactEditor = new Mock<IContactEditorViewModel>();
 			contactEditor.Setup(x => x.ModifiedContact).Returns(editedByDialogContact);
 
@@ -120,8 +120,8 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Tests
 			var vmFactory = new Mock<IViewModelFactory>();
 			vmFactory.Setup(x => x.CreateContactEditorDialog(It.IsAny<Contact>())).Returns(contactEditor.Object);
 
-			var mainViewModel = new MainViewModel(view.Object, contactsService.Object, vmFactory.Object);
-			view.Raise(x => x.Loaded += null, new EventArgs());
+			var mainViewModel = new MainViewModel(viewAdapter.Object, contactsService.Object, vmFactory.Object);
+			viewAdapter.Raise(x => x.Loaded += null, new EventArgs());
 			mainViewModel.CurrentContact = contactToEdit;
 
 			// act
@@ -143,7 +143,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Tests
 			var contacts = this.GenerateContacts();
 			var contactToEdit = contacts[2];
 
-			var view = new Mock<IView>();
+			var viewAdapter = new Mock<IViewAdapter>();
 			var contactEditor = new Mock<IContactEditorViewModel>();
 			contactEditor.Setup(x => x.ModifiedContact).Returns((Contact)null);
 
@@ -153,8 +153,8 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Tests
 			var vmFactory = new Mock<IViewModelFactory>();
 			vmFactory.Setup(x => x.CreateContactEditorDialog(It.IsAny<Contact>())).Returns(contactEditor.Object);
 
-			var mainViewModel = new MainViewModel(view.Object, contactsService.Object, vmFactory.Object);
-			view.Raise(x => x.Loaded += null, new EventArgs());
+			var mainViewModel = new MainViewModel(viewAdapter.Object, contactsService.Object, vmFactory.Object);
+			viewAdapter.Raise(x => x.Loaded += null, new EventArgs());
 			mainViewModel.CurrentContact = contactToEdit;
 
 			// act
@@ -174,7 +174,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Tests
 			// arrange
 			var contacts = this.GenerateContacts();
 			var contactToDelete = contacts[2];
-			var view = new Mock<IView>();
+			var viewAdapter = new Mock<IViewAdapter>();
 			var messageBoxDialog = new Mock<IMessageBoxViewModel>();
 			messageBoxDialog.Setup(x => x.DialogResult).Returns(MessageBoxResult.Yes);
 
@@ -185,8 +185,8 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Tests
 			var vmFactory = new Mock<IViewModelFactory>();
 			vmFactory.Setup(x => x.CreateMessageBoxDialog(It.IsAny<String>(), It.IsAny<string>(), MessageBoxButton.YesNo)).Returns(messageBoxDialog.Object);
 
-			var mainViewModel = new MainViewModel(view.Object, contactsService.Object, vmFactory.Object);
-			view.Raise(x => x.Loaded += null, new EventArgs());
+			var mainViewModel = new MainViewModel(viewAdapter.Object, contactsService.Object, vmFactory.Object);
+			viewAdapter.Raise(x => x.Loaded += null, new EventArgs());
 			mainViewModel.CurrentContact = contactToDelete;
 
 			// act
@@ -206,7 +206,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Tests
 			// arrange
 			var contacts = this.GenerateContacts();
 			var contactToDelete = contacts[2];
-			var view = new Mock<IView>();
+			var viewAdapter = new Mock<IViewAdapter>();
 			var messageBoxDialog = new Mock<IMessageBoxViewModel>();
 			messageBoxDialog.Setup(x => x.DialogResult).Returns(MessageBoxResult.No);
 
@@ -216,8 +216,8 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Tests
 			var vmFactory = new Mock<IViewModelFactory>();
 			vmFactory.Setup(x => x.CreateMessageBoxDialog(It.IsAny<String>(), It.IsAny<string>(), MessageBoxButton.YesNo)).Returns(messageBoxDialog.Object);
 
-			var mainViewModel = new MainViewModel(view.Object, contactsService.Object, vmFactory.Object);
-			view.Raise(x => x.Loaded += null, new EventArgs());
+			var mainViewModel = new MainViewModel(viewAdapter.Object, contactsService.Object, vmFactory.Object);
+			viewAdapter.Raise(x => x.Loaded += null, new EventArgs());
 			mainViewModel.CurrentContact = contactToDelete;
 
 			// act

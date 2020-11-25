@@ -7,11 +7,11 @@ using EasySoftware.MvvmMini.Core;
 
 namespace EasySoftware.MvvmMini
 {
-	public class ClosableViewModelBase : ViewModelBase, IClosableViewModel
+	public abstract class ClosableViewModelBase : ViewModelBase, IClosableViewModel
 	{
 		public event EventHandler Closed;
 
-		public ClosableViewModelBase(IView view) : base(view)
+		public ClosableViewModelBase(IViewAdapter viewAdapter) : base(viewAdapter)
 		{
 			this.State = ViewModelState.Open;
 			this.CloseCommand = new RelayCommand(this.Close, this.CanClose);
@@ -41,7 +41,7 @@ namespace EasySoftware.MvvmMini
 			if (!ea.Cancel)
 			{
 				this.State = ViewModelState.Closing;
-				this._view.Close();
+				this._viewAdapter.Close();
 				this.State = ViewModelState.Closed;
 			}
 

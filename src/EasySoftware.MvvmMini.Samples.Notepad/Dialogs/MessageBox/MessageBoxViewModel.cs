@@ -8,7 +8,7 @@ namespace EasySoftware.MvvmMini.Samples.Notepad.Dialogs.MessageBox
 {
 	public class MessageBoxViewModel : DialogViewModelBase, IMessageBoxDialog
 	{
-		public MessageBoxViewModel(IView view, string message, string title, MessageBoxButton buttons) : base(view)
+		public MessageBoxViewModel(IViewAdapter viewAdapter, string message, string title, MessageBoxButton buttons) : base(viewAdapter)
 		{
 			this.DialogResult = MessageBoxResult.Cancel;
 			this.Title = title;

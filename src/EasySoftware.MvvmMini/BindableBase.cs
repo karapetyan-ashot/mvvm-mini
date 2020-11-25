@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace EasySoftware.MvvmMini
 {
-	public class BindableBase : INotifyPropertyChanged
+	public abstract class BindableBase : INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
 

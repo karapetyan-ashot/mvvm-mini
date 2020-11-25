@@ -24,27 +24,27 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Factories
 		{
 			IContactsService contactsService = this._unityContainer.Resolve<IContactsService>();
 			
-			IView view = new ViewWrapper(new MainView());
-			return new MainViewModel(view, contactsService, this);
+			IViewAdapter viewAdapter = new ViewAdapter(new MainView());
+			return new MainViewModel(viewAdapter, contactsService, this);
 		}
 		public IContactEditorViewModel CreateContactEditorDialog(Contact contact)
 		{
-			IView view = new ViewWrapper(new ContactEditorView());
-			return new ContactEditorViewModel(view, contact);
+			IViewAdapter viewAdapter = new ViewAdapter(new ContactEditorView());
+			return new ContactEditorViewModel(viewAdapter, contact);
 		}
 
 		public ILoginViewModel CreateLoginDialog()
 		{
 			IContactsService contactsService = this._unityContainer.Resolve<IContactsService>();
 			
-			IView view = new ViewWrapper(new LoginView());
-			return new LoginViewModel(view, contactsService);
+			IViewAdapter viewAdapter = new ViewAdapter(new LoginView());
+			return new LoginViewModel(viewAdapter, contactsService);
 		}
 
 		public IMessageBoxViewModel CreateMessageBoxDialog(string message, string title, MessageBoxButton buttons)
 		{
-			IView view = new ViewWrapper(new MessageBoxView());
-			return new MessageBoxViewModel(view, message, title, buttons);
+			IViewAdapter viewAdapter = new ViewAdapter(new MessageBoxView());
+			return new MessageBoxViewModel(viewAdapter, message, title, buttons);
 		}
 	}
 }

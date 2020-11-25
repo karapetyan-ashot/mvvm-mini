@@ -7,6 +7,7 @@ using System.Windows.Input;
 
 using EasySoftware.MvvmMini.Core;
 using EasySoftware.MvvmMini.Samples.Notepad.Factories;
+using EasySoftware.MvvmMini.Samples.Notepad.Workplaces.Document;
 
 namespace EasySoftware.MvvmMini.Samples.Notepad
 {
@@ -15,26 +16,30 @@ namespace EasySoftware.MvvmMini.Samples.Notepad
 		private int docNum = 0;
 		private IViewModelFactory _viewModelFactory;
 
-		public MainViewModel(IView view, IViewModelFactory viewModelFactory) : base(view)
+		public MainViewModel(IViewAdapter viewAdapter, IViewModelFactory viewModelFactory) : base(viewAdapter)
 		{
 			this._viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
-			
-			this.Documents = new ObservableCollection<IClosableViewModel>();
+
+			this.Title = "Notepad ++-";
+
+			this.Documents = new ObservableCollection<IDocumentViewModel>();
 
 			this.NewDocumentCommand = new RelayCommand(this.CreateNewDocument);
+			this.SaveCommand = new RelayCommand(this.Save, this.CanSave);
 		}
 
 		public ICommand NewDocumentCommand { get; }
+		public ICommand SaveCommand { get; }
 
-		private ObservableCollection<IClosableViewModel> _documents;
-		public ObservableCollection<IClosableViewModel> Documents
+		private ObservableCollection<IDocumentViewModel> _documents;
+		public ObservableCollection<IDocumentViewModel> Documents
 		{
 			get => this._documents;
 			set => SetProperty(ref this._documents, value);
 		}
 
-		private IClosableViewModel _currentDocument;
-		public IClosableViewModel CurrentDocument
+		private IDocumentViewModel _currentDocument;
+		public IDocumentViewModel CurrentDocument
 		{
 			get => this._currentDocument;
 			set => SetProperty(ref this._currentDocument, value);
@@ -42,16 +47,16 @@ namespace EasySoftware.MvvmMini.Samples.Notepad
 
 		protected override Task Loaded()
 		{
-			return CreateNewDocument();			
+			return CreateNewDocument();
 		}
 
 		private Task CreateNewDocument()
 		{
-			IClosableViewModel doc = this._viewModelFactory.CreateDocumentViewModel();
+			IDocumentViewModel doc = this._viewModelFactory.CreateDocumentViewModel();
 			doc.Title = $"New doc {++docNum}";
-			doc.Closed += (o, e) =>
+			doc.Closed += (s, e) =>
 			{
-				if(o is IClosableViewModel viewModel)
+				if (s is IDocumentViewModel viewModel)
 				{
 					if (this.Documents.Contains(viewModel))
 						this.Documents.Remove(viewModel);
@@ -62,6 +67,22 @@ namespace EasySoftware.MvvmMini.Samples.Notepad
 			return Task.CompletedTask;
 		}
 
+		private Task Save()
+		{
+			foreach (var document in this.Documents)
+			{
+				document.SaveCommand.Execute(null);
+			}
+			return Task.CompletedTask;
+		}
+
+		private bool CanSave()
+		{
+			return this.Documents.Any(x => x.SaveCommand.CanExecute(null) == true);
+		}
+
+
+
 		public override void OnClosing(CancelEventArgs e)
 		{
 			var currDoc = this.CurrentDocument;
@@ -70,13 +91,13 @@ namespace EasySoftware.MvvmMini.Samples.Notepad
 				this.CurrentDocument = document;
 				document.CloseCommand.Execute(null);
 			}
-			
-			if(this.Documents.Any())
+
+			if (this.Documents.Any())
 			{
 				e.Cancel = true;
 				if (this.Documents.Contains(currDoc))
 					this.CurrentDocument = currDoc;
-			}			
+			}
 			base.OnClosing(e);
 		}
 

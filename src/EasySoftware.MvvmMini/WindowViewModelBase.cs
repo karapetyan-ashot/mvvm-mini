@@ -1,17 +1,14 @@
-﻿
-using EasySoftware.MvvmMini.Core;
+﻿using EasySoftware.MvvmMini.Core;
 
 namespace EasySoftware.MvvmMini
 {
-	public class WindowViewModelBase : ClosableViewModelBase, IWindowViewModel
+	public abstract class WindowViewModelBase : ClosableViewModelBase, IWindowViewModel
 	{
-		public WindowViewModelBase(IView view) : base(view)
-		{
-		}
+		public WindowViewModelBase(IViewAdapter viewAdapter) : base(viewAdapter) { }
 
 		public void Show()
 		{
-			this._view.Show();
+			this._viewAdapter.Show();
 		}
 	}
 }

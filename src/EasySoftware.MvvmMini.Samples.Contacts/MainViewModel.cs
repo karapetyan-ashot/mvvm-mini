@@ -19,7 +19,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 		private IContactsService _contactsService;
 		private IViewModelFactory _viewModelFactory;
 
-		public MainViewModel(IView view, IContactsService contactsService, IViewModelFactory viewModelFactory) : base(view)
+		public MainViewModel(IViewAdapter viewAdapter, IContactsService contactsService, IViewModelFactory viewModelFactory) : base(viewAdapter)
 		{
 			this._contactsService = contactsService ?? throw new ArgumentNullException(nameof(contactsService));
 			this._viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));

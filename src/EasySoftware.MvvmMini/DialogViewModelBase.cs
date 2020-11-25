@@ -2,15 +2,13 @@
 
 namespace EasySoftware.MvvmMini
 {
-	public class DialogViewModelBase : WindowViewModelBase, IDialogViewModel
+	public abstract class DialogViewModelBase : WindowViewModelBase, IDialogViewModel
 	{
-		public DialogViewModelBase(IView view) : base(view)
-		{
-		}
+		public DialogViewModelBase(IViewAdapter viewAdapter) : base(viewAdapter) { }
 
 		public void ShowDialog()
 		{
-			this._view.ShowDialog();
+			this._viewAdapter.ShowDialog();
 		}
 	}
 }

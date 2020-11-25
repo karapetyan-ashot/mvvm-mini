@@ -20,20 +20,20 @@ namespace EasySoftware.MvvmMini.Samples.Notepad.Factories
 
 		public IMessageBoxDialog CreateMessageBoxDialog(string message, string title, MessageBoxButton buttons)
 		{
-			IView view = new ViewWrapper(new MessageBoxView());
-			return new MessageBoxViewModel(view, message, title, buttons);
+			IViewAdapter viewAdapter = new ViewAdapter(new MessageBoxView());
+			return new MessageBoxViewModel(viewAdapter, message, title, buttons);
 		}
 
-		public IClosableViewModel CreateDocumentViewModel()
+		public IDocumentViewModel CreateDocumentViewModel()
 		{
-			IView view = new ViewWrapper(new DocumentView());
-			return new DocumentViewModel(view, this);
+			IViewAdapter viewAdapter = new ViewAdapter(new DocumentView());
+			return new DocumentViewModel(viewAdapter, this);
 		}
 
 		public IWindowViewModel CreateMainViewModel()
 		{
-			IView view = new ViewWrapper(new MainView());
-			return new MainViewModel(view, this);
+			IViewAdapter viewAdapter = new ViewAdapter(new MainView());
+			return new MainViewModel(viewAdapter, this);
 		}
 	}
 }
