@@ -6,9 +6,9 @@ using EasySoftware.MvvmMini.Core;
 
 namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.MessageBox
 {
-	public class MessageBoxViewModel : DialogViewModelBase, IMessageBoxDialog
+	public class MessageBoxViewModel : DialogViewModelBase, IMessageBoxViewModel
 	{
-		public MessageBoxViewModel(IView view, string message, string title, MessageBoxButton buttons) : base(view)
+		public MessageBoxViewModel(IViewAdapter viewAdapter, string message, string title, MessageBoxButton buttons) : base(viewAdapter)
 		{
 			this.DialogResult = MessageBoxResult.Cancel;
 			this.Title = title;

@@ -8,7 +8,6 @@ namespace EasySoftware.MvvmMini.Core
 	{
 		event EventHandler Closed;
 		ICommand CloseCommand { get; }
-		ViewModelState State { get; }
 		void OnClosing(CancelEventArgs e);
 	}
 }

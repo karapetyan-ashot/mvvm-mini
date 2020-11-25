@@ -13,7 +13,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.Login
 	{
 		private IContactsService _contactsService;
 
-		public LoginViewModel(IView view, IContactsService contactsService) : base(view)
+		public LoginViewModel(IViewAdapter viewAdapter, IContactsService contactsService) : base(viewAdapter)
 		{
 			this._contactsService = contactsService ?? throw new ArgumentNullException(nameof(contactsService));
 			this.LoginCommand = new RelayCommand(this.Login, this.CanLogin);
@@ -49,7 +49,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.Login
 				this.User = await this._contactsService.Login(this.UserName, this.Password);
 
 				if (this.User != null)
-					this._view.Close();
+					this._viewAdapter.Close();
 				else
 					this.AddError("Wrong user/pass");
 

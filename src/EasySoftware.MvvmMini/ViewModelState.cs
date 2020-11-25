@@ -1,4 +1,4 @@
-﻿namespace EasySoftware.MvvmMini.Core
+﻿namespace EasySoftware.MvvmMini
 {
 	public enum ViewModelState
 	{

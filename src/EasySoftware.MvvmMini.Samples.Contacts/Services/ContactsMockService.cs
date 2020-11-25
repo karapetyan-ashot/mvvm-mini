@@ -2,16 +2,13 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-
-using Microsoft.Win32.SafeHandles;
 
 namespace EasySoftware.MvvmMini.Samples.Contacts.Services
 {
 	public class ContactsMockService : IContactsService
 	{
-		private static List<User> _users = new List<User> { new User { Id = 1, Name = "Ashot", UserName = "shota", Password = "1" } };
+		private static List<User> _users = new List<User> { new User { Id = 1, Name = "Name LastName", UserName = "username", Password = "1" } };
 		private static List<Contact> _contacts;
 		private static int _nextId = 0;
 		public static int NextId { get { return ++_nextId; } }

@@ -7,7 +7,7 @@ using EasySoftware.MvvmMini.Samples.Contacts.Services;
 
 namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.ContactEditor
 {
-	public interface IContactEditor : IDialogViewModel
+	public interface IContactEditorViewModel : IDialogViewModel
 	{
 		Contact ModifiedContact { get; }
 	}

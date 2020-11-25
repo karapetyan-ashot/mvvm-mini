@@ -10,20 +10,20 @@ using EasySoftware.MvvmMini.Samples.Notepad.Factories;
 
 namespace EasySoftware.MvvmMini.Samples.Notepad.Workplaces.Document
 {
-	public class DocumentViewModel : ClosableViewModelBase
+	public class DocumentViewModel : ClosableViewModelBase, IDocumentViewModel
 	{
 		private bool _saved = true;
-		private IDialogFactory _dialogFactory;
+		private IViewModelFactory _viewModelFactory;
 
-		public DocumentViewModel(IView view, IDialogFactory dialogFactory) : base(view)
+		public DocumentViewModel(IViewAdapter viewAdapter, IViewModelFactory viewModelFactory) : base(viewAdapter)
 		{
-			this._dialogFactory = dialogFactory ?? throw new ArgumentNullException(nameof(dialogFactory));
+			this._viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
 			this.SaveCommand = new RelayCommand(this.Save, this.CanSave);
-			this.Title = "New1";
+			
+			this.Title = "unnamed";
 		}
 
 		public ICommand SaveCommand { get; }
-
 
 		private string _text;
 		public string Text
@@ -44,7 +44,7 @@ namespace EasySoftware.MvvmMini.Samples.Notepad.Workplaces.Document
 		{
 			if (!this._saved)
 			{
-				IMessageBoxDialog messageBox = this._dialogFactory.CreateMessageBoxDialog("do you want to save", "confirm please", MessageBoxButton.YesNoCancel);
+				IMessageBoxDialog messageBox = this._viewModelFactory.CreateMessageBoxDialog($"do you want to save {this.Title} document", "confirm please", MessageBoxButton.YesNoCancel);
 				messageBox.ShowDialog();
 
 				switch (messageBox.DialogResult)

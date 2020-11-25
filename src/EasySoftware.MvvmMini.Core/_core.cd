@@ -1,23 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Interface Name="EasySoftware.MvvmMini.Core.IViewModel">
-    <Position X="0.75" Y="0.5" Width="1.5" />
+    <Position X="1" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAEAAAAAAAABAAAABAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IViewModel.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="EasySoftware.MvvmMini.Core.IView">
-    <Position X="3.5" Y="0.5" Width="1.5" />
+  <Interface Name="EasySoftware.MvvmMini.Core.IViewAdapter">
+    <Position X="6.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gAAAAAAAAAEAAAAAAAAAAAEAAAAFAAAAAAAAAACAAAA=</HashCode>
-      <FileName>IView.cs</FileName>
+      <FileName>IViewAdapter.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="EasySoftware.MvvmMini.Core.IClosableViewModel">
     <Position X="0.75" Y="2.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAgEAAAAAAAAAAAAAABACAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgEAAAAAAAAAAAAAAAACAAAA=</HashCode>
       <FileName>IClosableViewModel.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -35,12 +35,5 @@
       <FileName>IDialogViewModel.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Enum Name="EasySoftware.MvvmMini.Core.ViewModelState">
-    <Position X="6.75" Y="1.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAABAAAAAAAAAAAAACAAAA=</HashCode>
-      <FileName>ViewModelState.cs</FileName>
-    </TypeIdentifier>
-  </Enum>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

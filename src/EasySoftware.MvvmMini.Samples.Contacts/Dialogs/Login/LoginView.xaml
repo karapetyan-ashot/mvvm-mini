@@ -7,15 +7,15 @@
 	xmlns:local="clr-namespace:EasySoftware.MvvmMini.Samples.Contacts.Dialogs.Login"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	Title="{Binding Title}"
-	Width="360"
-	Height="240"
+	Width="400"
+	Height="260"
 	d:DataContext="{d:DesignInstance local:LoginViewModel}"
 	ResizeMode="NoResize"
 	WindowStartupLocation="CenterScreen"
 	mc:Ignorable="d">
 
-	<ctrl:BusyIndicator IsBusy="{Binding IsBusy}">
-		<Grid Margin="20">
+	<ctrl:BusyIndicator Margin="20" IsBusy="{Binding IsBusy}">
+		<Grid>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition />
 				<ColumnDefinition />
@@ -25,43 +25,50 @@
 				<RowDefinition Height="auto" />
 				<RowDefinition Height="auto" />
 				<RowDefinition Height="*" />
+				<RowDefinition Height="auto" />
 			</Grid.RowDefinitions>
+			<TextBlock
+				Grid.ColumnSpan="2"
+				Margin="0,10"
+				HorizontalAlignment="Center"
+				Text="to login use username / 1" />
 			<Label
-				Grid.Row="0"
+				Grid.Row="1"
 				Grid.Column="0"
 				Content="Username" />
 			<TextBox
-				Grid.Row="0"
-				Grid.Column="1"
 				x:Name="_loginTextBox"
-            Text="{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-			<Label
 				Grid.Row="1"
+				Grid.Column="1"
+				Text="{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+			<Label
+				Grid.Row="2"
 				Grid.Column="0"
 				Content="Password" />
 			<TextBox
-				Grid.Row="1"
+				x:Name="_passwordTextBox"
+				Grid.Row="2"
 				Grid.Column="1"
-            x:Name="_passwordTextBox"
 				Text="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-			<ctrl:ValidationSummary Grid.Row="2" Grid.ColumnSpan="2" />
+			<ctrl:ValidationSummary Grid.Row="3" Grid.ColumnSpan="2" />
 			<StackPanel
-				Grid.Row="3"
+				Grid.Row="4"
 				Grid.Column="1"
 				HorizontalAlignment="Right"
 				Orientation="Horizontal">
 				<Button
 					Command="{Binding LoginCommand}"
 					Content="Login"
-               IsDefault="True"
+					IsDefault="True"
 					Style="{StaticResource dialogButton}" />
 				<Button
 					Content="Cancel"
-					IsCancel="True"               
+					IsCancel="True"
 					Style="{StaticResource dialogButton}" />
 			</StackPanel>
 		</Grid>
+
 	</ctrl:BusyIndicator>
 
 </Window>
