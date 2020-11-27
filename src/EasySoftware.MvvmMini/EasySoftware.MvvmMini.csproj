@@ -6,6 +6,8 @@
     <PackageTags>WPF, MVVM</PackageTags>
     <PackageReleaseNotes>Initial implementation</PackageReleaseNotes>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
