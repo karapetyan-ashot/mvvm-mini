@@ -4,109 +4,95 @@ using System.Windows.Input;
 
 namespace EasySoftware.MvvmMini
 {
-   public class RelayCommand<T> : ICommand
-   {
-      private readonly Func<T, Task> _execute;
-      private readonly Func<T, bool> _canExecute;
-      private bool _isLoad;
+	public abstract class RelayCommandBase : ICommand
+	{
+		public abstract void Execute(object parameter);
 
-      public RelayCommand(Func<T, Task> execute, Func<T, bool> canExecute = null)
-      {
-         _execute = execute;
-         _canExecute = canExecute;
-      }
+		public abstract bool CanExecute(object parameter);
 
-      public bool CanExecute(object parameter)
-      {
-         if (this._isLoad)
-            return false;
+		public event EventHandler CanExecuteChanged
+		{
+			add
+			{
+				CommandManager.RequerySuggested += value;
+				LocalCanExecuteChanged += value;
+			}
+			remove
+			{
+				CommandManager.RequerySuggested -= value;
+				LocalCanExecuteChanged -= value;
+			}
+		}
 
-         if (_canExecute != null)
-            return _canExecute((T)parameter);
+		public event EventHandler LocalCanExecuteChanged;
 
-         return true;
-      }
+		public void RaiseCanExecuteChanged()
+		{
+			LocalCanExecuteChanged?.Invoke(this, new EventArgs());
+		}
+	}
 
-      public async void Execute(object parameter)
-      {
-         this._isLoad = true;
-         await _execute((T)parameter);
-         this._isLoad = false;
-         this.RaiseCanExecuteChanged();
-      }
+	public class RelayCommand<T> : RelayCommandBase
+	{
+		private readonly Func<T, Task> _execute;
+		private readonly Func<T, bool> _canExecute;
+		private bool _isLoad;
 
-      public event EventHandler CanExecuteChanged
-      {
-         add
-         {
-            CommandManager.RequerySuggested += value;
-            LocalCanExecuteChanged += value;
-         }
-         remove
-         {
-            CommandManager.RequerySuggested -= value;
-            LocalCanExecuteChanged -= value;
-         }
-      }
+		public RelayCommand(Func<T, Task> execute, Func<T, bool> canExecute = null)
+		{
+			_execute = execute;
+			_canExecute = canExecute;
+		}
 
-      public event EventHandler LocalCanExecuteChanged;
+		public override async void Execute(object parameter)
+		{
+			this._isLoad = true;
+			await _execute((T)parameter);
+			this._isLoad = false;
+			this.RaiseCanExecuteChanged();
+		}
 
-      public void RaiseCanExecuteChanged()
-      {
-         LocalCanExecuteChanged?.Invoke(this, new EventArgs());
-      }
-   }
+		public override bool CanExecute(object parameter)
+		{
+			if (this._isLoad)
+				return false;
 
-   public class RelayCommand : ICommand
-   {
-      private readonly Func<Task> _execute;
-      private readonly Func<bool> _canExecute;
-      private bool _isLoad;
+			if (_canExecute != null)
+				return _canExecute((T)parameter);
 
-      public RelayCommand(Func<Task> execute, Func<bool> canExecute = null)
-      {
-         _execute = execute;
-         _canExecute = canExecute;
-      }
+			return true;
+		}
+	}
 
-      public bool CanExecute(object parameter)
-      {
-         if (this._isLoad)
-            return false;
+	public class RelayCommand : RelayCommandBase
+	{
+		private readonly Func<Task> _execute;
+		private readonly Func<bool> _canExecute;
+		private bool _isLoad;
 
-         if (_canExecute != null)
-            return _canExecute();
+		public RelayCommand(Func<Task> execute, Func<bool> canExecute = null)
+		{
+			_execute = execute;
+			_canExecute = canExecute;
+		}
 
-         return true;
-      }
+		public override async void Execute(object parameter)
+		{
+			this._isLoad = true;
+			await _execute();
+			this._isLoad = false;
+			this.RaiseCanExecuteChanged();
+		}
 
-      public async void Execute(object parameter)
-      {
-         this._isLoad = true;
-         await _execute();
-         this._isLoad = false;
-         this.RaiseCanExecuteChanged();
-      }
+		public override bool CanExecute(object parameter)
+		{
+			if (this._isLoad)
+				return false;
 
-      public event EventHandler CanExecuteChanged
-      {
-         add
-         {
-            CommandManager.RequerySuggested += value;
-            LocalCanExecuteChanged += value;
-         }
-         remove
-         {
-            CommandManager.RequerySuggested -= value;
-            LocalCanExecuteChanged -= value;
-         }
-      }
+			if (_canExecute != null)
+				return _canExecute();
 
-      public event EventHandler LocalCanExecuteChanged;
-
-      public void RaiseCanExecuteChanged()
-      {
-         LocalCanExecuteChanged?.Invoke(this, new EventArgs());
-      }
-   }
+			return true;
+		}
+	}
 }
