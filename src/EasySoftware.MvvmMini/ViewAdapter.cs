@@ -9,6 +9,8 @@ namespace EasySoftware.MvvmMini
 {
 	public class ViewAdapter : IViewAdapter
 	{
+		private bool _isLoaded;
+
 		public event EventHandler Loaded;
 
 		private FrameworkElement _view;
@@ -18,7 +20,13 @@ namespace EasySoftware.MvvmMini
 			this._view = view ?? throw new ArgumentNullException(nameof(view));
 
 			this._view.Loaded += (s, e) =>
-				this.Loaded?.Invoke(this, EventArgs.Empty);
+			{
+				if (!this._isLoaded)
+				{
+					this.Loaded?.Invoke(this, EventArgs.Empty);
+					this._isLoaded = true;
+				}
+			};
 
 			if (this._view is Window window)
 			{
@@ -70,7 +78,7 @@ namespace EasySoftware.MvvmMini
 			if (this._view is Window window)
 			{
 				window.Owner = Application.Current?.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-				window.WindowStartupLocation = window.Owner == null ? WindowStartupLocation.CenterScreen : WindowStartupLocation.CenterOwner;				
+				window.WindowStartupLocation = window.Owner == null ? WindowStartupLocation.CenterScreen : WindowStartupLocation.CenterOwner;
 
 				window.ShowDialog();
 			}
