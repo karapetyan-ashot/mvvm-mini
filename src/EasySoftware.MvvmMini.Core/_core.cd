@@ -8,7 +8,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="EasySoftware.MvvmMini.Core.IViewAdapter">
-    <Position X="6.5" Y="0.75" Width="1.5" />
+    <Position X="9.25" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gAAAAAAAAAEAAAAAAAAAAAEAAAAFAAAAAAAAAACAAAA=</HashCode>
       <FileName>IViewAdapter.cs</FileName>
@@ -29,14 +29,14 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="EasySoftware.MvvmMini.Core.IDialogViewModel">
-    <Position X="0.75" Y="7.75" Width="2" />
+    <Position X="0.75" Y="8" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IDialogViewModel.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="EasySoftware.MvvmMini.Core.IViewModelFactory">
-    <Position X="4.5" Y="3.5" Width="1.5" />
+    <Position X="3" Y="0.75" Width="4.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
       <FileName>IViewModelFactory.cs</FileName>

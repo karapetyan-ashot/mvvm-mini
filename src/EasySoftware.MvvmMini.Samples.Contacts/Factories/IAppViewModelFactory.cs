@@ -8,11 +8,8 @@ using EasySoftware.MvvmMini.Samples.Contacts.Services;
 
 namespace EasySoftware.MvvmMini.Samples.Contacts.Factories
 {
-	public interface IViewModelFactory
+	public interface IAppViewModelFactory : IViewModelFactory
 	{
-		IWindowViewModel CreateMainViewModel();
-		ILoginViewModel CreateLoginDialog();
 		IMessageBoxViewModel CreateMessageBoxDialog(string message, string title, MessageBoxButton buttons);
-		IContactEditorViewModel CreateContactEditorDialog(Contact contact);
 	}
 }

@@ -8,18 +8,18 @@ using Unity.Resolution;
 
 namespace EasySoftware.MvvmMini
 {
-   public class ViewModelFactory : IViewModelFactory
+   public class ViewModelFactoryBase : IViewModelFactory
    {
       private readonly Dictionary<Type, Type> _viewModelViewMapping;
-      private readonly IUnityContainer _unityContainer;
+      protected readonly IUnityContainer _unityContainer;
 
-      public ViewModelFactory(IUnityContainer unityContainer)
+      public ViewModelFactoryBase(IUnityContainer unityContainer)
       {
-         this._viewModelViewMapping = new Dictionary<Type, Type>();
-         this._unityContainer = unityContainer;
+         this._unityContainer = unityContainer ?? throw new ArgumentNullException(nameof(unityContainer));
 
-         this._unityContainer.RegisterInstance<IViewModelFactory>(this);
          this._unityContainer.RegisterType<IViewAdapter, ViewAdapter>();
+
+         this._viewModelViewMapping = new Dictionary<Type, Type>();
       }
 
       public void RegisterViewModelWithView<TViewModelFrom, TViewModelTo, TView>() where TViewModelTo : TViewModelFrom, IViewModel

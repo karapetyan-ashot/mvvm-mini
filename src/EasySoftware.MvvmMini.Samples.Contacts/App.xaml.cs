@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Windows;
 
-using EasySoftware.MvvmMini.Core;
+using EasySoftware.MvvmMini.Samples.Contacts.Dialogs.ContactEditor;
 using EasySoftware.MvvmMini.Samples.Contacts.Dialogs.Login;
+using EasySoftware.MvvmMini.Samples.Contacts.Dialogs.MessageBox;
 using EasySoftware.MvvmMini.Samples.Contacts.Factories;
 using EasySoftware.MvvmMini.Samples.Contacts.Services;
 
@@ -18,12 +19,12 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 		{
 			this.ConfigureContainer();
 
-			IViewModelFactory viewModelFactory = this._unityContainer.Resolve<IViewModelFactory>();
-			ILoginViewModel loginViewModel = viewModelFactory.CreateLoginDialog();
+			IAppViewModelFactory viewModelFactory = this._unityContainer.Resolve<IAppViewModelFactory>();
+			ILoginViewModel loginViewModel = viewModelFactory.ResolveViewModel<ILoginViewModel>();
 			loginViewModel.ShowDialog();
 			if (loginViewModel.User != null)
 			{
-				IWindowViewModel mainViewModel = viewModelFactory.CreateMainViewModel();
+				IMainViewModel mainViewModel = viewModelFactory.ResolveViewModel<IMainViewModel>();
 
 				mainViewModel.Closed += MainViewModel_Closed;
 				mainViewModel.Show();
@@ -41,10 +42,16 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 		{
 			this._unityContainer = new UnityContainer().AddExtension(new Diagnostic());
 
-			this._unityContainer.RegisterInstance(this._unityContainer);
+			IAppViewModelFactory viewModelFactory = new AppViewModelFactory(this._unityContainer);
+			this._unityContainer.RegisterInstance<IAppViewModelFactory>(viewModelFactory);
 
-			this._unityContainer.RegisterSingleton<IContactsService, ContactsMockService>();			
-			this._unityContainer.RegisterSingleton<IViewModelFactory, ViewModelFactory>();
+			this._unityContainer.RegisterSingleton<IContactsService, ContactsMockService>();
+
+			viewModelFactory.RegisterViewModelWithView<ILoginViewModel, LoginViewModel, LoginView>();
+			viewModelFactory.RegisterViewModelWithView<IMessageBoxViewModel, MessageBoxViewModel, MessageBoxView>();
+			viewModelFactory.RegisterViewModelWithView<IContactEditorViewModel, ContactEditorViewModel, ContactEditorView>();
+			viewModelFactory.RegisterViewModelWithView<IMainViewModel, MainViewModel, MainView>();
+
 		}
 	}
 }
