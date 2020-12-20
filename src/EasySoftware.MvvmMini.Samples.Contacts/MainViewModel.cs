@@ -14,12 +14,12 @@ using EasySoftware.MvvmMini.Samples.Contacts.Helpers;
 
 namespace EasySoftware.MvvmMini.Samples.Contacts
 {
-	public class MainViewModel : WindowViewModelBase
+	public class MainViewModel : WindowViewModelBase, IMainViewModel
 	{
 		private IContactsService _contactsService;
-		private IViewModelFactory _viewModelFactory;
+		private IAppViewModelFactory _viewModelFactory;
 
-		public MainViewModel(IViewAdapter viewAdapter, IContactsService contactsService, IViewModelFactory viewModelFactory) : base(viewAdapter)
+		public MainViewModel(IViewAdapter viewAdapter, IContactsService contactsService, IAppViewModelFactory viewModelFactory) : base(viewAdapter)
 		{
 			this._contactsService = contactsService ?? throw new ArgumentNullException(nameof(contactsService));
 			this._viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
@@ -61,7 +61,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 
 		private async Task CreateContact()
 		{
-			IContactEditorViewModel contactEditor = this._viewModelFactory.CreateContactEditorDialog(new Contact());
+			IContactEditorViewModel contactEditor = this._viewModelFactory.ResolveViewModel<IContactEditorViewModel>(new KeyValuePair<string, object>("contact", new Contact()));
 			contactEditor.ShowDialog();
 			if (contactEditor.ModifiedContact != null)
 			{
@@ -75,7 +75,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 
 		private async Task EditContact()
 		{
-			IContactEditorViewModel contactEditor = this._viewModelFactory.CreateContactEditorDialog(this.CurrentContact);
+			IContactEditorViewModel contactEditor = this._viewModelFactory.ResolveViewModel<IContactEditorViewModel>(new KeyValuePair<string, object>("contact", this.CurrentContact));
 			contactEditor.ShowDialog();
 			if (contactEditor.ModifiedContact != null)
 			{

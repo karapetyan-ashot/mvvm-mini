@@ -11,12 +11,12 @@ using EasySoftware.MvvmMini.Samples.Notepad.Workplaces.Document;
 
 namespace EasySoftware.MvvmMini.Samples.Notepad
 {
-	public class MainViewModel : WindowViewModelBase
+	public class MainViewModel : WindowViewModelBase, IMainViewModel
 	{
 		private int docNum = 0;
-		private IViewModelFactory _viewModelFactory;
+		private IAppViewModelFactory _viewModelFactory;
 
-		public MainViewModel(IViewAdapter viewAdapter, IViewModelFactory viewModelFactory) : base(viewAdapter)
+		public MainViewModel(IViewAdapter viewAdapter, IAppViewModelFactory viewModelFactory) : base(viewAdapter)
 		{
 			this._viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
 
@@ -52,7 +52,7 @@ namespace EasySoftware.MvvmMini.Samples.Notepad
 
 		private Task CreateNewDocument()
 		{
-			IDocumentViewModel doc = this._viewModelFactory.CreateDocumentViewModel();
+			IDocumentViewModel doc = this._viewModelFactory.ResolveViewModel<IDocumentViewModel>();
 			doc.Title = $"New doc {++docNum}";
 			doc.Closed += (s, e) =>
 			{

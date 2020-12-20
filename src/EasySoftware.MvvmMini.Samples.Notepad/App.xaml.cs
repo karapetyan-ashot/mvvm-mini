@@ -1,48 +1,51 @@
 ﻿using System;
 using System.Windows;
 
-using EasySoftware.MvvmMini.Core;
+using EasySoftware.MvvmMini.Samples.Notepad.Dialogs.MessageBox;
 using EasySoftware.MvvmMini.Samples.Notepad.Factories;
+using EasySoftware.MvvmMini.Samples.Notepad.Workplaces.Document;
 
 using Unity;
 
 namespace EasySoftware.MvvmMini.Samples.Notepad
 {
 	public partial class App : Application
-   {
-      IUnityContainer _container;
-      public App()
-      {
-         this.ShutdownMode = ShutdownMode.OnExplicitShutdown;
-      }
+	{
+		IUnityContainer _container;
+		public App()
+		{
+			this.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+		}
 
-      protected override void OnStartup(StartupEventArgs e)
-      {
-         base.OnStartup(e);
+		protected override void OnStartup(StartupEventArgs e)
+		{
+			base.OnStartup(e);
 
-         ConfigureContainer();
+			ConfigureContainer();
 
-         IViewModelFactory viewModelFactory = this._container.Resolve<IViewModelFactory>();
-         IWindowViewModel mainViewModel = viewModelFactory.CreateMainViewModel();
+			IAppViewModelFactory viewModelFactory = this._container.Resolve<IAppViewModelFactory>();
+			IMainViewModel mainViewModel = viewModelFactory.ResolveViewModel<IMainViewModel>();
 
-         mainViewModel.Closed += MainViewModel_Closed;
-         mainViewModel.Show();
-      }
+			mainViewModel.Closed += MainViewModel_Closed;
+			mainViewModel.Show();
+		}
 
-      private void MainViewModel_Closed(object sender, EventArgs e)
-      {
-         this.Shutdown();
-      }
+		private void MainViewModel_Closed(object sender, EventArgs e)
+		{
+			this.Shutdown();
+		}
 
-      private void ConfigureContainer()
-      {
-         this._container = new UnityContainer().AddExtension(new Diagnostic());
+		private void ConfigureContainer()
+		{
+			this._container = new UnityContainer().AddExtension(new Diagnostic());
 
-         this._container.RegisterInstance<IUnityContainer>(this._container);
-         this._container.RegisterSingleton<IViewModelFactory, ViewModelFactory>();
+			IAppViewModelFactory viewModelFactory = new AppViewModelFactory(this._container);
 
+			this._container.RegisterInstance<IAppViewModelFactory>(viewModelFactory);
 
-      }
-
-   }
+			viewModelFactory.RegisterViewModelWithView<IMainViewModel, MainViewModel, MainView>();
+			viewModelFactory.RegisterViewModelWithView<IDocumentViewModel, DocumentViewModel, DocumentView>();
+			viewModelFactory.RegisterViewModelWithView<IMessageBoxDialog, MessageBoxViewModel, MessageBoxView>();
+		}
+	}
 }

@@ -13,9 +13,9 @@ namespace EasySoftware.MvvmMini.Samples.Notepad.Workplaces.Document
 	public class DocumentViewModel : ClosableViewModelBase, IDocumentViewModel
 	{
 		private bool _saved = true;
-		private IViewModelFactory _viewModelFactory;
+		private IAppViewModelFactory _viewModelFactory;
 
-		public DocumentViewModel(IViewAdapter viewAdapter, IViewModelFactory viewModelFactory) : base(viewAdapter)
+		public DocumentViewModel(IViewAdapter viewAdapter, IAppViewModelFactory viewModelFactory) : base(viewAdapter)
 		{
 			this._viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
 			this.SaveCommand = new RelayCommand(this.Save, this.CanSave);
