@@ -4,7 +4,7 @@ namespace EasySoftware.MvvmMini
 {
 	public abstract class DialogViewModelBase : WindowViewModelBase, IDialogViewModel
 	{
-		public DialogViewModelBase(IViewAdapter viewAdapter) : base(viewAdapter) { }
+      protected DialogViewModelBase(IViewAdapter viewAdapter) : base(viewAdapter) { }
 
 		public void ShowDialog()
 		{

@@ -9,8 +9,8 @@ namespace EasySoftware.MvvmMini
 {
 	public class EventAggregator : IEventAggregator
 	{
-		private object _locker = new object();
-		Dictionary<string, List<ActionWrapper>> _actions;
+		private readonly object _locker = new object();
+      private readonly Dictionary<string, List<ActionWrapper>> _actions;
 
 		#region constructors
 		public EventAggregator()
@@ -182,8 +182,6 @@ namespace EasySoftware.MvvmMini
 		}
 
 		#endregion
-
-
+		
 	}
-
 }

@@ -11,7 +11,7 @@ namespace EasySoftware.MvvmMini
 	{
 		public event EventHandler Closed;
 
-		public ClosableViewModelBase(IViewAdapter viewAdapter) : base(viewAdapter)
+      protected ClosableViewModelBase(IViewAdapter viewAdapter) : base(viewAdapter)
 		{
 			this.State = ViewModelState.Open;
 			this.CloseCommand = new RelayCommand(this.Close, this.CanClose);

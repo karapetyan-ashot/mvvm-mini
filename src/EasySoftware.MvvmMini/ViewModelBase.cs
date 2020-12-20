@@ -5,11 +5,11 @@ using EasySoftware.MvvmMini.Core;
 
 namespace EasySoftware.MvvmMini
 {
-	public abstract partial class ViewModelBase : ErrorContainerBase, IViewModel
+	public abstract class ViewModelBase : ErrorContainerBase, IViewModel
 	{
 		protected IViewAdapter _viewAdapter;
 
-		public ViewModelBase(IViewAdapter viewAdapter)
+      protected ViewModelBase(IViewAdapter viewAdapter)
 		{
 			this._viewAdapter = viewAdapter;
 			this._viewAdapter.DataContext = this;
