@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Windows;
+﻿using System.Windows;
 
 using EasySoftware.MvvmMini.Samples.Notepad.Dialogs.MessageBox;
 
@@ -17,9 +16,9 @@ namespace EasySoftware.MvvmMini.Samples.Notepad.Factories
 		public IMessageBoxDialog CreateMessageBoxDialog(string message, string title, MessageBoxButton buttons)
 		{
 			return this.ResolveViewModel<IMessageBoxDialog>(
-				new KeyValuePair<string, object>(nameof(message), message),
-				new KeyValuePair<string, object>(nameof(title), title),
-				new KeyValuePair<string, object>(nameof(buttons), buttons)
+				(nameof(message), message),
+				(nameof(title), title),
+				(nameof(buttons), buttons)
 			);
 		}
 	}

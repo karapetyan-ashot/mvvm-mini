@@ -9,8 +9,8 @@ using EasySoftware.MvvmMini.Core;
 using EasySoftware.MvvmMini.Samples.Contacts.Dialogs.ContactEditor;
 using EasySoftware.MvvmMini.Samples.Contacts.Dialogs.MessageBox;
 using EasySoftware.MvvmMini.Samples.Contacts.Factories;
-using EasySoftware.MvvmMini.Samples.Contacts.Services;
 using EasySoftware.MvvmMini.Samples.Contacts.Helpers;
+using EasySoftware.MvvmMini.Samples.Contacts.Services;
 
 namespace EasySoftware.MvvmMini.Samples.Contacts
 {
@@ -61,7 +61,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 
 		private async Task CreateContact()
 		{
-			IContactEditorViewModel contactEditor = this._viewModelFactory.ResolveViewModel<IContactEditorViewModel>(new KeyValuePair<string, object>("contact", new Contact()));
+			IContactEditorViewModel contactEditor = this._viewModelFactory.ResolveViewModel<IContactEditorViewModel>(("contact", new Contact()));
 			contactEditor.ShowDialog();
 			if (contactEditor.ModifiedContact != null)
 			{
@@ -75,7 +75,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 
 		private async Task EditContact()
 		{
-			IContactEditorViewModel contactEditor = this._viewModelFactory.ResolveViewModel<IContactEditorViewModel>(new KeyValuePair<string, object>("contact", this.CurrentContact));
+			IContactEditorViewModel contactEditor = this._viewModelFactory.ResolveViewModel<IContactEditorViewModel>(("contact", this.CurrentContact));
 			contactEditor.ShowDialog();
 			if (contactEditor.ModifiedContact != null)
 			{

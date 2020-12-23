@@ -15,9 +15,9 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Factories
 		public IMessageBoxViewModel CreateMessageBoxDialog(string message, string title, MessageBoxButton buttons)
 		{
 			return this.ResolveViewModel<IMessageBoxViewModel>(
-				new KeyValuePair<string, object>(nameof(message), message),
-				new KeyValuePair<string, object>(nameof(title), title),
-				new KeyValuePair<string, object>(nameof(buttons), buttons)
+				(nameof(message), message),
+				(nameof(title), title),
+				(nameof(buttons), buttons)
 			);
 		}
 	}

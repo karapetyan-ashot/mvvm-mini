@@ -53,7 +53,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Tests
 			contactsService.Setup(x => x.CreateContact(It.IsAny<Contact>())).Returns(Task.FromResult<Contact>(updatedBuServidceContact));
 
 			var vmFactory = new Mock<IAppViewModelFactory>();
-			vmFactory.Setup(x => x.ResolveViewModel<IContactEditorViewModel>(It.IsAny<KeyValuePair<string, object>>())).Returns(contactEditor.Object);
+			vmFactory.Setup(x => x.ResolveViewModel<IContactEditorViewModel>(It.IsAny<(string name, object value)>())).Returns(contactEditor.Object);
 
 			var mainViewModel = new MainViewModel(viewAdapter.Object, contactsService.Object, vmFactory.Object);
 			viewAdapter.Raise(x => x.Loaded += null, new EventArgs());
@@ -62,7 +62,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Tests
 			mainViewModel.CreateContactCommand.Execute(null);
 
 			// assert			
-			vmFactory.Verify(x => x.ResolveViewModel<IContactEditorViewModel>(It.IsAny<KeyValuePair<string, object>>()), Times.Once);
+			vmFactory.Verify(x => x.ResolveViewModel<IContactEditorViewModel>(It.IsAny<(string name, object value)>()), Times.Once);
 			contactEditor.Verify(x => x.ShowDialog(), Times.Once());
 			contactsService.Verify(x => x.CreateContact(editedByDialogContact), Times.Once);
 			Assert.AreSame(updatedBuServidceContact, mainViewModel.CurrentContact);
@@ -84,7 +84,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Tests
 			contactsService.Setup(x => x.GetContacts()).Returns(Task.FromResult<List<Contact>>(this.GenerateContacts()));
 
 			var vmFactory = new Mock<IAppViewModelFactory>();
-			vmFactory.Setup(x => x.ResolveViewModel<IContactEditorViewModel>(It.IsAny<KeyValuePair<string, object>>())).Returns(contactEditor.Object);
+			vmFactory.Setup(x => x.ResolveViewModel<IContactEditorViewModel>(It.IsAny<(string name, object value)>())).Returns(contactEditor.Object);
 
 			var mainViewModel = new MainViewModel(viewAdapter.Object, contactsService.Object, vmFactory.Object);
 			viewAdapter.Raise(x => x.Loaded += null, new EventArgs());
@@ -93,7 +93,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Tests
 			mainViewModel.CreateContactCommand.Execute(null);
 
 			// assert			
-			vmFactory.Verify(x => x.ResolveViewModel<IContactEditorViewModel>(It.IsAny<KeyValuePair<string, object>>()), Times.Once);
+			vmFactory.Verify(x => x.ResolveViewModel<IContactEditorViewModel>(It.IsAny<(string name, object value)>()), Times.Once);
 			contactEditor.Verify(x => x.ShowDialog(), Times.Once());
 			contactsService.Verify(x => x.CreateContact(It.IsAny<Contact>()), Times.Never);
 			Assert.IsNull(mainViewModel.CurrentContact);
@@ -118,7 +118,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Tests
 			contactsService.Setup(x => x.UpdateContact(It.IsAny<Contact>())).Returns(Task.FromResult<Contact>(updatedBuServidceContact));
 
 			var vmFactory = new Mock<IAppViewModelFactory>();
-			vmFactory.Setup(x => x.ResolveViewModel<IContactEditorViewModel>(It.IsAny<KeyValuePair<string, object>>())).Returns(contactEditor.Object);
+			vmFactory.Setup(x => x.ResolveViewModel<IContactEditorViewModel>(It.IsAny<(string name, object value)>())).Returns(contactEditor.Object);
 
 			var mainViewModel = new MainViewModel(viewAdapter.Object, contactsService.Object, vmFactory.Object);
 			viewAdapter.Raise(x => x.Loaded += null, new EventArgs());
@@ -128,7 +128,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Tests
 			mainViewModel.EditContactCommand.Execute(null);
 
 			// assert
-			vmFactory.Verify(x => x.ResolveViewModel<IContactEditorViewModel>(It.IsAny<KeyValuePair<string, object>>()), Times.Once);
+			vmFactory.Verify(x => x.ResolveViewModel<IContactEditorViewModel>(It.IsAny<(string name, object value)>()), Times.Once);
 			contactEditor.Verify(x => x.ShowDialog(), Times.Once());
 			contactsService.Verify(x => x.UpdateContact(editedByDialogContact), Times.Once());
 			Assert.AreSame(updatedBuServidceContact, mainViewModel.CurrentContact);
@@ -151,7 +151,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Tests
 			contactsService.Setup(x => x.GetContacts()).Returns(Task.FromResult<List<Contact>>(contacts));
 
 			var vmFactory = new Mock<IAppViewModelFactory>();
-			vmFactory.Setup(x => x.ResolveViewModel<IContactEditorViewModel>(It.IsAny<KeyValuePair<string, object>>())).Returns(contactEditor.Object);
+			vmFactory.Setup(x => x.ResolveViewModel<IContactEditorViewModel>(It.IsAny<(string name, object value)>())).Returns(contactEditor.Object);
 
 			var mainViewModel = new MainViewModel(viewAdapter.Object, contactsService.Object, vmFactory.Object);
 			viewAdapter.Raise(x => x.Loaded += null, new EventArgs());
@@ -161,7 +161,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Tests
 			mainViewModel.EditContactCommand.Execute(null);
 
 			// assert
-			vmFactory.Verify(x => x.ResolveViewModel<IContactEditorViewModel>(It.IsAny<KeyValuePair<string, object>>()), Times.Once);
+			vmFactory.Verify(x => x.ResolveViewModel<IContactEditorViewModel>(It.IsAny<(string name, object value)>()), Times.Once);
 			contactEditor.Verify(x => x.ShowDialog(), Times.Once());
 			contactsService.Verify(x => x.UpdateContact(It.IsAny<Contact>()), Times.Never);
 			Assert.AreSame(contactToEdit, mainViewModel.CurrentContact);
