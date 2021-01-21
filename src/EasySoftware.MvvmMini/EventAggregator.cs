@@ -10,7 +10,7 @@ namespace EasySoftware.MvvmMini
 	public class EventAggregator : IEventAggregator
 	{
 		private readonly object _locker = new object();
-      private readonly Dictionary<string, List<ActionWrapper>> _actions;
+		private readonly Dictionary<string, List<ActionWrapper>> _actions;
 
 		#region constructors
 		public EventAggregator()
@@ -147,7 +147,7 @@ namespace EasySoftware.MvvmMini
 					return true;
 				}
 			}
-			
+
 			public void Publish(object objectToSend)
 			{
 				object target = null;
@@ -182,6 +182,6 @@ namespace EasySoftware.MvvmMini
 		}
 
 		#endregion
-		
+
 	}
 }
