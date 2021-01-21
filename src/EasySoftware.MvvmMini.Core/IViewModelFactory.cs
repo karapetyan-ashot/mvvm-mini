@@ -1,9 +1,15 @@
 ﻿using System;
+using Unity;
 
 namespace EasySoftware.MvvmMini.Core
 {
 	public interface IViewModelFactory
 	{
+		/// <summary>
+		/// IUnityContainer to register and resolve all other services, types except ViewModels.
+		/// </summary>
+		IUnityContainer Container { get; }
+
 		/// <summary>
 		/// Registers in IoC container ViewModel interface, implementation and View.
 		/// </summary>

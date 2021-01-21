@@ -9,55 +9,56 @@ using Unity.Resolution;
 
 namespace EasySoftware.MvvmMini
 {
-	public class ViewModelFactoryBase : IViewModelFactory
-	{
-		private readonly Dictionary<Type, Type> _viewModelViewMapping;
-		protected readonly IUnityContainer _unityContainer;
+   public class ViewModelFactoryBase : IViewModelFactory
+   {
+      private readonly Dictionary<Type, Type> _viewModelViewMapping;
 
-		public ViewModelFactoryBase(IUnityContainer unityContainer)
-		{
-			this._unityContainer = unityContainer ?? throw new ArgumentNullException(nameof(unityContainer));
+      public ViewModelFactoryBase(IUnityContainer unityContainer)
+      {
+         this.Container = unityContainer ?? throw new ArgumentNullException(nameof(unityContainer));
 
-			this._unityContainer.RegisterType<IViewAdapter, ViewAdapter>();
+         this.Container.RegisterType<IViewAdapter, ViewAdapter>();
 
-			this._viewModelViewMapping = new Dictionary<Type, Type>();
-		}
+         this._viewModelViewMapping = new Dictionary<Type, Type>();
+      }
 
-		public void RegisterViewModelWithView<TViewModelFrom, TViewModelTo, TView>() where TViewModelTo : TViewModelFrom, IViewModel
-		{
-			Type viewModelFromType = typeof(TViewModelFrom);
-			if (this._viewModelViewMapping.ContainsKey(viewModelFromType))
-				throw new Exception($"Duplicate registration ({viewModelFromType})");
-			this._viewModelViewMapping.Add(viewModelFromType, typeof(TView));
+      public IUnityContainer Container { get; }
 
-			this._unityContainer.RegisterType<TViewModelFrom, TViewModelTo>();
-			this._unityContainer.RegisterType<TView>();
-		}
+      public void RegisterViewModelWithView<TViewModelFrom, TViewModelTo, TView>() where TViewModelTo : TViewModelFrom, IViewModel
+      {
+         Type viewModelFromType = typeof(TViewModelFrom);
+         if (this._viewModelViewMapping.ContainsKey(viewModelFromType))
+            throw new Exception($"Duplicate registration ({viewModelFromType})");
+         this._viewModelViewMapping.Add(viewModelFromType, typeof(TView));
 
-		public TViewModel ResolveViewModel<TViewModel>(params (string name, object value)[] constructorParameters) where TViewModel : IViewModel
-		{
-			Type viewModelType = typeof(TViewModel);
-			return (TViewModel)ResolveViewModel(viewModelType, constructorParameters);
-		}
+         this.Container.RegisterType<TViewModelFrom, TViewModelTo>();
+         this.Container.RegisterType<TView>();
+      }
 
-		public object ResolveViewModel(Type viewModelType, params (string name, object value)[] constructorParameters)
-		{
-			if (!this._viewModelViewMapping.ContainsKey(viewModelType))
-				throw new Exception($"{viewModelType} is not registered");
+      public TViewModel ResolveViewModel<TViewModel>(params (string name, object value)[] constructorParameters) where TViewModel : IViewModel
+      {
+         Type viewModelType = typeof(TViewModel);
+         return (TViewModel)ResolveViewModel(viewModelType, constructorParameters);
+      }
 
-			Type viewType = this._viewModelViewMapping[viewModelType];
+      public object ResolveViewModel(Type viewModelType, params (string name, object value)[] constructorParameters)
+      {
+         if (!this._viewModelViewMapping.ContainsKey(viewModelType))
+            throw new Exception($"{viewModelType} is not registered");
 
-			var view = this._unityContainer.Resolve(viewType);
+         Type viewType = this._viewModelViewMapping[viewModelType];
 
-			IViewAdapter viewAdapter = this._unityContainer.Resolve<IViewAdapter>(
-			   new ParameterOverride("view", view));
+         var view = this.Container.Resolve(viewType);
 
-			var overrides = constructorParameters.Select(x => new ParameterOverride(x.name, x.value)).ToList();
-			overrides.Add(new ParameterOverride("viewAdapter", viewAdapter));
+         IViewAdapter viewAdapter = this.Container.Resolve<IViewAdapter>(
+            new ParameterOverride("view", view));
 
-			var viewModel = this._unityContainer.Resolve(viewModelType, overrides.ToArray());
+         var overrides = constructorParameters.Select(x => new ParameterOverride(x.name, x.value)).ToList();
+         overrides.Add(new ParameterOverride("viewAdapter", viewAdapter));
 
-			return viewModel;
-		}
-	}
+         var viewModel = this.Container.Resolve(viewModelType, overrides.ToArray());
+
+         return viewModel;
+      }
+   }
 }
