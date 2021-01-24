@@ -1,0 +1,24 @@
+﻿<Window x:Class="EasySoftware.MvvmMini.WpfDemo.ViewModels.DemoHandleWindowClosing.DemoHandleWindowClosingView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EasySoftware.MvvmMini.WpfDemo.ViewModels.DemoHandleWindowClosing"
+        mc:Ignorable="d"
+        Title="{Binding Title}" Height="200" Width="400">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition />
+			<RowDefinition Height="40" />
+		</Grid.RowDefinitions>
+		<StackPanel Orientation="Vertical" HorizontalAlignment="Center" >
+			<TextBlock Text="Now it is impossible to close this window even by clicking on 'X'" />
+			<TextBlock Text="Enter 'close' to allow closing" />
+			<TextBox Text="{Binding Confirmation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100" />
+		</StackPanel>
+		<StackPanel HorizontalAlignment="Right" Grid.Row="1">
+		<Button Content="Close" Command="{Binding CloseCommand}" IsDefault="True" />
+		</StackPanel>
+	</Grid>
+		
+</Window>

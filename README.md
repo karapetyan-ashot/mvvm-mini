@@ -20,21 +20,23 @@ public class ShellViewModel : WindowViewModelBase, IShellViewModel
 }
 ```
 
-### override OnStartup method of your App class
+### Set ShutdownMode in App.xaml
+```xaml
+<Application 
+...
+ShutdownMode="OnExplicitShutdown" />
 
+```
+
+### Override OnStartup method of your App class
 ```csharp
 using EasySoftware.MvvmMini.Core;
-
 ...
-
 public partial class App : Application
 {
 	protected override void OnStartup(StartupEventArgs e)
 	{
 		base.OnStartup(e);
-
-		// set shutdown mode
-		this.ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
 		IViewModelFactory viewModelFactory = new ViewModelFactory();
 
@@ -43,11 +45,13 @@ public partial class App : Application
 
 		// resolve shell viewmodel
 		IShellViewModel shellViewModel = viewModelFactory.ResolveViewModel<IShellViewModel>();
+
 		// subscribe to closed event to shutdown app
 		shellViewModel.Closed += (s, ea) => this.Shutdown();
+
 		// call show method to display the view.
 		shellViewModel.Show();
 	}
 }
-
 ```
+
