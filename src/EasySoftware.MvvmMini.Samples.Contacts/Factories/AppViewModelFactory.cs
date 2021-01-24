@@ -7,7 +7,7 @@ using Unity;
 
 namespace EasySoftware.MvvmMini.Samples.Contacts.Factories
 {
-	public class AppViewModelFactory : ViewModelFactoryBase, IAppViewModelFactory
+	public class AppViewModelFactory : ViewModelFactory, IAppViewModelFactory
 	{
 
 		public AppViewModelFactory(IUnityContainer unityContainer) : base(unityContainer) { }
