@@ -28,25 +28,26 @@ using EasySoftware.MvvmMini.Core;
 ...
 
 public partial class App : Application
+{
+	protected override void OnStartup(StartupEventArgs e)
 	{
-		protected override void OnStartup(StartupEventArgs e)
-		{
-			base.OnStartup(e);
-            // set shutdown mode
-			this.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+		base.OnStartup(e);
 
-			IViewModelFactory viewModelFactory = new ViewModelFactory();
+		// set shutdown mode
+		this.ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
-			// register in viewmodel factory shell viewmodel and view
-			viewModelFactory.RegisterViewModelWithView<IShellViewModel, ShellViewModel, ShellView>();
+		IViewModelFactory viewModelFactory = new ViewModelFactory();
 
-            // resolve shell viewmodel
-			IShellViewModel shellViewModel = viewModelFactory.ResolveViewModel<IShellViewModel>();
-            // subscribe to closed event to shutdown app
-			shellViewModel.Closed += (s, ea) => this.Shutdown();
-            // call show method to display the view.
-			shellViewModel.Show();
-		}
+		// register in viewmodel factory shell viewmodel and view
+		viewModelFactory.RegisterViewModelWithView<IShellViewModel, ShellViewModel, ShellView>();
+
+		// resolve shell viewmodel
+		IShellViewModel shellViewModel = viewModelFactory.ResolveViewModel<IShellViewModel>();
+		// subscribe to closed event to shutdown app
+		shellViewModel.Closed += (s, ea) => this.Shutdown();
+		// call show method to display the view.
+		shellViewModel.Show();
 	}
+}
 
 ```
