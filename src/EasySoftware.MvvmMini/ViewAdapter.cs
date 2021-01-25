@@ -13,7 +13,7 @@ namespace EasySoftware.MvvmMini
 
 		public event EventHandler Loaded;
 
-		private FrameworkElement _view;
+		private readonly FrameworkElement _view;
 
 		public ViewAdapter(FrameworkElement view)
 		{

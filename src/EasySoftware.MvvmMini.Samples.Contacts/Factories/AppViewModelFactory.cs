@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Windows;
+﻿using System.Windows;
 
 using EasySoftware.MvvmMini.Samples.Contacts.Dialogs.MessageBox;
 
@@ -10,7 +9,10 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Factories
 	public class AppViewModelFactory : ViewModelFactory, IAppViewModelFactory
 	{
 
-		public AppViewModelFactory(IUnityContainer unityContainer) : base(unityContainer) { }
+		public AppViewModelFactory() : base()
+		{
+			this.Container.AddExtension(new Diagnostic());
+		}
 
 		public IMessageBoxViewModel CreateMessageBoxDialog(string message, string title, MessageBoxButton buttons)
 		{

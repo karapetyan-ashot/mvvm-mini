@@ -12,7 +12,7 @@
 	mc:Ignorable="d">
 	<Window.Resources>
 		<conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-		
+
 	</Window.Resources>
 	<Grid>
 		<TextBlock Text="{Binding CurrentState}" />

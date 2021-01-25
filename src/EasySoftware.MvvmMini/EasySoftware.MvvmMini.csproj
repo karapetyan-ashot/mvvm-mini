@@ -4,13 +4,16 @@
     <TargetFrameworks>netcoreapp3.1;net472</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <PackageTags>WPF, MVVM</PackageTags>
-    <PackageReleaseNotes>Initial implementation</PackageReleaseNotes>
+    <PackageReleaseNotes>code cleanup</PackageReleaseNotes>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <AssemblyVersion>1.0.11.0</AssemblyVersion>
-    <Version>1.0.11</Version>
+    <AssemblyVersion>1.0.12.0</AssemblyVersion>
+    <Version>1.0.12</Version>
     <FileVersion>1.0.11.0</FileVersion>
     <PackageProjectUrl>https://github.com/karapetyan-ashot/mvvm-mini</PackageProjectUrl>
     <RepositoryUrl>https://github.com/karapetyan-ashot/mvvm-mini</RepositoryUrl>
+    <Authors>Ashot Karapetyan</Authors>
+    <Company>EasySoftware</Company>
+    <Description>WPF MVVM implementation using VIewModel first approach</Description>
   </PropertyGroup>
 
   <ItemGroup>

@@ -13,45 +13,35 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 {
 	public partial class App : Application
 	{
-		IUnityContainer _unityContainer;
-
 		protected override void OnStartup(StartupEventArgs e)
 		{
-			this.ConfigureContainer();
-
-			IAppViewModelFactory viewModelFactory = this._unityContainer.Resolve<IAppViewModelFactory>();
+			IAppViewModelFactory viewModelFactory = this.ConfigureContainer();
 			ILoginViewModel loginViewModel = viewModelFactory.ResolveViewModel<ILoginViewModel>();
 			loginViewModel.ShowDialog();
 			if (loginViewModel.User != null)
 			{
 				IMainViewModel mainViewModel = viewModelFactory.ResolveViewModel<IMainViewModel>();
 
-				mainViewModel.Closed += MainViewModel_Closed;
+				mainViewModel.Closed += (s, ea) => this.Shutdown();
 				mainViewModel.Show();
 			}
 			else
 				this.Shutdown();
 		}
 
-		private void MainViewModel_Closed(object sender, EventArgs e)
+		private IAppViewModelFactory ConfigureContainer()
 		{
-			this.Shutdown();
-		}
+			IAppViewModelFactory viewModelFactory = new AppViewModelFactory();
 
-		private void ConfigureContainer()
-		{
-			this._unityContainer = new UnityContainer().AddExtension(new Diagnostic());
-
-			IAppViewModelFactory viewModelFactory = new AppViewModelFactory(this._unityContainer);
-			this._unityContainer.RegisterInstance<IAppViewModelFactory>(viewModelFactory);
-
-			this._unityContainer.RegisterSingleton<IContactsService, ContactsMockService>();
+			viewModelFactory.Container.RegisterInstance<IAppViewModelFactory>(viewModelFactory);
+			viewModelFactory.Container.RegisterSingleton<IContactsService, ContactsMockService>();
 
 			viewModelFactory.RegisterViewModelWithView<ILoginViewModel, LoginViewModel, LoginView>();
 			viewModelFactory.RegisterViewModelWithView<IMessageBoxViewModel, MessageBoxViewModel, MessageBoxView>();
 			viewModelFactory.RegisterViewModelWithView<IContactEditorViewModel, ContactEditorViewModel, ContactEditorView>();
 			viewModelFactory.RegisterViewModelWithView<IMainViewModel, MainViewModel, MainView>();
 
+			return viewModelFactory;
 		}
 	}
 }

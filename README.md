@@ -2,7 +2,7 @@
 
 <!-- Headings -->
 
-## Quiqk start
+## Quick start
 
 ### Create viewmodel with view for main window
 
