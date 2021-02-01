@@ -1,7 +1,5 @@
 # mvvm-mini
 
-<!-- Headings -->
-
 ## Quick start
 
 ### Create viewmodel with view for main window
