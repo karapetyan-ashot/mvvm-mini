@@ -31,9 +31,9 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 			this.DeleteContactCommand = new RelayCommand(this.DeleteContact, this.CanDeleteContact);
 		}
 
-		public ICommand CreateContactCommand { get; }
-		public ICommand EditContactCommand { get; }
-		public ICommand DeleteContactCommand { get; }
+		public IRelayCommand CreateContactCommand { get; }
+		public IRelayCommand EditContactCommand { get; }
+		public IRelayCommand DeleteContactCommand { get; }
 
 		private ObservableCollection<Contact> _contacts;
 		public ObservableCollection<Contact> Contacts
