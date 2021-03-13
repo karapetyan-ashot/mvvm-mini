@@ -13,13 +13,16 @@ namespace EasySoftware.MvvmMini
 			this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
 		}
 
-		protected void SetProperty<T>(ref T storage, T value, [CallerMemberName] string propName = null)
+		protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propName = null)
 		{
 			if (!EqualityComparer<T>.Default.Equals(storage, value))
 			{
 				storage = value;
 				RaisePropertyChanged(propName);
+				return true;
 			}
+
+			return false;
 		}
 	}
 }

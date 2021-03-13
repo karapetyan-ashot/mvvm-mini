@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Security.RightsManagement;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
+
 using EasySoftware.MvvmMini.Core;
 using EasySoftware.MvvmMini.Samples.Contacts.Services;
 
@@ -22,7 +19,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.Login
 
 		public User User { get; private set; }
 
-		public ICommand LoginCommand { get; }
+		public IRelayCommand LoginCommand { get; }
 
 		private string _userName;
 		public string UserName
@@ -45,7 +42,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.Login
 			if (!this.HasErrors)
 			{
 				this.IsBusy = true;
-								
+
 				this.User = await this._contactsService.Login(this.UserName, this.Password);
 
 				if (this.User != null)
@@ -55,7 +52,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.Login
 
 				this.IsBusy = false;
 			}
-			
+
 		}
 
 		private bool CanLogin()
@@ -69,10 +66,10 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.Login
 		private void Validate()
 		{
 			this.ClearErrors();
-			
+
 			if (string.IsNullOrEmpty(this.UserName))
 				this.AddError(nameof(UserName), "username is required");
-			if(this.UserName != null && this.UserName.Length < 2)
+			if (this.UserName != null && this.UserName.Length < 5)
 				this.AddError(nameof(UserName), "username lenght must be >= 2");
 			if (string.IsNullOrEmpty(this.Password))
 				this.AddError(nameof(Password), "password is required");

@@ -28,8 +28,8 @@ namespace EasySoftware.MvvmMini.Samples.Notepad
 			this.SaveCommand = new RelayCommand(this.Save, this.CanSave);
 		}
 
-		public ICommand NewDocumentCommand { get; }
-		public ICommand SaveCommand { get; }
+		public IRelayCommand NewDocumentCommand { get; }
+		public IRelayCommand SaveCommand { get; }
 
 		private ObservableCollection<IDocumentViewModel> _documents;
 		public ObservableCollection<IDocumentViewModel> Documents

@@ -17,7 +17,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.MessageBox
          this.SetResultCommand = new RelayCommand<MessageBoxResult>(this.SetResult);
       }
 
-      public ICommand SetResultCommand { get; }
+      public IRelayCommand SetResultCommand { get; }
 
       private string _message;
       public string Message

@@ -31,11 +31,11 @@ namespace EasySoftware.MvvmMini.Samples.HowTo
 			this.OpenHandleWindowLoadingCommand = new RelayCommand(OpenHandleWindowLoading);
 		}
 
-		public ICommand OpenWindowCommand { get; }
-		public ICommand OpenWindowWithParamsCommand { get; }
-		public ICommand OpenDialogCommand { get; }
-		public ICommand OpenHandleWindowClosingCommand { get; }
-		public ICommand OpenHandleWindowLoadingCommand { get; }
+		public IRelayCommand OpenWindowCommand { get; }
+		public IRelayCommand OpenWindowWithParamsCommand { get; }
+		public IRelayCommand OpenDialogCommand { get; }
+		public IRelayCommand OpenHandleWindowClosingCommand { get; }
+		public IRelayCommand OpenHandleWindowLoadingCommand { get; }
 
 		private string _infoMessage;
 		public string InfoMessage

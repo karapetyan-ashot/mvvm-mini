@@ -51,7 +51,7 @@
 							Background="White"
 							BorderBrush="Red"
 							BorderThickness="1">
-							<ContentPresenter 
+							<ContentPresenter
 								Margin="4"
 								HorizontalAlignment="Left"
 								VerticalAlignment="Top" />

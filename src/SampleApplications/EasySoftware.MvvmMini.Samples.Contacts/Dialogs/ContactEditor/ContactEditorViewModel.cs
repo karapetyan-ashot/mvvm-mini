@@ -29,8 +29,8 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.ContactEditor
 			this.CancelCommand = new RelayCommand(this.Cancel);
 		}
 
-		public ICommand SaveCommand { get; }
-		public ICommand CancelCommand { get; }
+		public IRelayCommand SaveCommand { get; }
+		public IRelayCommand CancelCommand { get; }
 
 		public Contact ModifiedContact { get; private set; }
 

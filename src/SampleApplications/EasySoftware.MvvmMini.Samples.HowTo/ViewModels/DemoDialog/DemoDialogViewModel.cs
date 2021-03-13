@@ -18,7 +18,7 @@ namespace EasySoftware.MvvmMini.Samples.HowTo.ViewModels.DemoDialog
 			this.SetResultCommand = new RelayCommand(this.SetResult, this.CanSetResult);
 		}
 
-		public ICommand SetResultCommand { get; }
+		public IRelayCommand SetResultCommand { get; }
 
 		private string _message;
 		public string Message
