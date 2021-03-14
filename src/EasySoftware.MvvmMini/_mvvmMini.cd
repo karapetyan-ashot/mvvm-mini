@@ -14,7 +14,7 @@
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAIEAAEAAAIAAAARAAAABAAAAAAAAAAAAQAA=</HashCode>
+      <HashCode>AAAAAAAAAIEAAEAAAIAAAARAAAABAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModelBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -43,17 +43,17 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="EasySoftware.MvvmMini.RelayCommand&lt;T&gt;" Collapsed="true">
-    <Position X="4.75" Y="1" Width="1.5" />
+  <Class Name="EasySoftware.MvvmMini.RelayCommand&lt;T&gt;">
+    <Position X="3.75" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAEAAAAQAAECAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAEAAAAQAAECAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>RelayCommand.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="EasySoftware.MvvmMini.RelayCommand" Collapsed="true">
-    <Position X="4.75" Y="2.25" Width="1.75" />
+  <Class Name="EasySoftware.MvvmMini.RelayCommand">
+    <Position X="3.75" Y="3.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAEAAAAQAAECAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAEAAAAQAAECAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>RelayCommand.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -73,7 +73,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Interface Name="EasySoftware.MvvmMini.IErrorContainer" Collapsed="true">
+  <Interface Name="EasySoftware.MvvmMini.IErrorContainer">
     <Position X="7.5" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAAAAAAAAAABAAAAAAAAAAAAAAAIAAAAAAAggAA=</HashCode>

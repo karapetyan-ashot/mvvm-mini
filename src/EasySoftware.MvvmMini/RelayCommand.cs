@@ -8,22 +8,22 @@ namespace EasySoftware.MvvmMini
 {
    public abstract class RelayCommandBase : IRelayCommand
    {
-      protected bool _useCommandManager = true;
-      protected bool _isRunning;
+      public bool UseCommandManager { get; protected set; }
+      public bool IsRunning { get; protected set; }
 
       private event EventHandler _canExecuteChanged;
       public event EventHandler CanExecuteChanged
       {
          add
          {
-            if (this._useCommandManager)
+            if (this.UseCommandManager)
                CommandManager.RequerySuggested += value;
             else
                this._canExecuteChanged += value;
          }
          remove
          {
-            if (this._useCommandManager)
+            if (this.UseCommandManager)
                CommandManager.RequerySuggested -= value;
             else
                this._canExecuteChanged -= value;
@@ -36,7 +36,7 @@ namespace EasySoftware.MvvmMini
 
       public void RaiseCanExecuteChanged()
       {
-         if (this._useCommandManager)
+         if (this.UseCommandManager)
             CommandManager.InvalidateRequerySuggested();
          else
             this._canExecuteChanged?.Invoke(this, EventArgs.Empty);
@@ -59,20 +59,20 @@ namespace EasySoftware.MvvmMini
       {
          this._execute = execute ?? throw new ArgumentNullException(nameof(execute));
          this._canExecute = canExecute;
-         this._useCommandManager = useCommandManager;
+         this.UseCommandManager = useCommandManager;
       }
 
       public override async void Execute(object parameter)
       {
-         this._isRunning = true;
+         this.IsRunning = true;
          await _execute((T)parameter);
-         this._isRunning = false;
+         this.IsRunning = false;
          this.RaiseCanExecuteChanged();
       }
 
       public override bool CanExecute(object parameter)
       {
-         if (this._isRunning)
+         if (this.IsRunning)
             return false;
 
          if (_canExecute == null)
@@ -97,20 +97,20 @@ namespace EasySoftware.MvvmMini
       {
          this._execute = execute ?? throw new ArgumentNullException(nameof(execute));
          this._canExecute = canExecute;
-         this._useCommandManager = useCommandManager;
+         this.UseCommandManager = useCommandManager;
       }
 
       public override async void Execute(object parameter)
       {
-         this._isRunning = true;
+         this.IsRunning = true;
          await _execute();
-         this._isRunning = false;
+         this.IsRunning = false;
          this.RaiseCanExecuteChanged();
       }
 
       public override bool CanExecute(object parameter)
       {
-         if (this._isRunning)
+         if (this.IsRunning)
             return false;
 
          if (_canExecute == null)

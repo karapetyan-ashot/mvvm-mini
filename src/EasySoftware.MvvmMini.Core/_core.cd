@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Interface Name="EasySoftware.MvvmMini.Core.IViewModel">
-    <Position X="1" Y="0.5" Width="1.5" />
+    <Position X="0.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAEAAAAAAAABAAAABAAAAAAAAAAAAQAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAABAAAABAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IViewModel.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="EasySoftware.MvvmMini.Core.IViewAdapter">
-    <Position X="9.25" Y="0.75" Width="1.5" />
+    <Position X="3.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gAAAAAAAAAEAAAAAAAAAAAEAAAAFAAAAAAAAAACAAAA=</HashCode>
       <FileName>IViewAdapter.cs</FileName>
@@ -29,16 +29,16 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="EasySoftware.MvvmMini.Core.IDialogViewModel">
-    <Position X="0.75" Y="8" Width="1.75" />
+    <Position X="0.75" Y="7.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IDialogViewModel.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="EasySoftware.MvvmMini.Core.IViewModelFactory">
-    <Position X="3" Y="0.75" Width="4.25" />
+    <Position X="5.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAQAAAEAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
       <FileName>IViewModelFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>

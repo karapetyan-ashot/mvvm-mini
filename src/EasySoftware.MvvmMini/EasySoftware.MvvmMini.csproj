@@ -4,11 +4,11 @@
     <TargetFrameworks>net5.0-windows;netcoreapp3.1;net472</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <PackageTags>WPF, MVVM</PackageTags>
-    <PackageReleaseNotes>ICommand implementation</PackageReleaseNotes>
+    <PackageReleaseNotes>IRelayCommand implementation</PackageReleaseNotes>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <AssemblyVersion>1.0.14.0</AssemblyVersion>
-    <Version>1.0.14</Version>
-    <FileVersion>1.0.14.0</FileVersion>
+    <AssemblyVersion>1.0.15.0</AssemblyVersion>
+    <Version>1.0.15</Version>
+    <FileVersion>1.0.15.0</FileVersion>
     <PackageProjectUrl>https://github.com/karapetyan-ashot/mvvm-mini</PackageProjectUrl>
     <RepositoryUrl>https://github.com/karapetyan-ashot/mvvm-mini</RepositoryUrl>
     <Authors>Ashot Karapetyan</Authors>
