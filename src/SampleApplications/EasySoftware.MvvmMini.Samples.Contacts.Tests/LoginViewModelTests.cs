@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 
 using EasySoftware.MvvmMini.Core;
 using EasySoftware.MvvmMini.Samples.Contacts.Dialogs.Login;
@@ -57,11 +58,10 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Tests
 			loginViewModel.LoginCommand.Execute(null);
 
 			// assert
-
 			viewAdapter.Verify(x => x.Close(), Times.Never);
 			contactsService.Verify(x => x.Login(It.Is<string>(p => p == "userName"), It.Is<string>(p => p == "2")), Times.Once);
 			Assert.AreEqual(null, loginViewModel.User);
-			Assert.AreEqual("- Wrong user/pass", loginViewModel[""].Trim());
+			Assert.AreEqual("- Wrong user/pass", loginViewModel.Errors[string.Empty].First());
 			
 		}
 	}

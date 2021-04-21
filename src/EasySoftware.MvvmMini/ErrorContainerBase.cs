@@ -3,50 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
+using EasySoftware.MvvmMini.Core;
+
 namespace EasySoftware.MvvmMini
 {
 	public abstract partial class ErrorContainerBase : BindableBase { }
-
-	// IDataErrorInfo
-	public partial class ErrorContainerBase : IDataErrorInfo
-	{
-		private Dictionary<string, List<string>> _errors;
-
-		public string Error
-		{
-			get
-			{
-				string err = string.Empty;
-				if (this._errors != null)
-				{
-					if (this._errors.ContainsKey(string.Empty))
-						err += this[string.Empty];
-					foreach (KeyValuePair<string, List<string>> item in this._errors.Where(x => x.Key != string.Empty))
-					{
-						err += this[item.Key];
-					}
-				}
-				return err;
-			}
-		}
-
-		public string this[string columnName]
-		{
-			get
-			{
-				string err = string.Empty;
-				if (this._errors != null && this._errors.ContainsKey(columnName))
-				{
-					err += columnName + System.Environment.NewLine;
-					foreach (string errMsg in this._errors[columnName])
-					{
-						err += string.Format("\t - {0}{1}", columnName, errMsg, System.Environment.NewLine);
-					}
-				}
-				return err;
-			}
-		}
-	}
 
 	// INotifyDataErrorInfo
 	public partial class ErrorContainerBase : INotifyDataErrorInfo
@@ -59,96 +20,48 @@ namespace EasySoftware.MvvmMini
 
 		public System.Collections.IEnumerable GetErrors(string propertyName)
 		{
-			if (this._errors != null && this._errors.ContainsKey(propertyName))
-				return this._errors[propertyName];
+			if (this._errorContainer.Errors.ContainsKey(propertyName))
+				return this._errorContainer.Errors[propertyName];
 
 			return null;
 		}
 
-		public bool HasErrors
-		{
-			get { return this._errors == null ? false : this._errors.Any(); }
-		}
+		public bool HasErrors => this._errorContainer.HasErrors;
 	}
 
 	// IErrorContainer
 	public partial class ErrorContainerBase : IErrorContainer
 	{
-		public void ClearErrors()
-		{
-			if (this._errors != null)
-			{
-				foreach (var item in this._errors.ToList())
-				{
-					this.RemoveError(item.Key);
-				}
-			}
-		}
+		protected readonly ErrorContainer _errorContainer = new ErrorContainer();
+
+		bool IErrorContainer.HasErrors => this._errorContainer.HasErrors;
+
+		public IReadOnlyDictionary<string, IEnumerable<string>> Errors => this._errorContainer.Errors;
 
 		public void AddError(string errorMessage)
 		{
-			this.AddError(string.Empty, errorMessage);
-		}
-
-		public void AddError(Exception ex)
-		{
-			this.AddError(string.Empty, ex.Message);
+			this._errorContainer.AddError(errorMessage);
+			RaiseErrorsChanged(string.Empty);
 		}
 
 		public void AddError(string propName, string errorMessage)
 		{
-			if (this._errors == null)
-				this._errors = new Dictionary<string, List<string>>();
-			if (!this._errors.ContainsKey(propName))
-				this._errors.Add(propName, new List<string>());
-			if (!this._errors[propName].Contains(errorMessage))
-				this._errors[propName].Add(errorMessage);
-			this.RaiseErrorsChanged(propName);
+			this._errorContainer.AddError(propName, errorMessage);
+			RaiseErrorsChanged(propName);
 		}
 
-		public void RemoveError(string propName)
+		public void ClearErrors()
 		{
-			this.RemoveError(propName, string.Empty);
-		}
-
-		public void RemoveError(string propName, string errorMessage)
-		{
-			if (this._errors != null && this._errors.ContainsKey(propName))
+			foreach (string key in this._errorContainer.Errors.Keys.ToList())
 			{
-				if (string.IsNullOrEmpty(errorMessage))
-				{
-					this._errors.Remove(propName);
-				}
-				else if (this._errors[propName].Contains(errorMessage))
-				{
-					this._errors[propName].Remove(errorMessage);
-					if (this._errors[propName].Count == 0)
-						this._errors.Remove(propName);
-				}
-
-				this.RaiseErrorsChanged(propName);
+				ClearErrors(key);
 			}
 		}
 
-		public Dictionary<string, string> GetErrors()
+		public void ClearErrors(string propName)
 		{
-			Dictionary<string, string> result = new Dictionary<string, string>();
-
-			if (this._errors != null)
-			{
-				string err;
-				foreach (KeyValuePair<string, List<string>> item in this._errors)
-				{
-					err = string.Empty;
-					foreach (string errMsg in item.Value)
-					{
-						err += $"{errMsg}{Environment.NewLine}";
-					}
-					result.Add(item.Key, err);
-				}
-			}
-
-			return result;
+			this._errorContainer.ClearErrors(propName);
+			RaiseErrorsChanged(propName);
 		}
 	}
 }

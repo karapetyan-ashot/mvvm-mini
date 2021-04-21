@@ -6,6 +6,8 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
+using EasySoftware.MvvmMini.Core;
+
 namespace EasySoftware.MvvmMini.Samples.Contacts.Controls
 {
 
@@ -15,7 +17,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Controls
 		public ValidationSummary()
 		{
 			this.Content = this._errorsListBox;
-			this.Loaded += ValidationSummary_Loaded; 
+			this.Loaded += ValidationSummary_Loaded;
 		}
 
 		private void ValidationSummary_Loaded(object sender, RoutedEventArgs e)
@@ -39,7 +41,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Controls
 
 			if (this.DataContext is IErrorContainer viewModel)
 			{
-				var errors = viewModel.GetErrors().Select(x => $"{x.Key} - {x.Value}");
+				var errors = viewModel.Errors.Select(x => $"{x.Key} - {string.Join(", ", x.Value)}");
 				this._errorsListBox.ItemsSource = errors;
 				if (errors.Any())
 					this.Visibility = Visibility.Visible;

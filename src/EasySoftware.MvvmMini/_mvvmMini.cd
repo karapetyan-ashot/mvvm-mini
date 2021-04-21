@@ -9,7 +9,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="EasySoftware.MvvmMini.ViewModelBase">
-    <Position X="0.75" Y="8" Width="2.25" />
+    <Position X="0.75" Y="7.25" Width="2.25" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
@@ -20,7 +20,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="EasySoftware.MvvmMini.ClosableViewModelBase">
-    <Position X="0.75" Y="11" Width="2.25" />
+    <Position X="0.75" Y="10.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAiEAAAAAAAgAAAAAABACAAAA=</HashCode>
       <FileName>ClosableViewModelBase.cs</FileName>
@@ -68,17 +68,18 @@
   <Class Name="EasySoftware.MvvmMini.ErrorContainerBase">
     <Position X="0.75" Y="3.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AQAAAAAAAABAAQABCAAAAAAAAAAAAACIAAAAAAAhgAA=</HashCode>
+      <HashCode>AAAAAgAAAAAAAAABAAAAAAAAAAAAAACIAAAAAAABgAA=</HashCode>
       <FileName>ErrorContainerBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Interface Name="EasySoftware.MvvmMini.IErrorContainer">
-    <Position X="7.5" Y="2.25" Width="1.5" />
+  <Class Name="EasySoftware.MvvmMini.ModelBase">
+    <Position X="7.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQAAAAAAAAAAAAABAAAAAAAAAAAAAAAIAAAAAAAggAA=</HashCode>
-      <FileName>IErrorContainer.cs</FileName>
+      <HashCode>AAAACAAAAAAAAQAAAAAAAAAAAAAAAAAIAAAAAAAggAA=</HashCode>
+      <FileName>ModelBase.cs</FileName>
     </TypeIdentifier>
-  </Interface>
+    <Lollipop Position="0.2" />
+  </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
