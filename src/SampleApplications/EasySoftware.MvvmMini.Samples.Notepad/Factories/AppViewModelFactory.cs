@@ -6,9 +6,9 @@ namespace EasySoftware.MvvmMini.Samples.Notepad.Factories
 {
 	public class AppViewModelFactory : ViewModelFactory, IAppViewModelFactory
 	{
-		public IMessageBoxDialog CreateMessageBoxDialog(string message, string title, MessageBoxButton buttons)
+		public IMessageBoxViewModel CreateMessageBoxDialog(string message, string title, MessageBoxButton buttons)
 		{
-			return this.ResolveViewModel<IMessageBoxDialog>(
+			return this.ResolveViewModel<IMessageBoxViewModel>(
 				(nameof(message), message),
 				(nameof(title), title),
 				(nameof(buttons), buttons)

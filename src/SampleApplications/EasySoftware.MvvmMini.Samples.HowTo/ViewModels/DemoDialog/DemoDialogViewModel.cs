@@ -1,16 +1,14 @@
 ﻿using System.Threading.Tasks;
-using System.Windows.Input;
 
 using EasySoftware.MvvmMini.Core;
 
 namespace EasySoftware.MvvmMini.Samples.HowTo.ViewModels.DemoDialog
 {
-	public interface IDemoDialogViewModel : IDialogViewModel
-	{
-		string ResultMessage { get; }
+	public interface IDemoDialogViewModel : IDialogViewModel<string>
+	{		
 	}
 
-	public class DemoDialogViewModel : DialogViewModelBase, IDemoDialogViewModel
+	public class DemoDialogViewModel : DialogViewModelBase<string>, IDemoDialogViewModel
 	{
 		public DemoDialogViewModel(IViewAdapter viewAdapter) : base(viewAdapter)
 		{
@@ -27,11 +25,12 @@ namespace EasySoftware.MvvmMini.Samples.HowTo.ViewModels.DemoDialog
 			set => SetProperty(ref this._message, value);
 		}
 
-		public string ResultMessage { get; private set; }
+		
+		public override string DialogResult { get; protected set; }
 
 		private Task SetResult()
 		{
-			this.ResultMessage = this.Message;
+			this.DialogResult = this.Message;
 			this.CloseCommand.Execute(null);
 			return Task.CompletedTask;
 		}

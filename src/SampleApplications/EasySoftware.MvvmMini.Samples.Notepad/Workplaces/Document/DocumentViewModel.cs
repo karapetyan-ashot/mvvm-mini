@@ -19,7 +19,7 @@ namespace EasySoftware.MvvmMini.Samples.Notepad.Workplaces.Document
 		{
 			this._viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
 			this.SaveCommand = new RelayCommand(this.Save, this.CanSave);
-			
+
 			this.Title = "unnamed";
 		}
 
@@ -44,7 +44,7 @@ namespace EasySoftware.MvvmMini.Samples.Notepad.Workplaces.Document
 		{
 			if (!this._saved)
 			{
-				IMessageBoxDialog messageBox = this._viewModelFactory.CreateMessageBoxDialog($"do you want to save {this.Title} document", "confirm please", MessageBoxButton.YesNoCancel);
+				IMessageBoxViewModel messageBox = this._viewModelFactory.CreateMessageBoxDialog($"do you want to save {this.Title} document", "confirm please", MessageBoxButton.YesNoCancel);
 				messageBox.ShowDialog();
 
 				switch (messageBox.DialogResult)

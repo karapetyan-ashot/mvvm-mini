@@ -6,76 +6,77 @@ using EasySoftware.MvvmMini.Samples.Contacts.Services;
 
 namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.Login
 {
-	public class LoginViewModel : DialogViewModelBase, ILoginViewModel
+	public class LoginViewModel : DialogViewModelBase<UserModel>, ILoginViewModel
 	{
 		private IContactsService _contactsService;
 
 		public LoginViewModel(IViewAdapter viewAdapter, IContactsService contactsService) : base(viewAdapter)
 		{
 			this._contactsService = contactsService ?? throw new ArgumentNullException(nameof(contactsService));
-			this.LoginCommand = new RelayCommand(this.Login, this.CanLogin);
 			this.Title = "Login to Contacts app";
+
+			this.LoginCommand = new RelayCommand(this.Login, this.CanLogin);
 		}
 
-		public User User { get; private set; }
-
 		public IRelayCommand LoginCommand { get; }
+
+		public override UserModel DialogResult { get; protected set; }
 
 		private string _userName;
 		public string UserName
 		{
 			get => this._userName;
-			set => SetProperty(ref this._userName, value);
+			set
+			{
+				if (SetProperty(ref this._userName, value))
+				{
+					this.ClearErrors(string.Empty);
+					this.ClearErrors(nameof(UserName));
+					if (string.IsNullOrEmpty(this._userName))
+						this.AddError(nameof(UserName), "username is required");
+				}
+			}
 		}
 
 		private string _password;
 		public string Password
 		{
 			get => this._password;
-			set => SetProperty(ref this._password, value);
+			set
+			{
+				if (SetProperty(ref this._password, value))
+				{
+					this.ClearErrors(string.Empty);
+					this.ClearErrors(nameof(Password));
+					if (string.IsNullOrEmpty(this._password))
+						this.AddError(nameof(Password), "password is required");
+				}
+			}
 		}
+
 
 		private async Task Login()
 		{
-			this.Validate();
+			this.IsBusy = true;
 
-			if (!this.HasErrors)
+			var user = await this._contactsService.Login(this.UserName, this.Password);
+
+			if (!user.HasErrors)
 			{
-				this.IsBusy = true;
-
-				this.User = await this._contactsService.Login(this.UserName, this.Password);
-
-				if (this.User != null)
-					this._viewAdapter.Close();
-				else
-					this.AddError("Wrong user/pass");
-
-				this.IsBusy = false;
+				this.DialogResult = user;
+				this.CloseCommand.Execute(null);
+			}
+			else
+			{
+				this.CloneErrors(user);
 			}
 
+			this.IsBusy = false;
 		}
 
 		private bool CanLogin()
 		{
-			if (string.IsNullOrEmpty(this.UserName) || string.IsNullOrEmpty(this.Password))
-				return false;
-			return true;
+			return !this.HasErrors && !string.IsNullOrEmpty(this.UserName) && !string.IsNullOrEmpty(this.Password);
 		}
-
-
-		private void Validate()
-		{
-			this.ClearErrors();
-
-			if (string.IsNullOrEmpty(this.UserName))
-				this.AddError(nameof(UserName), "username is required");
-			if (this.UserName != null && this.UserName.Length < 5)
-				this.AddError(nameof(UserName), "username lenght must be >= 2");
-			if (string.IsNullOrEmpty(this.Password))
-				this.AddError(nameof(Password), "password is required");
-
-			this.RaiseErrorsChanged(string.Empty);
-		}
-
 	}
 }

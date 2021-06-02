@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 
 using EasySoftware.MvvmMini.Core;
 using EasySoftware.MvvmMini.Samples.Contacts.Dialogs.ContactEditor;
@@ -24,7 +23,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 			this._contactsService = contactsService ?? throw new ArgumentNullException(nameof(contactsService));
 			this._viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
 
-			this.Contacts = new ObservableCollection<Contact>();
+			this.Contacts = new ObservableCollection<ContactModel>();
 
 			this.CreateContactCommand = new RelayCommand(this.CreateContact);
 			this.EditContactCommand = new RelayCommand(this.EditContact, this.CanEditContact);
@@ -35,15 +34,15 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 		public IRelayCommand EditContactCommand { get; }
 		public IRelayCommand DeleteContactCommand { get; }
 
-		private ObservableCollection<Contact> _contacts;
-		public ObservableCollection<Contact> Contacts
+		private ObservableCollection<ContactModel> _contacts;
+		public ObservableCollection<ContactModel> Contacts
 		{
 			get => this._contacts;
 			set => SetProperty(ref this._contacts, value);
 		}
 
-		private Contact _currentContact;
-		public Contact CurrentContact
+		private ContactModel _currentContact;
+		public ContactModel CurrentContact
 		{
 			get => this._currentContact;
 			set => SetProperty(ref this._currentContact, value);
@@ -53,38 +52,36 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 		{
 			this.IsBusy = true;
 
-			List<Contact> contacts = await this._contactsService.GetContacts();
-			this.Contacts = new ObservableCollection<Contact>(contacts);
+			List<ContactModel> contacts = await this._contactsService.GetContacts();
+			this.Contacts = new ObservableCollection<ContactModel>(contacts);
 
 			this.IsBusy = false;
 		}
 
-		private async Task CreateContact()
+		private Task CreateContact()
 		{
-			IContactEditorViewModel contactEditor = this._viewModelFactory.ResolveViewModel<IContactEditorViewModel>(("contact", new Contact()));
+			IContactEditorViewModel contactEditor = this._viewModelFactory.ResolveViewModel<IContactEditorViewModel>(("contact", new ContactModel()));
 			contactEditor.ShowDialog();
-			if (contactEditor.ModifiedContact != null)
-			{
-				this.IsBusy = true;
-				Contact newContact = await this._contactsService.CreateContact(contactEditor.ModifiedContact);
-				this.Contacts.Add(newContact);
-				this.CurrentContact = newContact;
-				this.IsBusy = false;
+			if (contactEditor.DialogResult != null)
+			{	
+				this.Contacts.Add(contactEditor.DialogResult);
+				this.CurrentContact = contactEditor.DialogResult;
 			}
+
+			return Task.CompletedTask;
 		}
 
-		private async Task EditContact()
+		private Task EditContact()
 		{
 			IContactEditorViewModel contactEditor = this._viewModelFactory.ResolveViewModel<IContactEditorViewModel>(("contact", this.CurrentContact));
 			contactEditor.ShowDialog();
-			if (contactEditor.ModifiedContact != null)
-			{
-				this.IsBusy = true;
-				Contact modifiedContact = await this._contactsService.UpdateContact(contactEditor.ModifiedContact);
-				this.Contacts.Replace(this.CurrentContact, modifiedContact);
-				this.CurrentContact = modifiedContact;
-				this.IsBusy = false;
+			if (contactEditor.DialogResult != null)
+			{	
+				this.Contacts.Replace(this.CurrentContact, contactEditor.DialogResult);
+				this.CurrentContact = contactEditor.DialogResult;
 			}
+			
+			return Task.CompletedTask;
 		}
 
 		private bool CanEditContact()
@@ -112,7 +109,5 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 		{
 			return this.CurrentContact != null;
 		}
-
-
 	}
 }

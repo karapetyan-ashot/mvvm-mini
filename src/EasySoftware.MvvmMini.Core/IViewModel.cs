@@ -1,8 +1,6 @@
-﻿using System.ComponentModel;
-
-namespace EasySoftware.MvvmMini.Core
+﻿namespace EasySoftware.MvvmMini.Core
 {
-	public interface IViewModel : INotifyPropertyChanged, INotifyDataErrorInfo, IErrorContainer
+	public interface IViewModel : IModel
 	{
 		/// <summary>
 		/// ViewModel's Title.

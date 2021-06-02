@@ -9,11 +9,12 @@ namespace EasySoftware.MvvmMini
 {
 	public class ViewAdapter : IViewAdapter
 	{
-		private bool _isLoaded;
+		private readonly FrameworkElement _view;
+
+		private ViewAdapterSate _state;
 
 		public event EventHandler Loaded;
-
-		private readonly FrameworkElement _view;
+		public event EventHandler Unloaded;
 
 		public ViewAdapter(FrameworkElement view)
 		{
@@ -21,10 +22,19 @@ namespace EasySoftware.MvvmMini
 
 			this._view.Loaded += (s, e) =>
 			{
-				if (!this._isLoaded)
+				if (this._state == ViewAdapterSate.NotLoaded)
 				{
 					this.Loaded?.Invoke(this, EventArgs.Empty);
-					this._isLoaded = true;
+					this._state = ViewAdapterSate.Loaded;
+				}
+			};
+
+			this._view.Unloaded += (s, e) =>
+			{
+				if(this._state == ViewAdapterSate.Loaded)
+				{
+					this.Unloaded?.Invoke(this, EventArgs.Empty);
+					this._state = ViewAdapterSate.Unloaded;
 				}
 			};
 
@@ -94,6 +104,13 @@ namespace EasySoftware.MvvmMini
 			{
 				window.Close();
 			}
+		}
+
+		private enum ViewAdapterSate
+		{
+			NotLoaded,
+			Loaded,
+			Unloaded
 		}
 	}
 }

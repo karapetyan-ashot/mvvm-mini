@@ -16,7 +16,7 @@ namespace EasySoftware.MvvmMini.Tests
 		}
 
 		[TestMethod]
-		public void Publish_Subscribe()
+		public void EventAggregator_Publish_SubscriberCalled()
 		{
 			// arrange
 			Mock<ISubscriber> subsriberMock = new Mock<ISubscriber>();			
@@ -31,7 +31,7 @@ namespace EasySoftware.MvvmMini.Tests
 		}
 
 		[TestMethod]
-		public void Publish_Subscribe2Times()
+		public void EventAggregator_Publish_SubscribersCalled()
 		{
 			// arrange
 			Mock<ISubscriber> subsriberMock1 = new Mock<ISubscriber>();
@@ -49,15 +49,17 @@ namespace EasySoftware.MvvmMini.Tests
 		}
 
 		[TestMethod]
-		public void NamedPublish_Subscribe()
+		public void EventAggregator_NamedPublish_SubscribersCalled()
 		{
 			// arrange
 			string key = "key";
 			Mock<ISubscriber> subsriberMock1 = new Mock<ISubscriber>();
 			Mock<ISubscriber> subsriberMock2 = new Mock<ISubscriber>();
+			Mock<ISubscriber> subsriberMock3 = new Mock<ISubscriber>();
 			IEventAggregator eventAggregator = new EventAggregator();
 			eventAggregator.Subscribe<int>(subsriberMock1.Object.OnInt, key);
 			eventAggregator.Subscribe<int>(subsriberMock2.Object.OnInt, key);
+			eventAggregator.Subscribe<int>(subsriberMock3.Object.OnInt);
 
 			// act
 			eventAggregator.Publish<int>(3, key);
@@ -65,6 +67,7 @@ namespace EasySoftware.MvvmMini.Tests
 			// assert
 			subsriberMock1.Verify(x => x.OnInt(3), Times.Once);
 			subsriberMock2.Verify(x => x.OnInt(3), Times.Once);
+			subsriberMock3.Verify(x => x.OnInt(3), Times.Never);
 		}
 	}
 

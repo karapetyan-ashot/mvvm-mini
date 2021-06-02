@@ -1,93 +1,78 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 using EasySoftware.MvvmMini.Core;
 using EasySoftware.MvvmMini.Samples.Contacts.Services;
 
 namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.ContactEditor
 {
-	public class ContactEditorViewModel : DialogViewModelBase, IContactEditorViewModel
+	public class ContactEditorViewModel : DialogViewModelBase<ContactModel>, IContactEditorViewModel
 	{
-		private Contact _contactToEdit;
+		private readonly IContactsService _contactService;
 
-		public ContactEditorViewModel(IViewAdapter viewAdapter, Contact contact) : base(viewAdapter)
+		public ContactEditorViewModel(IViewAdapter viewAdapter, IContactsService contactService, ContactModel contact) : base(viewAdapter)
 		{
-			if (contact == null)
-				throw new ArgumentNullException(nameof(contact));
-			this._contactToEdit = new Contact { Id = contact.Id, Modified = contact.Modified };
+			this._contactService = contactService ?? throw new ArgumentNullException(nameof(contactService));
+			this.Contact = contact ?? throw new ArgumentNullException(nameof(contact));
 
-			this.Name = contact.Name;
-			this.Phone = contact.Phone;
-			this.Email = contact.Email;
-
-			this.Title = contact.Id <= 0 ? "Create contact" : "Edit contact";
+			this.Title = this.Contact.Id <= 0 ? "Create contact" : "Edit contact";
 
 			this.SaveCommand = new RelayCommand(this.Save);
-			this.CancelCommand = new RelayCommand(this.Cancel);
 		}
 
 		public IRelayCommand SaveCommand { get; }
-		public IRelayCommand CancelCommand { get; }
 
-		public Contact ModifiedContact { get; private set; }
+		public override ContactModel DialogResult { get; protected set; }
 
-		private string _name;
-		public string Name
+		private ContactModel _contact;
+		public ContactModel Contact
 		{
-			get => this._name;
-			set => SetProperty(ref this._name, value);
+			get => this._contact;
+			set
+			{
+				if (this._contact != value)
+				{
+					this._contact = value;
+					this._contact.PropertyChanged += (s, e) => { this._contact.ClearErrors(); };
+					this.RaisePropertyChanged(nameof(Contact));
+				}
+			}
 		}
 
-		private string _phone;
-		public string Phone
-		{
-			get => this._phone;
-			set => SetProperty(ref this._phone, value);
-		}
-
-		private string _email;
-		public string Email
-		{
-			get => this._email;
-			set => SetProperty(ref this._email, value);
-		}
-
-		private Task Save()
+		private async Task Save()
 		{
 			this.Validate();
-			if (!this.HasErrors)
+
+			if (!this.Contact.HasErrors)
 			{
-				this._contactToEdit.Name = this.Name;
-				this._contactToEdit.Phone = this.Phone;
-				this._contactToEdit.Email = this.Email;
-				this.ModifiedContact = this._contactToEdit;
-				this._viewAdapter.Close();
+				this.IsBusy = true;
+
+				if (this.Contact.Id <= 0)
+					this.Contact = await this._contactService.CreateContact(this.Contact);
+				else
+					this.Contact = await this._contactService.UpdateContact(this.Contact);
+
+				this.IsBusy = false;
+
+				if (!this.Contact.HasErrors)
+				{
+					this.DialogResult = this.Contact;
+					this.CloseCommand.Execute(null);
+				}
 			}
-			return Task.CompletedTask;
 		}
 
-		private Task Cancel()
-		{
-			this.ModifiedContact = null;
-			this._viewAdapter.Close();
-			return Task.CompletedTask;
-		}
-
+		// client side partial validation
 		private void Validate()
 		{
-			this.ClearErrors();
-			if (string.IsNullOrEmpty(this.Name))
-				this.AddError(nameof(Name), "name is required");
-			if (string.IsNullOrEmpty(this.Email))
-				this.AddError(nameof(Email), "Email is required");
-			else
-			{
-				if (!this.Email.Contains("@"))
-					this.AddError(nameof(Email), "Not valid email");
-			}
+			this.Contact.ClearErrors();
+
+			if (string.IsNullOrEmpty(this.Contact.Name))
+				this.Contact.AddError(nameof(Contact.Name), "name is required");
+			if (string.IsNullOrEmpty(this.Contact.Phone))
+				this.Contact.AddError(nameof(Contact.Phone), "phone is required");
+			if (string.IsNullOrEmpty(this.Contact.Email))
+				this.Contact.AddError(nameof(Contact.Email), "Email is required");
 		}
 	}
 }

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
-using EasySoftware.MvvmMini.Core;
+using EasySoftware.Abstractions;
 
 namespace EasySoftware.MvvmMini.Samples.Contacts.Controls
 {

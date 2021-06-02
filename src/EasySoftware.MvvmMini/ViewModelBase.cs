@@ -4,7 +4,7 @@ using EasySoftware.MvvmMini.Core;
 
 namespace EasySoftware.MvvmMini
 {
-	public abstract class ViewModelBase : ErrorContainerBase, IViewModel
+	public abstract class ViewModelBase : ModelBase, IViewModel
 	{
 		protected IViewAdapter _viewAdapter;
 
@@ -13,6 +13,7 @@ namespace EasySoftware.MvvmMini
 			this._viewAdapter = viewAdapter;
 			this._viewAdapter.DataContext = this;
 			this._viewAdapter.Loaded += async (s, e) => await this.Loaded();
+			this._viewAdapter.Unloaded += async (s, e) => await this.Unloaded();
 		}
 
 		private string _title;
@@ -32,5 +33,6 @@ namespace EasySoftware.MvvmMini
 		public object View => this._viewAdapter.View;
 
 		protected virtual Task Loaded() { return Task.CompletedTask; }
+		protected virtual Task Unloaded() { return Task.CompletedTask; }
 	}
 }

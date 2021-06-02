@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-using EasySoftware.MvvmMini.Core;
+﻿using EasySoftware.MvvmMini.Core;
 using EasySoftware.MvvmMini.Samples.Contacts.Services;
 
 namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.ContactEditor
 {
-	public interface IContactEditorViewModel : IDialogViewModel
+	public interface IContactEditorViewModel : IDialogViewModel<ContactModel>
 	{
-		Contact ModifiedContact { get; }
+		IRelayCommand SaveCommand { get; }
+		ContactModel Contact { get; }
 	}
 }

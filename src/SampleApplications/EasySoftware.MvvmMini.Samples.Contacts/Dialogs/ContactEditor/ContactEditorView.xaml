@@ -8,29 +8,30 @@
 		xmlns:conv="clr-namespace:EasySoftware.MvvmMini.Samples.Contacts.Converters"
         mc:Ignorable="d"
         Title="{Binding Title}" Height="300" Width="400">
-	
-    <Grid Margin="20" >
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="*" />
-			<RowDefinition Height="Auto" />
-		</Grid.RowDefinitions>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition />
-			<ColumnDefinition />
-		</Grid.ColumnDefinitions>
-		<Label Grid.Row="0" Grid.Column="0" Content="Name" />
-		<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name, Mode=TwoWay}" />
-		<Label Grid.Row="1" Grid.Column="0" Content="Phone" />
-		<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Phone, Mode=TwoWay}" />
-		<Label Grid.Row="2" Grid.Column="0" Content="Email" />
-		<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Email, Mode=TwoWay}" />
-		<ctrl:ValidationSummary Grid.Row="3" Grid.ColumnSpan="2" />
-		<StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-			<Button Content="Save" Command="{Binding SaveCommand}" Style="{StaticResource dialogButton}" />
-			<Button Content="Cancel" Command="{Binding CancelCommand}" Style="{StaticResource dialogButton}"/>
-		</StackPanel>
-	</Grid>
+	<ctrl:BusyIndicator IsBusy="{Binding IsBusy}" >
+		<Grid Margin="20" >
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<Label Grid.Row="0" Grid.Column="0" Content="Name" />
+			<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Contact.Name, Mode=TwoWay}" />
+			<Label Grid.Row="1" Grid.Column="0" Content="Phone" />
+			<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Contact.Phone, Mode=TwoWay}" />
+			<Label Grid.Row="2" Grid.Column="0" Content="Email" />
+			<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Contact.Email, Mode=TwoWay}" />
+			<ctrl:ValidationSummary DataContext="{Binding Contact}" Grid.Row="3" Grid.ColumnSpan="2" />
+			<StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+				<Button Content="Save" IsDefault="True" Command="{Binding SaveCommand}" Style="{StaticResource dialogButton}" />
+				<Button Content="Cancel" IsCancel="True" Style="{StaticResource dialogButton}"/>
+			</StackPanel>
+		</Grid>
+	</ctrl:BusyIndicator>
 </Window>

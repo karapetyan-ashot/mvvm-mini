@@ -44,8 +44,6 @@ namespace EasySoftware.MvvmMini.Samples.HowTo
 			set => SetProperty(ref this._infoMessage, value);
 		}
 
-
-
 		private Task OpenWindow()
 		{
 			IDemoWindowViewModel demoWindow = this._viewModelFactory.ResolveViewModel<IDemoWindowViewModel>();
@@ -68,9 +66,9 @@ namespace EasySoftware.MvvmMini.Samples.HowTo
 		{
 			IDemoDialogViewModel dialogViewModel = this._viewModelFactory.ResolveViewModel<IDemoDialogViewModel>();
 			dialogViewModel.ShowDialog();
-			if (dialogViewModel.ResultMessage != null)
+			if (dialogViewModel.DialogResult != null)
 			{
-				this.InfoMessage += $"Dialog result is {dialogViewModel.ResultMessage}{Environment.NewLine}";
+				this.InfoMessage += $"Dialog result is {dialogViewModel .DialogResult}{Environment.NewLine}";
 			}
 			else
 			{
@@ -92,8 +90,5 @@ namespace EasySoftware.MvvmMini.Samples.HowTo
 			demoWindow.Show();
 			return Task.CompletedTask;
 		}
-
-
-
 	}
 }

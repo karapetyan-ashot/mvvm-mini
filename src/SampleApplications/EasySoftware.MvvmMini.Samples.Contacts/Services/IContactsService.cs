@@ -5,12 +5,12 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Services
 {
 	public interface IContactsService
 	{
-		Task<User> Login(string userName, string password);
+		Task<UserModel> Login(string userName, string password);
 
-		Task<List<Contact>> GetContacts();
-		Task<Contact> GetContactById(int id);
-		Task<Contact> CreateContact(Contact contact);
-		Task<Contact> UpdateContact(Contact contact);
-		Task DeleteContact(Contact contact);
+		Task<List<ContactModel>> GetContacts();
+		Task<ContactModel> GetContactById(int id);
+		Task<ContactModel> CreateContact(ContactModel contact);
+		Task<ContactModel> UpdateContact(ContactModel contact);
+		Task DeleteContact(ContactModel contact);
 	}
 }

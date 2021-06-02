@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 
 using EasySoftware.MvvmMini.Samples.Contacts.Dialogs.ContactEditor;
 using EasySoftware.MvvmMini.Samples.Contacts.Dialogs.Login;
@@ -18,7 +17,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 			IAppViewModelFactory viewModelFactory = this.ConfigureContainer();
 			ILoginViewModel loginViewModel = viewModelFactory.ResolveViewModel<ILoginViewModel>();
 			loginViewModel.ShowDialog();
-			if (loginViewModel.User != null)
+			if (loginViewModel.DialogResult != null)
 			{
 				IMainViewModel mainViewModel = viewModelFactory.ResolveViewModel<IMainViewModel>();
 

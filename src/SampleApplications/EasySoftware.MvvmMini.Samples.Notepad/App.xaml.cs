@@ -28,7 +28,7 @@ namespace EasySoftware.MvvmMini.Samples.Notepad
 
 			viewModelFactory.RegisterViewModelWithView<IMainViewModel, MainViewModel, MainView>();
 			viewModelFactory.RegisterViewModelWithView<IDocumentViewModel, DocumentViewModel, DocumentView>();
-			viewModelFactory.RegisterViewModelWithView<IMessageBoxDialog, MessageBoxViewModel, MessageBoxView>();
+			viewModelFactory.RegisterViewModelWithView<IMessageBoxViewModel, MessageBoxViewModel, MessageBoxView>();
 			
 			return viewModelFactory;
 		}
