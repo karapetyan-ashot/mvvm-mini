@@ -1,21 +1,19 @@
-﻿using System.ComponentModel;
-
-namespace EasySoftware.MvvmMini.Core
+﻿namespace EasySoftware.MvvmMini.Core
 {
-	public interface IViewModel : INotifyPropertyChanged
+	public interface IViewModel : IModel
 	{
 		/// <summary>
-		/// ViewModel's Title
+		/// ViewModel's Title.
 		/// </summary>
 		string Title { get; set; }
 
 		/// <summary>
-		/// To indicate that model is busy
+		/// IsBusy indicator.
 		/// </summary>
 		bool IsBusy { get; }
 
 		/// <summary>
-		/// View to bind in DataTemplates
+		/// View to bind in DataTemplates.
 		/// </summary>
 		object View { get; }
 	}

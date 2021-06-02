@@ -3,18 +3,22 @@
 		<TargetFrameworks>net5.0-windows;netcoreapp3.1;net472</TargetFrameworks>
 		<UseWPF>true</UseWPF>
 		<PackageTags>MVVM</PackageTags>
-		<AssemblyVersion>1.0.13.0</AssemblyVersion>
-		<Version>1.0.13</Version>
-		<FileVersion>1.0.13.0</FileVersion>
+		<AssemblyVersion>1.0.17.1</AssemblyVersion>
+		<Version>1.0.17.1</Version>
+		<FileVersion>1.0.17.1</FileVersion>
 		<PackageProjectUrl>https://github.com/karapetyan-ashot/mvvm-mini</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/karapetyan-ashot/mvvm-mini</RepositoryUrl>
 		<Authors>Ashot Karapetyan</Authors>
 		<Company>EasySoftware</Company>
 		<Description />
-		<PackageReleaseNotes>.net 5 support</PackageReleaseNotes>
+		<PackageReleaseNotes>IModel implementation</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Unity.Abstractions" Version="5.11.7" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\EasySoftware.Abstractions\EasySoftware.Abstractions.csproj" />
 	</ItemGroup>
 </Project>

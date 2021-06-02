@@ -7,6 +7,6 @@ namespace EasySoftware.MvvmMini.Samples.Notepad.Factories
 {
 	public interface IAppViewModelFactory : IViewModelFactory
 	{
-		IMessageBoxDialog CreateMessageBoxDialog(string message, string title, MessageBoxButton buttons);
+		IMessageBoxViewModel CreateMessageBoxDialog(string message, string title, MessageBoxButton buttons);
 	}
 }
