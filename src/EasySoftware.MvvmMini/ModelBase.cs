@@ -86,7 +86,7 @@ namespace EasySoftware.MvvmMini
 			}
 		}
 
-		public void CloneErrors(IErrorContainer other)
+		public virtual void CloneErrors(IErrorContainer other)
 		{
 			this.ClearErrors();
 			foreach (var propError in other.Errors)
