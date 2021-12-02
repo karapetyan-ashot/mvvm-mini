@@ -3,15 +3,15 @@
 		<TargetFrameworks>net5.0-windows;netcoreapp3.1;net472</TargetFrameworks>
 		<UseWPF>true</UseWPF>
 		<PackageTags>MVVM</PackageTags>
-		<AssemblyVersion>1.0.17.1</AssemblyVersion>
-		<Version>1.0.17.1</Version>
-		<FileVersion>1.0.17.1</FileVersion>
+		<AssemblyVersion>1.0.17.3</AssemblyVersion>
+		<Version>1.0.17.3</Version>
+		<FileVersion>1.0.17.3</FileVersion>
 		<PackageProjectUrl>https://github.com/karapetyan-ashot/mvvm-mini</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/karapetyan-ashot/mvvm-mini</RepositoryUrl>
 		<Authors>Ashot Karapetyan</Authors>
 		<Company>EasySoftware</Company>
 		<Description />
-		<PackageReleaseNotes>IModel implementation</PackageReleaseNotes>
+		<PackageReleaseNotes></PackageReleaseNotes>
 	</PropertyGroup>
 
 	<ItemGroup>

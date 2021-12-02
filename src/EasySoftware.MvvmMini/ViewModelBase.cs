@@ -16,6 +16,8 @@ namespace EasySoftware.MvvmMini
 			this._viewAdapter.Unloaded += async (s, e) => await this.Unloaded();
 		}
 
+		public string UniqueId { get; protected set; }
+
 		private string _title;
 		public string Title
 		{

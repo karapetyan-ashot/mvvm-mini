@@ -16,5 +16,10 @@
 		/// View to bind in DataTemplates.
 		/// </summary>
 		object View { get; }
+
+		/// <summary>
+		/// UniqueId to identify it.
+		/// </summary>
+		string UniqueId { get; }
 	}
 }

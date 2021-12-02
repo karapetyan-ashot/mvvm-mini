@@ -69,6 +69,8 @@ namespace EasySoftware.MvvmMini.Samples.Notepad.Workplaces.Document
 
 		private bool CanSave()
 		{
+			if (this.HasErrors)
+				return false;
 			return !this._saved;
 		}
 	}
