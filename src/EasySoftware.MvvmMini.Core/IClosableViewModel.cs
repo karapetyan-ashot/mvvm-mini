@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace EasySoftware.MvvmMini.Core
@@ -8,6 +9,6 @@ namespace EasySoftware.MvvmMini.Core
 	{
 		event EventHandler Closed;
 		ICommand CloseCommand { get; }
-		void OnClosing(CancelEventArgs e);
+		Task OnClosing(CancelEventArgs e);
 	}
 }

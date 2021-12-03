@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Threading.Tasks;
 
 using EasySoftware.MvvmMini.Core;
 
@@ -27,10 +28,12 @@ namespace EasySoftware.MvvmMini.Samples.HowTo.ViewModels.DemoHandleWindowClosing
 			}
 		}
 
-		public override void OnClosing(CancelEventArgs e)
+		public override Task OnClosing(CancelEventArgs e)
 		{
 			if (!this.CanClose())
 				e.Cancel = true;
+
+			return base.OnClosing(e);
 		}
 
 		protected override bool CanClose()

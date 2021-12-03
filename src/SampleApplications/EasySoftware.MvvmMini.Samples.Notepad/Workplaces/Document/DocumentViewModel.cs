@@ -40,7 +40,7 @@ namespace EasySoftware.MvvmMini.Samples.Notepad.Workplaces.Document
 			}
 		}
 
-		public override void OnClosing(CancelEventArgs e)
+		public override Task OnClosing(CancelEventArgs e)
 		{
 			if (!this._saved)
 			{
@@ -59,6 +59,8 @@ namespace EasySoftware.MvvmMini.Samples.Notepad.Workplaces.Document
 						break;
 				}
 			}
+
+			return base.OnClosing(e);
 		}
 
 		private Task Save()

@@ -34,18 +34,16 @@ namespace EasySoftware.MvvmMini
 			}
 		}
 
-		private Task Close()
+		private async Task Close()
 		{
 			CancelEventArgs ea = new CancelEventArgs();
-			this.OnClosing(ea);
+			await this.OnClosing(ea);
 			if (!ea.Cancel)
 			{
 				this.State = ViewModelState.Closing;
 				this._viewAdapter.Close();
 				this.State = ViewModelState.Closed;
 			}
-
-			return Task.CompletedTask;
 		}
 
 		protected virtual bool CanClose()
@@ -53,7 +51,7 @@ namespace EasySoftware.MvvmMini
 			return true;
 		}
 
-		public virtual void OnClosing(CancelEventArgs e) { }
+		public virtual Task OnClosing(CancelEventArgs e) { return Task.CompletedTask; }
 	}
 
 }

@@ -2,11 +2,12 @@
 
   <PropertyGroup>
     <TargetFrameworks>net5.0-windows;netcoreapp3.1;net472</TargetFrameworks>
-    <AssemblyVersion>1.0.17.3</AssemblyVersion>
-    <FileVersion>1.0.17.3</FileVersion>
-    <Version>1.0.17.3</Version>
+    <AssemblyVersion>1.0.18.1</AssemblyVersion>
+    <FileVersion>1.0.18.1</FileVersion>
+    <Version>1.0.18.1</Version>
     <PackageProjectUrl>https://github.com/karapetyan-ashot/mvvm-mini</PackageProjectUrl>
     <RepositoryUrl>https://github.com/karapetyan-ashot/mvvm-mini</RepositoryUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
 </Project>

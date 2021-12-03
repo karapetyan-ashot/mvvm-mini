@@ -81,9 +81,7 @@ namespace EasySoftware.MvvmMini.Samples.Notepad
 			return this.Documents.Any(x => x.SaveCommand.CanExecute(null) == true);
 		}
 
-
-
-		public override void OnClosing(CancelEventArgs e)
+		public override Task OnClosing(CancelEventArgs e)
 		{
 			var currDoc = this.CurrentDocument;
 			foreach (var document in this.Documents.ToList())
@@ -98,7 +96,8 @@ namespace EasySoftware.MvvmMini.Samples.Notepad
 				if (this.Documents.Contains(currDoc))
 					this.CurrentDocument = currDoc;
 			}
-			base.OnClosing(e);
+
+			return base.OnClosing(e);
 		}
 
 	}

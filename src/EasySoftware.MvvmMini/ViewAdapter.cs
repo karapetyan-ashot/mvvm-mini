@@ -31,7 +31,7 @@ namespace EasySoftware.MvvmMini
 
 			this._view.Unloaded += (s, e) =>
 			{
-				if(this._state == ViewAdapterSate.Loaded)
+				if (this._state == ViewAdapterSate.Loaded)
 				{
 					this.Unloaded?.Invoke(this, EventArgs.Empty);
 					this._state = ViewAdapterSate.Unloaded;
@@ -40,14 +40,14 @@ namespace EasySoftware.MvvmMini
 
 			if (this._view is Window window)
 			{
-				window.Closing += (s, e) =>
+				window.Closing += async (s, e) =>
 				{
 					if (window.DataContext is ClosableViewModelBase viewModel)
 					{
 						if (viewModel.State == ViewModelState.Open)
 						{
 							CancelEventArgs ea = new CancelEventArgs();
-							viewModel.OnClosing(ea);
+							await viewModel.OnClosing(ea);
 							e.Cancel = ea.Cancel;
 						}
 					}
