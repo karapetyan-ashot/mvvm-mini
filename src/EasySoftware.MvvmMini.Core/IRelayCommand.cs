@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace EasySoftware.MvvmMini.Core
 {
@@ -7,5 +8,6 @@ namespace EasySoftware.MvvmMini.Core
 		bool IsRunning { get; }
 		bool UseCommandManager { get; }
 		void RaiseCanExecuteChanged();
+		Task ExecuteAsync(object parameter);
 	}
 }

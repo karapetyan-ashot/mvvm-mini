@@ -6,117 +6,128 @@ using EasySoftware.MvvmMini.Core;
 
 namespace EasySoftware.MvvmMini
 {
-   public abstract class RelayCommandBase : IRelayCommand
-   {
-      public bool UseCommandManager { get; protected set; }
-      public bool IsRunning { get; protected set; }
+	public abstract class RelayCommandBase : IRelayCommand
+	{
+		public bool UseCommandManager { get; protected set; }
+		public bool IsRunning { get; protected set; }
 
-      private event EventHandler _canExecuteChanged;
-      public event EventHandler CanExecuteChanged
-      {
-         add
-         {
-            if (this.UseCommandManager)
-               CommandManager.RequerySuggested += value;
-            else
-               this._canExecuteChanged += value;
-         }
-         remove
-         {
-            if (this.UseCommandManager)
-               CommandManager.RequerySuggested -= value;
-            else
-               this._canExecuteChanged -= value;
-         }
-      }
+		private event EventHandler _canExecuteChanged;
+		public event EventHandler CanExecuteChanged
+		{
+			add
+			{
+				if (this.UseCommandManager)
+					CommandManager.RequerySuggested += value;
+				else
+					this._canExecuteChanged += value;
+			}
+			remove
+			{
+				if (this.UseCommandManager)
+					CommandManager.RequerySuggested -= value;
+				else
+					this._canExecuteChanged -= value;
+			}
+		}
 
-      public abstract void Execute(object parameter);
+		public abstract void Execute(object parameter);
+		public abstract Task ExecuteAsync(object parameter);
 
-      public abstract bool CanExecute(object parameter);
+		public abstract bool CanExecute(object parameter);
 
-      public void RaiseCanExecuteChanged()
-      {
-         if (this.UseCommandManager)
-            CommandManager.InvalidateRequerySuggested();
-         else
-            this._canExecuteChanged?.Invoke(this, EventArgs.Empty);
-      }
-   }
+		public void RaiseCanExecuteChanged()
+		{
+			if (this.UseCommandManager)
+				CommandManager.InvalidateRequerySuggested();
+			else
+				this._canExecuteChanged?.Invoke(this, EventArgs.Empty);
+		}
+	}
 
-   public class RelayCommand<T> : RelayCommandBase
-   {
-      private readonly Func<T, Task> _execute;
-      private readonly Func<T, bool> _canExecute;
+	public class RelayCommand<T> : RelayCommandBase
+	{
+		private readonly Func<T, Task> _execute;
+		private readonly Func<T, bool> _canExecute;
 
-      public RelayCommand(Func<T, Task> execute)
-         : this(execute, null, false) { }
+		public RelayCommand(Func<T, Task> execute)
+		   : this(execute, null, false) { }
 
-      public RelayCommand(Func<T, Task> execute, Func<T, bool> canExecute)
-         : this(execute, canExecute, true) { }
+		public RelayCommand(Func<T, Task> execute, Func<T, bool> canExecute)
+		   : this(execute, canExecute, true) { }
 
 
-      public RelayCommand(Func<T, Task> execute, Func<T, bool> canExecute, bool useCommandManager)
-      {
-         this._execute = execute ?? throw new ArgumentNullException(nameof(execute));
-         this._canExecute = canExecute;
-         this.UseCommandManager = useCommandManager;
-      }
+		public RelayCommand(Func<T, Task> execute, Func<T, bool> canExecute, bool useCommandManager)
+		{
+			this._execute = execute ?? throw new ArgumentNullException(nameof(execute));
+			this._canExecute = canExecute;
+			this.UseCommandManager = useCommandManager;
+		}
 
-      public override async void Execute(object parameter)
-      {
-         this.IsRunning = true;
-         await _execute((T)parameter);
-         this.IsRunning = false;
-         this.RaiseCanExecuteChanged();
-      }
+		public override async void Execute(object parameter)
+		{
+			await ExecuteAsync(parameter);
+		}
 
-      public override bool CanExecute(object parameter)
-      {
-         if (this.IsRunning)
-            return false;
+		public override async Task ExecuteAsync(object parameter)
+		{
+			this.IsRunning = true;
+			await _execute((T)parameter);
+			this.IsRunning = false;
+			this.RaiseCanExecuteChanged();
+		}
 
-         if (_canExecute == null)
-            return true;
+		public override bool CanExecute(object parameter)
+		{
+			if (this.IsRunning)
+				return false;
 
-         return _canExecute((T)parameter);
-      }
-   }
+			if (_canExecute == null)
+				return true;
 
-   public class RelayCommand : RelayCommandBase
-   {
-      private readonly Func<Task> _execute;
-      private readonly Func<bool> _canExecute;
+			return _canExecute((T)parameter);
+		}
+	}
 
-      public RelayCommand(Func<Task> execute)
-         : this(execute, null, false) { }
+	public class RelayCommand : RelayCommandBase
+	{
+		private readonly Func<Task> _execute;
+		private readonly Func<bool> _canExecute;
 
-      public RelayCommand(Func<Task> execute, Func<bool> canExecute)
-         : this(execute, canExecute, true) { }
+		public RelayCommand(Func<Task> execute)
+		   : this(execute, null, false) { }
 
-      public RelayCommand(Func<Task> execute, Func<bool> canExecute, bool useCommandManager)
-      {
-         this._execute = execute ?? throw new ArgumentNullException(nameof(execute));
-         this._canExecute = canExecute;
-         this.UseCommandManager = useCommandManager;
-      }
+		public RelayCommand(Func<Task> execute, Func<bool> canExecute)
+		   : this(execute, canExecute, true) { }
 
-      public override async void Execute(object parameter)
-      {
-         this.IsRunning = true;
-         await _execute();
-         this.IsRunning = false;
-         this.RaiseCanExecuteChanged();
-      }
+		public RelayCommand(Func<Task> execute, Func<bool> canExecute, bool useCommandManager)
+		{
+			this._execute = execute ?? throw new ArgumentNullException(nameof(execute));
+			this._canExecute = canExecute;
+			this.UseCommandManager = useCommandManager;
+		}
 
-      public override bool CanExecute(object parameter)
-      {
-         if (this.IsRunning)
-            return false;
+		public override async void Execute(object parameter)
+		{
+			await ExecuteAsync(parameter);
+		}
 
-         if (_canExecute == null)
-            return true;
+		public override async Task ExecuteAsync(object parameter)
+		{
+			this.IsRunning = true;
+			await _execute();
+			this.IsRunning = false;
+			this.RaiseCanExecuteChanged();
+		}
 
-         return _canExecute();
-      }
-   }
+		public override bool CanExecute(object parameter)
+		{
+			if (this.IsRunning)
+				return false;
+
+			if (_canExecute == null)
+				return true;
+
+			return _canExecute();
+		}
+	}
 }

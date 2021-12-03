@@ -40,7 +40,7 @@ namespace EasySoftware.MvvmMini.Samples.Notepad.Workplaces.Document
 			}
 		}
 
-		public override Task OnClosing(CancelEventArgs e)
+		public override async Task OnClosing(CancelEventArgs e)
 		{
 			if (!this._saved)
 			{
@@ -50,7 +50,7 @@ namespace EasySoftware.MvvmMini.Samples.Notepad.Workplaces.Document
 				switch (messageBox.DialogResult)
 				{
 					case MessageBoxResult.Yes:
-						this._saved = true;
+						await Save();						
 						break;
 					case MessageBoxResult.No:
 						break;
@@ -59,14 +59,12 @@ namespace EasySoftware.MvvmMini.Samples.Notepad.Workplaces.Document
 						break;
 				}
 			}
-
-			return base.OnClosing(e);
 		}
 
-		private Task Save()
+		private async Task Save()
 		{
+			await Task.Delay(2000);
 			this._saved = true;
-			return Task.CompletedTask;
 		}
 
 		private bool CanSave()

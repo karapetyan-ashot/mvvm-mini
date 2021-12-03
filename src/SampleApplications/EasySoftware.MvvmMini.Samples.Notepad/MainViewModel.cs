@@ -81,13 +81,13 @@ namespace EasySoftware.MvvmMini.Samples.Notepad
 			return this.Documents.Any(x => x.SaveCommand.CanExecute(null) == true);
 		}
 
-		public override Task OnClosing(CancelEventArgs e)
+		public override async Task OnClosing(CancelEventArgs e)
 		{
 			var currDoc = this.CurrentDocument;
 			foreach (var document in this.Documents.ToList())
 			{
 				this.CurrentDocument = document;
-				document.CloseCommand.Execute(null);
+				await ((IRelayCommand)document.CloseCommand).ExecuteAsync(null);
 			}
 
 			if (this.Documents.Any())
@@ -96,9 +96,6 @@ namespace EasySoftware.MvvmMini.Samples.Notepad
 				if (this.Documents.Contains(currDoc))
 					this.CurrentDocument = currDoc;
 			}
-
-			return base.OnClosing(e);
 		}
-
 	}
 }
