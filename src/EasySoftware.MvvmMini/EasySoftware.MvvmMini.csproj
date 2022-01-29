@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <TargetFrameworks>net5.0-windows;netcoreapp3.1;net472</TargetFrameworks>
+	  <TargetFrameworks>net6.0-windows;net5.0-windows;netcoreapp3.1;net472</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <PackageTags>WPF, MVVM</PackageTags>
     <PackageReleaseNotes>OnClosing method now returns Task</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>1.0.18.2</AssemblyVersion>
-    <Version>1.0.18.2</Version>
-    <FileVersion>1.0.18.2</FileVersion>
+    <AssemblyVersion>1.0.18.3</AssemblyVersion>
+    <Version>1.0.18.3</Version>
+    <FileVersion>1.0.18.3</FileVersion>
     <PackageProjectUrl>https://github.com/karapetyan-ashot/mvvm-mini</PackageProjectUrl>
     <RepositoryUrl>https://github.com/karapetyan-ashot/mvvm-mini</RepositoryUrl>
     <Authors>Ashot Karapetyan</Authors>
