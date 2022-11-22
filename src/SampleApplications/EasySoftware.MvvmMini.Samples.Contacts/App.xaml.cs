@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 using EasySoftware.MvvmMini.Samples.Contacts.Dialogs.ContactEditor;
 using EasySoftware.MvvmMini.Samples.Contacts.Dialogs.Login;
@@ -6,7 +7,7 @@ using EasySoftware.MvvmMini.Samples.Contacts.Dialogs.MessageBox;
 using EasySoftware.MvvmMini.Samples.Contacts.Factories;
 using EasySoftware.MvvmMini.Samples.Contacts.Services;
 
-using Unity;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EasySoftware.MvvmMini.Samples.Contacts
 {
@@ -14,12 +15,15 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 	{
 		protected override void OnStartup(StartupEventArgs e)
 		{
-			IAppViewModelFactory viewModelFactory = this.ConfigureContainer();
-			ILoginViewModel loginViewModel = viewModelFactory.ResolveViewModel<ILoginViewModel>();
+			IServiceProvider serviceProvider = ConfigureServices();
+
+			IAppViewModelFactory viewModelFactory = serviceProvider.GetRequiredService<IAppViewModelFactory>();
+
+			ILoginViewModel loginViewModel = viewModelFactory.CreateLoginDialog();
 			loginViewModel.ShowDialog();
 			if (loginViewModel.DialogResult != null)
 			{
-				IMainViewModel mainViewModel = viewModelFactory.ResolveViewModel<IMainViewModel>();
+				IMainViewModel mainViewModel = viewModelFactory.CreateMainViewModel();
 
 				mainViewModel.Closed += (s, ea) => this.Shutdown();
 				mainViewModel.Show();
@@ -28,19 +32,21 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 				this.Shutdown();
 		}
 
-		private IAppViewModelFactory ConfigureContainer()
+		private IServiceProvider ConfigureServices()
 		{
-			IAppViewModelFactory viewModelFactory = new AppViewModelFactory();
+			IServiceCollection services = new ServiceCollection();
 
-			viewModelFactory.Container.RegisterInstance<IAppViewModelFactory>(viewModelFactory);
-			viewModelFactory.Container.RegisterSingleton<IContactsService, ContactsMockService>();
+			services.AddSingleton<IAppViewModelFactory, AppViewModelFactory>();
+			services.AddTransient<IContactsService, ContactsMockService>();
 
-			viewModelFactory.RegisterViewModelWithView<ILoginViewModel, LoginViewModel, LoginView>();
-			viewModelFactory.RegisterViewModelWithView<IMessageBoxViewModel, MessageBoxViewModel, MessageBoxView>();
-			viewModelFactory.RegisterViewModelWithView<IContactEditorViewModel, ContactEditorViewModel, ContactEditorView>();
-			viewModelFactory.RegisterViewModelWithView<IMainViewModel, MainViewModel, MainView>();
+			services.AddMvvmMini(mapper => {
+				mapper.RegisterViewModelWithView<ILoginViewModel, LoginViewModel, LoginView>();
+                mapper.RegisterViewModelWithView<IMessageBoxViewModel, MessageBoxViewModel, MessageBoxView>();
+                mapper.RegisterViewModelWithView<IContactEditorViewModel, ContactEditorViewModel, ContactEditorView>();
+                mapper.RegisterViewModelWithView<IMainViewModel, MainViewModel, MainView>();
+            });
 
-			return viewModelFactory;
-		}
+			return services.BuildServiceProvider();
+        }
 	}
 }

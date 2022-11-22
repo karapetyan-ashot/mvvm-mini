@@ -18,6 +18,7 @@ namespace EasySoftware.MvvmMini
 
 		public IEnumerable GetErrors(string propertyName)
 		{
+			propertyName = propertyName ?? string.Empty;
 			if (this.Errors.ContainsKey(propertyName))
 				return this.Errors[propertyName];
 

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Windows;
 
-using EasySoftware.MvvmMini.Core;
 using EasySoftware.MvvmMini.Samples.HowTo.Services;
 using EasySoftware.MvvmMini.Samples.HowTo.ViewModels.DemoDialog;
 using EasySoftware.MvvmMini.Samples.HowTo.ViewModels.DemoHandleWindowClosing;
 using EasySoftware.MvvmMini.Samples.HowTo.ViewModels.DemoHandleWindowLoading;
 using EasySoftware.MvvmMini.Samples.HowTo.ViewModels.DemoWindow;
 using EasySoftware.MvvmMini.Samples.HowTo.ViewModels.DemoWindowWithParams;
-using Unity;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EasySoftware.MvvmMini.Samples.HowTo
 {
@@ -21,29 +21,24 @@ namespace EasySoftware.MvvmMini.Samples.HowTo
 		{
 			base.OnStartup(e);
 
-			IViewModelFactory viewModelFactory = CreateAndConfigureFactory();
+			IServiceCollection services = new ServiceCollection();
+			services.AddSingleton<IDateTimeService, DateTimeService>();
 
-			IShellViewModel shellViewModel = viewModelFactory.ResolveViewModel<IShellViewModel>();
+			services.AddMvvmMini(mapper =>
+			{
+				mapper.RegisterViewModelWithView<IShellViewModel, ShellViewModel, ShellView>();
+				mapper.RegisterViewModelWithView<IDemoWindowViewModel, DemoWindowViewModel, DemoWindowView>();
+				mapper.RegisterViewModelWithView<IDemoWindowWithParamsViewModel, DemoWindowWithParamsViewModel, DemoWindowWithParamsView>();
+				mapper.RegisterViewModelWithView<IDemoDialogViewModel, DemoDialogViewModel, DemoDialogView>();
+				mapper.RegisterViewModelWithView<IDemoHandleWindowClosingViewModel, DemoHandleWindowClosingViewModel, DemoHandleWindowClosingView>();
+				mapper.RegisterViewModelWithView<IDemoHandleWindowLoadingViewModel, DemoHandleWindowLoadingViewModel, DemoHandleWindowLoadingView>();
+            } );
+
+			IServiceProvider serviceProvider = services.BuildServiceProvider();
+
+			IShellViewModel shellViewModel = serviceProvider.GetViewModel<IShellViewModel>();
 			shellViewModel.Closed += (s, ea) => this.Shutdown();
 			shellViewModel.Show();
-		}
-
-		private IViewModelFactory CreateAndConfigureFactory()
-		{
-			IViewModelFactory viewModelFactory = new ViewModelFactory();
-
-			// register viewmodels with views
-			viewModelFactory.RegisterViewModelWithView<IShellViewModel, ShellViewModel, ShellView>();
-			viewModelFactory.RegisterViewModelWithView<IDemoWindowViewModel, DemoWindowViewModel, DemoWindowView>();
-			viewModelFactory.RegisterViewModelWithView<IDemoWindowWithParamsViewModel, DemoWindowWithParamsViewModel, DemoWindowWithParamsView>();
-			viewModelFactory.RegisterViewModelWithView<IDemoDialogViewModel, DemoDialogViewModel, DemoDialogView>();
-			viewModelFactory.RegisterViewModelWithView<IDemoHandleWindowClosingViewModel, DemoHandleWindowClosingViewModel, DemoHandleWindowClosingView>();
-			viewModelFactory.RegisterViewModelWithView<IDemoHandleWindowLoadingViewModel, DemoHandleWindowLoadingViewModel, DemoHandleWindowLoadingView>();
-
-			// register other services in UnityContainer
-			viewModelFactory.Container.RegisterSingleton<IDateTimeService, DateTimeService>();
-
-			return viewModelFactory;
 		}
 	}
 }

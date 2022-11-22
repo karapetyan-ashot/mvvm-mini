@@ -36,13 +36,19 @@ public partial class App : Application
 	{
 		base.OnStartup(e);
 
-		IViewModelFactory viewModelFactory = new ViewModelFactory();
+		// create services
+		IServiceCollection services = new ServiceCollection();
 
-		// register in viewmodel factory shell viewmodel and view
-		viewModelFactory.RegisterViewModelWithView<IShellViewModel, ShellViewModel, ShellView>();
+		// setup MvvmMini
+		services.AddMvvmMini(mapper => {
+                mapper.RegisterViewModelWithView<IShellViewModel, ShellViewModel, ShellView>();
+				// register other view models with views here
+            });
 
+		// create serviceProvider
+		var sp = services.BuildServiceProvider();
 		// resolve shell viewmodel
-		IShellViewModel shellViewModel = viewModelFactory.ResolveViewModel<IShellViewModel>();
+		IShellViewModel shellViewModel = sp.GetViewModel<IShellViewModel>();
 
 		// subscribe to closed event to shutdown app
 		shellViewModel.Closed += (s, ea) => this.Shutdown();

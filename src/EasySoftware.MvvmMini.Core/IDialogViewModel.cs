@@ -1,9 +1,12 @@
 ﻿namespace EasySoftware.MvvmMini.Core
 {
-	public interface IDialogViewModel<T> : IWindowViewModel
-	{
-		T DialogResult { get; }
-		
-		void ShowDialog();		
-	}
+    public interface IDialogViewModel : IWindowViewModel
+    {
+        void ShowDialog();
+    }
+
+    public interface IDialogViewModel<T> : IDialogViewModel
+    {
+        T DialogResult { get; }
+    }
 }

@@ -1,36 +1,32 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 using EasySoftware.MvvmMini.Samples.Notepad.Dialogs.MessageBox;
-using EasySoftware.MvvmMini.Samples.Notepad.Factories;
 using EasySoftware.MvvmMini.Samples.Notepad.Workplaces.Document;
-using Unity;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EasySoftware.MvvmMini.Samples.Notepad
 {
-	public partial class App : Application
-	{
-		protected override void OnStartup(StartupEventArgs e)
-		{
-			base.OnStartup(e);
-			this.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+    public partial class App : Application
+    {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            this.ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
-			IAppViewModelFactory viewModelFactory = CreateAndConfigureFactory();
-						
-			IMainViewModel mainViewModel = viewModelFactory.ResolveViewModel<IMainViewModel>();
-			mainViewModel.Closed += (s, ea) => this.Shutdown();
-			mainViewModel.Show();
-		}
+            IServiceCollection services = new ServiceCollection();
+            
+            services.AddMvvmMini(mapper => {
+                mapper.RegisterViewModelWithView<IMainViewModel, MainViewModel, MainView>();
+                mapper.RegisterViewModelWithView<IDocumentViewModel, DocumentViewModel, DocumentView>();
+                mapper.RegisterViewModelWithView<IMessageBoxViewModel, MessageBoxViewModel, MessageBoxView>();
+            });
+            var sp = services.BuildServiceProvider();
 
-		private IAppViewModelFactory CreateAndConfigureFactory()
-		{			
-			IAppViewModelFactory viewModelFactory = new AppViewModelFactory();
-			viewModelFactory.Container.RegisterInstance<IAppViewModelFactory>(viewModelFactory);
-
-			viewModelFactory.RegisterViewModelWithView<IMainViewModel, MainViewModel, MainView>();
-			viewModelFactory.RegisterViewModelWithView<IDocumentViewModel, DocumentViewModel, DocumentView>();
-			viewModelFactory.RegisterViewModelWithView<IMessageBoxViewModel, MessageBoxViewModel, MessageBoxView>();
-			
-			return viewModelFactory;
-		}
-	}
+            var mainVM = sp.GetViewModel<IMainViewModel>();
+            mainVM.Closed += (s, ea) => this.Shutdown();
+            mainVM.Show();
+        }
+    }
 }

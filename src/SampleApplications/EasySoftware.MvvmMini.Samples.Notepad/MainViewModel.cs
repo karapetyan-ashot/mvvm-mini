@@ -3,10 +3,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 using EasySoftware.MvvmMini.Core;
-using EasySoftware.MvvmMini.Samples.Notepad.Factories;
 using EasySoftware.MvvmMini.Samples.Notepad.Workplaces.Document;
 
 namespace EasySoftware.MvvmMini.Samples.Notepad
@@ -14,12 +12,11 @@ namespace EasySoftware.MvvmMini.Samples.Notepad
 	public class MainViewModel : WindowViewModelBase, IMainViewModel
 	{
 		private int docNum = 0;
-		private IAppViewModelFactory _viewModelFactory;
+		private readonly IServiceProvider _serviceProvider;
 
-		public MainViewModel(IViewAdapter viewAdapter, IAppViewModelFactory viewModelFactory) : base(viewAdapter)
+		public MainViewModel(IViewAdapter viewAdapter, IServiceProvider serviceProvider) : base(viewAdapter)
 		{
-			this._viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
-
+			_serviceProvider = serviceProvider;
 			this.Title = "Notepad ++-";
 
 			this.Documents = new ObservableCollection<IDocumentViewModel>();
@@ -52,7 +49,7 @@ namespace EasySoftware.MvvmMini.Samples.Notepad
 
 		private Task CreateNewDocument()
 		{
-			IDocumentViewModel doc = this._viewModelFactory.ResolveViewModel<IDocumentViewModel>();
+			var doc = _serviceProvider.GetViewModel<IDocumentViewModel>();
 			doc.Title = $"New doc {++docNum}";
 			doc.Closed += (s, e) =>
 			{
