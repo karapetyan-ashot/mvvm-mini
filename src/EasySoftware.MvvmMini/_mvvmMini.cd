@@ -11,7 +11,7 @@
   <Class Name="EasySoftware.MvvmMini.ViewModelBase">
     <Position X="0.75" Y="7.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAIEAAEAAAIAAAARAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AQAAAAAAAIEAAEAAAIAAAARAAAABAAAAAAAAAAAAQAA=</HashCode>
       <FileName>ViewModelBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -32,10 +32,10 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="EasySoftware.MvvmMini.DialogViewModelBase">
+  <Class Name="EasySoftware.MvvmMini.DialogViewModelBase&lt;T&gt;">
     <Position X="0.75" Y="17.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>DialogViewModelBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -43,21 +43,21 @@
   <Class Name="EasySoftware.MvvmMini.RelayCommand&lt;T&gt;" Collapsed="true">
     <Position X="3.75" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAEAAAAQAAECAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAEAAAAQAAECAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
       <FileName>RelayCommand.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="EasySoftware.MvvmMini.RelayCommand" Collapsed="true">
     <Position X="5.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAEAAAAQAAECAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAEAAAAQAAECAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
       <FileName>RelayCommand.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="EasySoftware.MvvmMini.ViewAdapter" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="3.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gAABAAAAAAEAAAAAAAAAAAEAAAAFAAAAACAAAACAAAA=</HashCode>
+      <HashCode>gQAAAAAAAAEAAAAAAAAACAEAAAAFAAAAACAAAACAAAA=</HashCode>
       <FileName>ViewAdapter.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -65,10 +65,24 @@
   <Class Name="EasySoftware.MvvmMini.ModelBase">
     <Position X="0.75" Y="3.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAABAAQABAAAAAAAAAAAAAACIAAAAAAAhgAA=</HashCode>
+      <HashCode>AACAAAAAAABAAQABAAAAAAAAAAAAAACIAAAAAAAhgAA=</HashCode>
       <FileName>ModelBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EasySoftware.MvvmMini.DependencyInjectionExtenstion">
+    <Position X="7" Y="3.75" Width="3.25" />
+    <NestedTypes>
+      <Class Name="EasySoftware.MvvmMini.DependencyInjectionExtenstion.ViewModelViewMapp" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DependencyInjectionExtenstion.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DependencyInjectionExtenstion.cs</FileName>
+    </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

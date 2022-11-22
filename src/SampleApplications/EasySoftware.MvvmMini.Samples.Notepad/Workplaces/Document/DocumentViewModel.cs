@@ -6,18 +6,17 @@ using System.Windows.Input;
 
 using EasySoftware.MvvmMini.Core;
 using EasySoftware.MvvmMini.Samples.Notepad.Dialogs.MessageBox;
-using EasySoftware.MvvmMini.Samples.Notepad.Factories;
 
 namespace EasySoftware.MvvmMini.Samples.Notepad.Workplaces.Document
 {
 	public class DocumentViewModel : ClosableViewModelBase, IDocumentViewModel
 	{
 		private bool _saved = true;
-		private IAppViewModelFactory _viewModelFactory;
+		private readonly IServiceProvider _serviceProvider;
 
-		public DocumentViewModel(IViewAdapter viewAdapter, IAppViewModelFactory viewModelFactory) : base(viewAdapter)
+		public DocumentViewModel(IViewAdapter viewAdapter,IServiceProvider serviceProvider) : base(viewAdapter)
 		{
-			this._viewModelFactory = viewModelFactory ?? throw new ArgumentNullException(nameof(viewModelFactory));
+			_serviceProvider = serviceProvider;
 			this.SaveCommand = new RelayCommand(this.Save, this.CanSave);
 
 			this.Title = "unnamed";
@@ -44,8 +43,8 @@ namespace EasySoftware.MvvmMini.Samples.Notepad.Workplaces.Document
 		{
 			if (!this._saved)
 			{
-				IMessageBoxViewModel messageBox = this._viewModelFactory.CreateMessageBoxDialog($"do you want to save {this.Title} document", "confirm please", MessageBoxButton.YesNoCancel);
-				messageBox.ShowDialog();
+                IMessageBoxViewModel messageBox = this._serviceProvider.GetViewModel<IMessageBoxViewModel>($"do you want to save {this.Title} document", "confirm please", MessageBoxButton.YesNoCancel);
+                messageBox.ShowDialog();
 
 				switch (messageBox.DialogResult)
 				{

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 using EasySoftware.MvvmMini.Core;
 using EasySoftware.MvvmMini.Samples.HowTo.ViewModels.DemoDialog;
@@ -15,11 +14,11 @@ namespace EasySoftware.MvvmMini.Samples.HowTo
 
 	public class ShellViewModel : WindowViewModelBase, IShellViewModel
 	{
-		private IViewModelFactory _viewModelFactory;
+		private IServiceProvider _serviceProvider;
 
-		public ShellViewModel(IViewAdapter viewAdapter, IViewModelFactory viewModelFactory) : base(viewAdapter)
+		public ShellViewModel(IViewAdapter viewAdapter, IServiceProvider serviceProvider) : base(viewAdapter)
 		{
-			this._viewModelFactory = viewModelFactory;
+			this._serviceProvider = serviceProvider;
 
 			this.Title = "MvvmMini.Demo";
 			this.InfoMessage = string.Empty;
@@ -46,7 +45,7 @@ namespace EasySoftware.MvvmMini.Samples.HowTo
 
 		private Task OpenWindow()
 		{
-			IDemoWindowViewModel demoWindow = this._viewModelFactory.ResolveViewModel<IDemoWindowViewModel>();
+			IDemoWindowViewModel demoWindow = this._serviceProvider.GetViewModel<IDemoWindowViewModel>();
 			demoWindow.Show();
 			return Task.CompletedTask;
 		}
@@ -57,14 +56,14 @@ namespace EasySoftware.MvvmMini.Samples.HowTo
 
 		private Task OpenWindowWithParams()
 		{
-			IDemoWindowWithParamsViewModel demoWindow = this._viewModelFactory.ResolveViewModel<IDemoWindowWithParamsViewModel>(("dateTime", DateTime.Now));
+			IDemoWindowWithParamsViewModel demoWindow = this._serviceProvider.GetViewModel<IDemoWindowWithParamsViewModel>(DateTime.Now);
 			demoWindow.Show();
 			return Task.CompletedTask;
 		}
 
 		private Task OpenDialog()
 		{
-			IDemoDialogViewModel dialogViewModel = this._viewModelFactory.ResolveViewModel<IDemoDialogViewModel>();
+			IDemoDialogViewModel dialogViewModel = this._serviceProvider.GetViewModel<IDemoDialogViewModel>();
 			dialogViewModel.ShowDialog();
 			if (dialogViewModel.DialogResult != null)
 			{
@@ -79,14 +78,14 @@ namespace EasySoftware.MvvmMini.Samples.HowTo
 
 		private Task OpenHandleWindowClosing()
 		{
-			IDemoHandleWindowClosingViewModel demoWindow = this._viewModelFactory.ResolveViewModel<IDemoHandleWindowClosingViewModel>();
+			IDemoHandleWindowClosingViewModel demoWindow = this._serviceProvider.GetViewModel<IDemoHandleWindowClosingViewModel>();
 			demoWindow.Show();
 			return Task.CompletedTask;
 		}
 
 		private Task OpenHandleWindowLoading()
 		{
-			IDemoHandleWindowLoadingViewModel demoWindow = this._viewModelFactory.ResolveViewModel<IDemoHandleWindowLoadingViewModel>();
+			IDemoHandleWindowLoadingViewModel demoWindow = this._serviceProvider.GetViewModel<IDemoHandleWindowLoadingViewModel>();
 			demoWindow.Show();
 			return Task.CompletedTask;
 		}

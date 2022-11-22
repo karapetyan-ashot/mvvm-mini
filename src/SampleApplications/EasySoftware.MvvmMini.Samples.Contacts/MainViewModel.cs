@@ -60,7 +60,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 
 		private Task CreateContact()
 		{
-			IContactEditorViewModel contactEditor = this._viewModelFactory.ResolveViewModel<IContactEditorViewModel>(("contact", new ContactModel()));
+			IContactEditorViewModel contactEditor = this._viewModelFactory.CreateContactEditorDialog(new ContactModel());
 			contactEditor.ShowDialog();
 			if (contactEditor.DialogResult != null)
 			{	
@@ -73,7 +73,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 
 		private Task EditContact()
 		{
-			IContactEditorViewModel contactEditor = this._viewModelFactory.ResolveViewModel<IContactEditorViewModel>(("contact", this.CurrentContact));
+			IContactEditorViewModel contactEditor = this._viewModelFactory.CreateContactEditorDialog(this.CurrentContact);
 			contactEditor.ShowDialog();
 			if (contactEditor.DialogResult != null)
 			{	
