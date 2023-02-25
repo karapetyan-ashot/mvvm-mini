@@ -8,7 +8,7 @@
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<AssemblyVersion>2.0.0.3</AssemblyVersion>
 		<FileVersion>2.0.0.3</FileVersion>
-		<Version>2.0.0.3</Version>
+		<Version>2.0.0.4</Version>
 		<PackageProjectUrl>https://github.com/karapetyan-ashot/mvvm-mini</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/karapetyan-ashot/mvvm-mini</RepositoryUrl>
 		<Authors>Ashot Karapetyan</Authors>

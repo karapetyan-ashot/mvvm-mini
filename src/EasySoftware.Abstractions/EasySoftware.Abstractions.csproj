@@ -4,7 +4,7 @@
 		<TargetFrameworks>net6.0-windows;net5.0-windows;netcoreapp3.1;net472</TargetFrameworks>
 		<AssemblyVersion>2.0.0.3</AssemblyVersion>
 		<FileVersion>2.0.0.3</FileVersion>
-		<Version>2.0.0.3</Version>
+		<Version>2.0.0.4</Version>
 		<PackageProjectUrl>https://github.com/karapetyan-ashot/mvvm-mini</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/karapetyan-ashot/mvvm-mini</RepositoryUrl>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
