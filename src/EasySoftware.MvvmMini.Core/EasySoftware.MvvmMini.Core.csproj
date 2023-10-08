@@ -4,9 +4,9 @@
 
 		<UseWPF>true</UseWPF>
 		<PackageTags>MVVM</PackageTags>
-		<AssemblyVersion>2.0.0.3</AssemblyVersion>
-		<FileVersion>2.0.0.3</FileVersion>
-		<Version>2.0.0.3</Version>
+		<AssemblyVersion>2.0.0.5</AssemblyVersion>
+		<FileVersion>2.0.0.5</FileVersion>
+		<Version>2.0.0.5</Version>
 		<PackageProjectUrl>https://github.com/karapetyan-ashot/mvvm-mini</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/karapetyan-ashot/mvvm-mini</RepositoryUrl>
 		<Authors>Ashot Karapetyan</Authors>

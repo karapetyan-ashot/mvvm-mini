@@ -90,6 +90,9 @@ namespace EasySoftware.MvvmMini
 		public virtual void CloneErrors(IErrorContainer other)
 		{
 			this.ClearErrors();
+			if (!other.HasErrors || other.Errors == null)
+				return;
+
 			foreach (var propError in other.Errors)
 			{
 				foreach (var error in propError.Value)
