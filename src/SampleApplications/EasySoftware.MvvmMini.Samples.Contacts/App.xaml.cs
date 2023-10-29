@@ -11,42 +11,66 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace EasySoftware.MvvmMini.Samples.Contacts
 {
-	public partial class App : Application
-	{
-		protected override void OnStartup(StartupEventArgs e)
-		{
-			IServiceProvider serviceProvider = ConfigureServices();
+    public partial class App : Application
+    {
+        private IServiceProvider _serviceProvider;
+        private bool _isRestarting = false;
+        private IMainViewModel _mainViewModel;
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            _serviceProvider = ConfigureServices();
 
-			IAppViewModelFactory viewModelFactory = serviceProvider.GetRequiredService<IAppViewModelFactory>();
+            StartApp();
 
-			ILoginViewModel loginViewModel = viewModelFactory.CreateLoginDialog();
-			loginViewModel.ShowDialog();
-			if (loginViewModel.DialogResult != null)
-			{
-				IMainViewModel mainViewModel = viewModelFactory.CreateMainViewModel();
+        }
 
-				mainViewModel.Closed += (s, ea) => this.Shutdown();
-				mainViewModel.Show();
-			}
-			else
-				this.Shutdown();
-		}
+        private void StartApp()
+        {
+            IAppViewModelFactory viewModelFactory = _serviceProvider.GetRequiredService<IAppViewModelFactory>();
 
-		private IServiceProvider ConfigureServices()
-		{
-			IServiceCollection services = new ServiceCollection();
+            ILoginViewModel loginViewModel = viewModelFactory.CreateLoginDialog();
+            loginViewModel.ShowDialog();
+            if (loginViewModel.DialogResult != null)
+            {
+                _mainViewModel = viewModelFactory.CreateMainViewModel();
+                
+                _mainViewModel.Closed += (s, ea) =>
+                {
+                    if (!_isRestarting)
+                        this.Shutdown();
+                };
 
-			services.AddSingleton<IAppViewModelFactory, AppViewModelFactory>();
-			services.AddTransient<IContactsService, ContactsMockService>();
+                _mainViewModel.Show();
+            }
+            else
+                this.Shutdown();
+        }
 
-			services.AddMvvmMini(mapper => {
-				mapper.RegisterViewModelWithView<ILoginViewModel, LoginViewModel, LoginView>();
+        private IServiceProvider ConfigureServices()
+        {
+            IServiceCollection services = new ServiceCollection();
+
+            services.AddSingleton<IAppViewModelFactory, AppViewModelFactory>();
+            services.AddTransient<IContactsService, ContactsMockService>();
+
+            services.AddMvvmMini(mapper =>
+            {
+                mapper.RegisterViewModelWithView<ILoginViewModel, LoginViewModel, LoginView>();
                 mapper.RegisterViewModelWithView<IMessageBoxViewModel, MessageBoxViewModel, MessageBoxView>();
                 mapper.RegisterViewModelWithView<IContactEditorViewModel, ContactEditorViewModel, ContactEditorView>();
                 mapper.RegisterViewModelWithView<IMainViewModel, MainViewModel, MainView>();
             });
 
-			return services.BuildServiceProvider();
+            return services.BuildServiceProvider();
         }
-	}
+
+        public void Restart()
+        {
+            _isRestarting = true;
+            _mainViewModel.CloseCommand.Execute(null);            
+            this.StartApp();
+
+            _isRestarting = false;
+        }
+    }
 }

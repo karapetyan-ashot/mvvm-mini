@@ -17,7 +17,8 @@
 			<StackPanel Orientation="Horizontal">
 				<Button Content="Add" Command="{Binding CreateContactCommand}"    Style="{StaticResource menuButton}" />
 				<Button Content="Edit" Command="{Binding EditContactCommand}"     Style="{StaticResource menuButton}" />
-				<Button Content="Delete" Command="{Binding DeleteContactCommand}" Style="{StaticResource menuButton}" />
+                <Button Content="Delete" Command="{Binding DeleteContactCommand}" Style="{StaticResource menuButton}" />
+                <Button Content="Restart" Command="{Binding RestartAppCommand}" Style="{StaticResource menuButton}" />
 				
 			</StackPanel>
 			<DataGrid Grid.Row="1" ItemsSource="{Binding Contacts}" SelectedItem="{Binding CurrentContact, Mode=TwoWay}" AutoGenerateColumns="True" IsReadOnly="True" />

@@ -54,8 +54,17 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Dialogs.Login
 			}
 		}
 
+        protected override Task Loaded()
+        {
+#if DEBUG
+			UserName = "username";
+			Password = "1";
+#endif
+			return base.Loaded();
+        }
 
-		private async Task Login()
+
+        private async Task Login()
 		{
 			this.IsBusy = true;
 

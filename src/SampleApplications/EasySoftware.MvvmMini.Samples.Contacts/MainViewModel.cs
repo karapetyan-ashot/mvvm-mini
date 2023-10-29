@@ -28,11 +28,14 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 			this.CreateContactCommand = new RelayCommand(this.CreateContact);
 			this.EditContactCommand = new RelayCommand(this.EditContact, this.CanEditContact);
 			this.DeleteContactCommand = new RelayCommand(this.DeleteContact, this.CanDeleteContact);
+			this.RestartAppCommand = new RelayCommand(this.Restart);
 		}
 
-		public IRelayCommand CreateContactCommand { get; }
+        public IRelayCommand CreateContactCommand { get; }
 		public IRelayCommand EditContactCommand { get; }
 		public IRelayCommand DeleteContactCommand { get; }
+		public IRelayCommand RestartAppCommand { get; }
+
 
 		private ObservableCollection<ContactModel> _contacts;
 		public ObservableCollection<ContactModel> Contacts
@@ -109,5 +112,11 @@ namespace EasySoftware.MvvmMini.Samples.Contacts
 		{
 			return this.CurrentContact != null;
 		}
-	}
+
+        private Task Restart()
+        {
+           ((App)App.Current).Restart();
+			return Task.CompletedTask;
+        }
+    }
 }

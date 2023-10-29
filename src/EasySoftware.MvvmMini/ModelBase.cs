@@ -43,7 +43,7 @@ namespace EasySoftware.MvvmMini
 
 		public IReadOnlyDictionary<string, IEnumerable<string>> Errors { get; }
 
-		public bool HasErrors => this._errors.Any();
+        public bool HasErrors => this._errors.Any();
 
 		public void AddError(string errorMessage)
 		{

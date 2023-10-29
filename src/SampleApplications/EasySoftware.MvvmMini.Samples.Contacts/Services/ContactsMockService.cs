@@ -8,6 +8,8 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Services
 {
 	public class ContactsMockService : IContactsService
 	{
+		private const int DELAY = 2000;
+
 		private static List<UserModel> _users = new List<UserModel> { new UserModel { Id = 1, Name = "Name LastName", UserName = "username", Password = "1" } };
 		private static List<ContactModel> _contacts;
 		private static int _nextId = 0;
@@ -25,7 +27,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Services
 
 		public async Task<UserModel> Login(string userName, string password)
 		{
-			await Task.Delay(2000);
+			await Task.Delay(DELAY);
 
 			UserModel user = new UserModel { UserName = userName, Password = password };
 			
@@ -47,14 +49,14 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Services
 
 		public async Task<List<ContactModel>> GetContacts()
 		{
-			await Task.Delay(2000);
+			await Task.Delay(DELAY);
 			
 			return _contacts.Select(x => x.Clone()).ToList();
 		}
 
 		public async Task<ContactModel> GetContactById(int id)
 		{
-			await Task.Delay(2000);
+			await Task.Delay(DELAY);
 
 			ContactModel found = _contacts.SingleOrDefault(x => x.Id == id);
 			if (found != null)
@@ -64,7 +66,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Services
 
 		public async Task<ContactModel> CreateContact(ContactModel contact)
 		{
-			await Task.Delay(2000);
+			await Task.Delay(DELAY);
 
 			this.ValidateContact(contact);
 
@@ -79,7 +81,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Services
 
 		public async Task<ContactModel> UpdateContact(ContactModel contact)
 		{
-			await Task.Delay(2000);
+			await Task.Delay(DELAY);
 
 			this.ValidateContact(contact);
 
@@ -97,7 +99,7 @@ namespace EasySoftware.MvvmMini.Samples.Contacts.Services
 
 		public async Task DeleteContact(ContactModel contact)
 		{
-			await Task.Delay(2000);
+			await Task.Delay(DELAY);
 
 			ContactModel found = _contacts.SingleOrDefault(x => x.Id == contact.Id && x.Modified == contact.Modified);
 			if (found == null)
