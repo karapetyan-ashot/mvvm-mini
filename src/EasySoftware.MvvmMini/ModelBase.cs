@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 
@@ -10,7 +9,7 @@ using EasySoftware.MvvmMini.Core;
 
 namespace EasySoftware.MvvmMini
 {
-	public abstract partial class ModelBase : BindableBase, IModel { }
+    public abstract partial class ModelBase : BindableBase, IModel { }
 
 	public abstract partial class ModelBase : INotifyDataErrorInfo
 	{
@@ -34,14 +33,17 @@ namespace EasySoftware.MvvmMini
 	public abstract partial class ModelBase : IErrorContainer
 	{
 		private readonly Dictionary<string, IEnumerable<string>> _errors;
-
-		public ModelBase()
+		
+        public ModelBase()
 		{
-			this._errors = new Dictionary<string, IEnumerable<string>>();
-			this.Errors = new ReadOnlyDictionary<string, IEnumerable<string>>(this._errors);
+			this._errors = new Dictionary<string, IEnumerable<string>>();			
 		}
 
-		public IReadOnlyDictionary<string, IEnumerable<string>> Errors { get; }
+		public IReadOnlyDictionary<string, IEnumerable<string>> Errors
+		{
+			get => this._errors;
+			set => this.CloneErrors(value);
+		}
 
         public bool HasErrors => this._errors.Any();
 
@@ -89,17 +91,23 @@ namespace EasySoftware.MvvmMini
 
 		public virtual void CloneErrors(IErrorContainer other)
 		{
+			CloneErrors(other.Errors);
+		}
+
+		private void CloneErrors(IReadOnlyDictionary<string, IEnumerable<string>> otherErrors)
+		{
 			this.ClearErrors();
-			if (!other.HasErrors || other.Errors == null)
+
+			if (otherErrors == null && !otherErrors.Any())
 				return;
 
-			foreach (var propError in other.Errors)
-			{
-				foreach (var error in propError.Value)
-				{
-					this.AddError(propError.Key, error);
-				}
-			}
-		}
+            foreach (var propError in otherErrors)
+            {
+                foreach (var error in propError.Value)
+                {
+                    this.AddError(propError.Key, error);
+                }
+            }
+        }
 	}
 }

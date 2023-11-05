@@ -2,10 +2,10 @@
 
 namespace EasySoftware.Abstractions
 {
-	public interface IErrorContainer
+    public interface IErrorContainer
 	{
 		bool HasErrors { get; }
-		IReadOnlyDictionary<string, IEnumerable<string>> Errors { get; }
+		IReadOnlyDictionary<string, IEnumerable<string>> Errors { get; set; }
 		void AddError(string errorMessage);
 		void AddError(string propName, string errorMessage);
 		void ClearErrors();
