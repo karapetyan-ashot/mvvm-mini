@@ -45,7 +45,7 @@ namespace EasySoftware.MvvmMini
 			set => this.CloneErrors(value);
 		}
 
-        public bool HasErrors => this._errors.Any();
+        public virtual bool HasErrors => this._errors.Any();
 
 		public void AddError(string errorMessage)
 		{
