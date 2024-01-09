@@ -98,7 +98,7 @@ namespace EasySoftware.MvvmMini
 		{
 			this.ClearErrors();
 
-			if (otherErrors == null && !otherErrors.Any())
+			if (otherErrors == null || !otherErrors.Any())
 				return;
 
             foreach (var propError in otherErrors)
