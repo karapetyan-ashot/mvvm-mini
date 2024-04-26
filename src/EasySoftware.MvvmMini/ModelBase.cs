@@ -15,7 +15,7 @@ namespace EasySoftware.MvvmMini
 	{
 		public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
-		public IEnumerable GetErrors(string propertyName)
+		public virtual IEnumerable GetErrors(string propertyName)
 		{
 			propertyName = propertyName ?? string.Empty;
 			if (this.Errors.ContainsKey(propertyName))
