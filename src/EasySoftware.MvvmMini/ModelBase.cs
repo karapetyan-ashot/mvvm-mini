@@ -24,7 +24,7 @@ namespace EasySoftware.MvvmMini
 			return null;
 		}
 
-		protected void RaiseErrorsChanged(string propName)
+		public void RaiseErrorsChanged(string propName)
 		{
 			this.ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propName));
 		}

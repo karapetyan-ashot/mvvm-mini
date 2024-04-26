@@ -8,7 +8,7 @@ namespace EasySoftware.MvvmMini
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		protected void RaisePropertyChanged([CallerMemberName] string propName = null)
+		public void RaisePropertyChanged([CallerMemberName] string propName = null)
 		{
 			this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
 		}
