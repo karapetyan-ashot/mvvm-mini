@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30406.217
+# Visual Studio Version 18
+VisualStudioVersion = 18.2.11408.102 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasySoftware.MvvmMini.Core", "EasySoftware.MvvmMini.Core\EasySoftware.MvvmMini.Core.csproj", "{F4C0FC7A-6F1E-4B17-82F7-68741CE918EE}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasySoftware.MvvmMini.Samples.HowTo", "SampleApplications\EasySoftware.MvvmMini.Samples.HowTo\EasySoftware.MvvmMini.Samples.HowTo.csproj", "{482CE772-89E2-4AD5-8651-D0E26F6462F5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoftware.Abstractions", "EasySoftware.Abstractions\EasySoftware.Abstractions.csproj", "{302AC406-DD56-4D2E-A539-4853A22F7974}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySoftware.WpfControls", "EasySoftware.WpfControls\EasySoftware.WpfControls.csproj", "{366B5CAD-2DF8-4274-94A0-15DD96DEFC98}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,10 @@ Global
 		{302AC406-DD56-4D2E-A539-4853A22F7974}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{302AC406-DD56-4D2E-A539-4853A22F7974}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{302AC406-DD56-4D2E-A539-4853A22F7974}.Release|Any CPU.Build.0 = Release|Any CPU
+		{366B5CAD-2DF8-4274-94A0-15DD96DEFC98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{366B5CAD-2DF8-4274-94A0-15DD96DEFC98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{366B5CAD-2DF8-4274-94A0-15DD96DEFC98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{366B5CAD-2DF8-4274-94A0-15DD96DEFC98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

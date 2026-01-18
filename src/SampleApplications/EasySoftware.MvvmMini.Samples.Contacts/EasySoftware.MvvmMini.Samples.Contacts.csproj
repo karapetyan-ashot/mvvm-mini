@@ -2,14 +2,11 @@
 
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
-		<TargetFrameworks>net9.0-windows</TargetFrameworks>
+		<TargetFrameworks>net10.0-windows</TargetFrameworks>
 		<UseWPF>true</UseWPF>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\EasySoftware.MvvmMini\EasySoftware.MvvmMini.csproj" />
 	</ItemGroup>
-
-
-
 </Project>

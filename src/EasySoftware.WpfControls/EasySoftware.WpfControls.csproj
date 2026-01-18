@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net10.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<AssemblyVersion>2.0.0.15</AssemblyVersion>
+		<FileVersion>2.0.0.15</FileVersion>
+		<Version>2.0.0.15</Version>
+		<PackageProjectUrl>https://github.com/karapetyan-ashot/mvvm-mini</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/karapetyan-ashot/mvvm-mini</RepositoryUrl>
+		<Authors>Ashot Karapetyan</Authors>
+		<Company>EasySoftware</Company>
+		<Description>WPF Controls</Description>
+	</PropertyGroup>
+
+</Project>
