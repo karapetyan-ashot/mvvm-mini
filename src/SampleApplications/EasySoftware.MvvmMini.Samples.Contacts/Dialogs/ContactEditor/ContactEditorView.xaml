@@ -4,11 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:ctrl="clr-namespace:EasySoftware.MvvmMini.Samples.Contacts.Controls"
+		xmlns:es="clr-namespace:EasySoftware.WpfControls.Controls;assembly=EasySoftware.WpfControls"
         xmlns:local="clr-namespace:EasySoftware.MvvmMini.Samples.Contacts.Dialogs.ContactEditor"
 		xmlns:conv="clr-namespace:EasySoftware.MvvmMini.Samples.Contacts.Converters"
         mc:Ignorable="d"
         Title="{Binding Title}" Height="300" Width="400">
-	<ctrl:BusyIndicator IsBusy="{Binding IsBusy}" >
+	<es:BusyIndicator IsBusy="{Binding IsBusy}" >
 		<Grid Margin="20" >
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
@@ -33,5 +34,5 @@
 				<Button Content="Cancel" IsCancel="True" Style="{StaticResource dialogButton}"/>
 			</StackPanel>
 		</Grid>
-	</ctrl:BusyIndicator>
+	</es:BusyIndicator>
 </Window>

@@ -8,5 +8,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\EasySoftware.MvvmMini\EasySoftware.MvvmMini.csproj" />
+		<ProjectReference Include="..\..\EasySoftware.WpfControls\EasySoftware.WpfControls.csproj" />
 	</ItemGroup>
 </Project>

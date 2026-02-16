@@ -26,9 +26,15 @@ namespace EasySoftware.MvvmMini
 
         public static TIViewModel GetViewModel<TIViewModel>(this IServiceProvider serviceProvider, params object[] openArgs)
         {
+            Type viewModelInterfaceType = typeof(TIViewModel);
+            var viewModel = serviceProvider.GetViewModel(viewModelInterfaceType, openArgs);
+            return (TIViewModel)viewModel;
+        }
+
+        public static IViewModel GetViewModel(this IServiceProvider serviceProvider, Type viewModelInterfaceType, params object[] openArgs)
+        {
             var vmvMaiping = (IIViewModelViewMappingReader)serviceProvider.GetRequiredService<IViewModelViewMapping>();
 
-            Type viewModelInterfaceType = typeof(TIViewModel);
             var viewModelType = vmvMaiping.GetViewModel(viewModelInterfaceType);
             var viewType = vmvMaiping.GetView(viewModelInterfaceType);
 
@@ -36,7 +42,7 @@ namespace EasySoftware.MvvmMini
             var viewAdapter = new ViewAdapter(view);
 
             openArgs = openArgs.Concat(new[] { viewAdapter }).ToArray();
-            return (TIViewModel)ActivatorUtilities.CreateInstance(serviceProvider, viewModelType, openArgs);
+            return (IViewModel)ActivatorUtilities.CreateInstance(serviceProvider, viewModelType, openArgs);
         }
     }
 

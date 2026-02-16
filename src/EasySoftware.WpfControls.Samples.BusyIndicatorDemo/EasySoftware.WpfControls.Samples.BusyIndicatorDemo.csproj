@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net10.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UseWPF>true</UseWPF>
+		<UseWindowsForms>false</UseWindowsForms>
+	</PropertyGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\EasySoftware.MvvmMini\EasySoftware.MvvmMini.csproj" />
+	  <ProjectReference Include="..\EasySoftware.WpfControls\EasySoftware.WpfControls.csproj" />
+	</ItemGroup>
+</Project>
