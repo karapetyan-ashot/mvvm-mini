@@ -14,7 +14,7 @@ namespace EasySoftware.MvvmMini.Tests
         {
             var errors = new Dictionary<string, IEnumerable<string>>
             {
-                { "Name", new List<string> { "Name error 2", "Name error 2" } }
+                { "Name", new List<string> { "Name error 1", "Name error 2" } }
             };
             Person person = new Person { Name = "gugush", Errors = errors };
             string json = JsonSerializer.Serialize(person);
