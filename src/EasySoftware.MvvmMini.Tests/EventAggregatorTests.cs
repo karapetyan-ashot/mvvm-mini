@@ -2,74 +2,76 @@ using EasySoftware.MvvmMini.Core;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Moq;
+using NSubstitute;
 
 namespace EasySoftware.MvvmMini.Tests
 {
-	[TestClass]
-	public class EventAggregatorTests
-	{
-		public interface ISubscriber
-		{
-			void OnInt(int val);
-			void OnString(string val);
-		}
+    [TestClass]
+    public class EventAggregatorTests
+    {
+        public interface ISubscriber
+        {
+            void OnInt(int val);
 
-		[TestMethod]
-		public void EventAggregator_Publish_SubscriberCalled()
-		{
-			// arrange
-			Mock<ISubscriber> subsriberMock = new Mock<ISubscriber>();			
-			IEventAggregator eventAggregator = new EventAggregator();
-			eventAggregator.Subscribe<int>(subsriberMock.Object.OnInt);
+            void OnString(string val);
+        }
 
-			// act
-			eventAggregator.Publish<int>(3);
+        [TestMethod]
+        public void EventAggregator_Publish_SubscriberCalled()
+        {
+            // arrange
+            var subsriber = Substitute.For<ISubscriber>();
+            var eventAggregator = new EventAggregator();
+            eventAggregator.Subscribe<int>(subsriber.OnInt);
 
-			// assert
-			subsriberMock.Verify(x => x.OnInt(3), Times.Once);
-		}
+            // act
+            eventAggregator.Publish(3);
 
-		[TestMethod]
-		public void EventAggregator_Publish_SubscribersCalled()
-		{
-			// arrange
-			Mock<ISubscriber> subsriberMock1 = new Mock<ISubscriber>();
-			Mock<ISubscriber> subsriberMock2 = new Mock<ISubscriber>();
-			IEventAggregator eventAggregator = new EventAggregator();
-			eventAggregator.Subscribe<int>(subsriberMock1.Object.OnInt);
-			eventAggregator.Subscribe<int>(subsriberMock2.Object.OnInt);
+            // assert
+            subsriber.Received(1).OnInt(3);
+        }
 
-			// act
-			eventAggregator.Publish<int>(3);
+        [TestMethod]
+        public void EventAggregator_Publish_SubscribersCalled()
+        {
+            // arrange
+            var subsriber1 = Substitute.For<ISubscriber>();
+            var subsriber2 = Substitute.For<ISubscriber>();
+            var eventAggregator = new EventAggregator();
+            eventAggregator.Subscribe<int>(subsriber1.OnInt);
+            eventAggregator.Subscribe<int>(subsriber2.OnInt);
 
-			// assert
-			subsriberMock1.Verify(x => x.OnInt(3), Times.Once);
-			subsriberMock2.Verify(x => x.OnInt(3), Times.Once);
-		}
+            // act
+            eventAggregator.Publish<int>(3);
 
-		[TestMethod]
-		public void EventAggregator_NamedPublish_SubscribersCalled()
-		{
-			// arrange
-			string key = "key";
-			Mock<ISubscriber> subsriberMock1 = new Mock<ISubscriber>();
-			Mock<ISubscriber> subsriberMock2 = new Mock<ISubscriber>();
-			Mock<ISubscriber> subsriberMock3 = new Mock<ISubscriber>();
-			IEventAggregator eventAggregator = new EventAggregator();
-			eventAggregator.Subscribe<int>(subsriberMock1.Object.OnInt, key);
-			eventAggregator.Subscribe<int>(subsriberMock2.Object.OnInt, key);
-			eventAggregator.Subscribe<int>(subsriberMock3.Object.OnInt);
+            // assert
+            subsriber1.Received(1).OnInt(3);
+            subsriber2.Received(1).OnInt(3);
+        }
 
-			// act
-			eventAggregator.Publish<int>(3, key);
+        [TestMethod]
+        public void EventAggregator_NamedPublish_SubscribersCalled()
+        {
+            // arrange
+            string key = "key";
+            var subsriber1WithKey = Substitute.For<ISubscriber>();
+            var subsriber2WithKey = Substitute.For<ISubscriber>();
+            var subsriber1WithoutKey = Substitute.For<ISubscriber>();
+            var subsriber1WithoutWrongKey = Substitute.For<ISubscriber>();
+            IEventAggregator eventAggregator = new EventAggregator();
+            eventAggregator.Subscribe<int>(subsriber1WithKey.OnInt, key);
+            eventAggregator.Subscribe<int>(subsriber2WithKey.OnInt, key);
+            eventAggregator.Subscribe<int>(subsriber1WithoutKey.OnInt);
+            eventAggregator.Subscribe<int>(subsriber1WithoutWrongKey.OnInt, "wrongKey");
 
-			// assert
-			subsriberMock1.Verify(x => x.OnInt(3), Times.Once);
-			subsriberMock2.Verify(x => x.OnInt(3), Times.Once);
-			subsriberMock3.Verify(x => x.OnInt(3), Times.Never);
-		}
-	}
+            // act
+            eventAggregator.Publish(3, key);
 
-
+            // assert
+            subsriber1WithKey.Received(1).OnInt(3);
+            subsriber2WithKey.Received(1).OnInt(3);
+            subsriber1WithoutKey.Received(0).OnInt(3);
+            subsriber1WithoutWrongKey.Received(0).OnInt(3);
+        }
+    }
 }
