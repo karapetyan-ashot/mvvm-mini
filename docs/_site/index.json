@@ -1,0 +1,17 @@
+{
+  "getting-started.html": {
+    "href": "getting-started.html",
+    "title": "Getting Started | MVVMMini",
+    "summary": "Getting Started"
+  },
+  "index.html": {
+    "href": "index.html",
+    "title": "This is the HOMEPAGE. | MVVMMini",
+    "summary": "This is the HOMEPAGE. Refer to Markdown for how to write markdown files. Quick Start Notes: Add images to the images folder if the file is referencing an image."
+  },
+  "introduction.html": {
+    "href": "introduction.html",
+    "title": "Introduction | MVVMMini",
+    "summary": "Introduction"
+  }
+}

@@ -5,6 +5,7 @@
 		<PackageTags>WPF, MVVM</PackageTags>
 		<PackageReleaseNotes>OnClosing method now returns Task</PackageReleaseNotes>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<AssemblyVersion>2.0.0.16</AssemblyVersion>
 		<FileVersion>2.0.0.16</FileVersion>
 		<Version>2.0.0.16</Version>

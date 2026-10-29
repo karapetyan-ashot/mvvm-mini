@@ -7,12 +7,23 @@ using EasySoftware.MvvmMini.Core;
 
 namespace EasySoftware.MvvmMini
 {
+	/// <summary>
+	/// Default thread-safe implementation of <see cref="IEventAggregator"/>.
+	/// </summary>
+	/// <remarks>
+	/// Subscribers are held through weak references, so a subscription does not keep its target object alive.
+	/// Use methods of a long-lived object as handlers. A lambda that captures local variables is owned only by the
+	/// delegate and can be garbage collected, which silently ends the subscription.
+	/// </remarks>
 	public class EventAggregator : IEventAggregator
 	{
 		private readonly object _locker = new object();
 		private readonly Dictionary<string, List<ActionWrapper>> _actions;
 
 		#region constructors
+		/// <summary>
+		/// Initializes a new instance of the <see cref="EventAggregator"/> class with no subscriptions.
+		/// </summary>
 		public EventAggregator()
 		{
 			lock (this._locker)
@@ -24,6 +35,7 @@ namespace EasySoftware.MvvmMini
 		#endregion
 
 		#region IEventAggregator
+		/// <inheritdoc/>
 		public void Subscribe<T>(Action<T> action, string key = null)
 		{
 			lock (this._locker)
@@ -33,6 +45,7 @@ namespace EasySoftware.MvvmMini
 			}
 		}
 
+		/// <inheritdoc/>
 		public void Unsubscribe<T>(Action<T> action, string key = null)
 		{
 			lock (this._locker)
@@ -42,6 +55,7 @@ namespace EasySoftware.MvvmMini
 			}
 		}
 
+		/// <inheritdoc/>
 		public void Publish<T>(T objectToSend, string key = null)
 		{
 			lock (this._locker)
@@ -65,6 +79,7 @@ namespace EasySoftware.MvvmMini
 			}
 		}
 
+		/// <inheritdoc/>
 		public void Reset()
 		{
 			lock (this._locker)

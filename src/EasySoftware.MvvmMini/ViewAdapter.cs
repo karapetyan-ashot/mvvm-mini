@@ -7,15 +7,30 @@ using EasySoftware.MvvmMini.Core;
 
 namespace EasySoftware.MvvmMini
 {
+	/// <summary>
+	/// Default <see cref="IViewAdapter"/> for WPF views. Works with any <see cref="FrameworkElement"/>;
+	/// <see cref="Show"/>, <see cref="ShowDialog"/> and <see cref="Close"/> require the view to be a <see cref="Window"/>.
+	/// </summary>
+	/// <remarks>
+	/// When the view is a window bound to a <see cref="ClosableViewModelBase"/>, closing the window calls
+	/// <see cref="ClosableViewModelBase.OnClosing(CancelEventArgs)"/>, and a closed window moves the view model to <see cref="ViewModelState.Closed"/>.
+	/// </remarks>
 	public class ViewAdapter : IViewAdapter
 	{
 		private readonly FrameworkElement _view;
 
 		private ViewAdapterSate _state;
 
+		/// <inheritdoc/>
 		public event EventHandler Loaded;
+		/// <inheritdoc/>
 		public event EventHandler Unloaded;
 
+		/// <summary>
+		/// Initializes a new adapter for the given view.
+		/// </summary>
+		/// <param name="view">The view to wrap.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="view"/> is <see langword="null"/>.</exception>
 		public ViewAdapter(FrameworkElement view)
 		{
 			this._view = view ?? throw new ArgumentNullException(nameof(view));
@@ -63,14 +78,18 @@ namespace EasySoftware.MvvmMini
 			}
 		}
 
+		/// <inheritdoc/>
 		public object DataContext
 		{
 			get => this._view.DataContext;
 			set => this._view.DataContext = value;
 		}
 
+		/// <inheritdoc/>
 		public object View { get => this._view; }
 
+		/// <inheritdoc/>
+		/// <exception cref="NotSupportedException">The view is not a <see cref="Window"/>.</exception>
 		public void Show()
 		{
 			if (this._view is Window window)
@@ -83,6 +102,10 @@ namespace EasySoftware.MvvmMini
 			}
 		}
 
+		/// <summary>
+		/// Shows the view as a modal dialog, owned by the currently active window of the application, and returns when it is closed.
+		/// </summary>
+		/// <exception cref="NotSupportedException">The view is not a <see cref="Window"/>.</exception>
 		public void ShowDialog()
 		{
 			if (this._view is Window window)
@@ -98,6 +121,9 @@ namespace EasySoftware.MvvmMini
 			}
 		}
 
+		/// <summary>
+		/// Closes the view if it is a <see cref="Window"/>; otherwise does nothing.
+		/// </summary>
 		public void Close()
 		{
 			if (this._view is Window window)
